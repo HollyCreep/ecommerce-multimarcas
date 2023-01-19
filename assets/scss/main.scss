@@ -1,0 +1,28 @@
+@import './-variables.scss';
+@import './-mixins.scss';
+@import './-typography.scss';
+
+.v-application {
+  &.odp-g-scale {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+  }
+
+  .odp-container {
+    width: calc(100% - #{$container-spacing} * 2);
+    @include container-base-styles;
+
+    &-fluid {
+      width: 100%;
+      padding-right: $container-spacing;
+      padding-left: $container-spacing;
+      @include container-base-styles;
+    }
+
+    &-inset {
+      width: calc(100% - #{$container-spacing} * 4);
+      @include container-base-styles;
+    }
+  }
+}

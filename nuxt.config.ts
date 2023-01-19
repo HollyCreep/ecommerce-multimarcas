@@ -1,12 +1,52 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
+import type { HookResult } from '@unhead/schema'
+import vuetify from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
-  css: ["vuetify/lib/styles/main.sass", "@mdi/font/css/materialdesignicons.min.css"],
-  build: {
-    transpile: ["vuetify"],
-  },
+  css: ['@mdi/font/css/materialdesignicons.min.css', '@/assets/scss/main.scss'],
   vite: {
-    define: {
-      "process.env.DEBUG": false,
+    ssr: {
+      noExternal: ['vuetify'],
     },
   },
-});
+  imports: {
+    dirs: ['stores', 'composables'],
+  },
+  build: {
+    transpile: ['vuetify'],
+  },
+  modules: [
+    async (_options, nuxt) => {
+      await nuxt.hooks.hook(
+        'vite:extendConfig',
+        (config) =>
+          config.plugins &&
+          (config.plugins.push(vuetify()) as unknown as HookResult)
+      )
+    },
+    '@nuxtjs/google-fonts',
+    '@vueuse/nuxt',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: ['defineStore', 'acceptHMRUpdate'],
+      },
+    ],
+  ],
+  googleFonts: {
+    families: {
+      'Exo+2': {
+        wght: [300, 400, 500, 600],
+        ital: [],
+      },
+      'Noto+Sans': {
+        wght: [400, 600, 700],
+        ital: [],
+      },
+    },
+  },
+  runtimeConfig: {
+    public: {
+      baseUrl: 'https://api.odontoprev.com.br:8243',
+    },
+  },
+})
