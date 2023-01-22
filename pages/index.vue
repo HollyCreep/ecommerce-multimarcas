@@ -7,13 +7,14 @@ definePageMeta({
 })
 const themeController = useThemeController()
 const store = useThemeStore()
-
 const { getActiveBrand } = storeToRefs(store)
 </script>
 
 <template>
   <div>
-    <h1>Thema: {{ getActiveBrand.name }}</h1>
+    <h1 class="text-primary">
+      Thema: {{ getActiveBrand.name }}
+    </h1>
     <v-icon
       color="red"
       icon="mdi-delete"
@@ -25,26 +26,9 @@ const { getActiveBrand } = storeToRefs(store)
     >
       mdi-alert-circle-check
     </v-icon>
-
-    <v-card color="amber">
-      <v-card color="amber">
-        <h1>Teste: {{ getActiveBrand.resources }}</h1>
-      </v-card>
-
-      <v-card-text color="amber">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
-        necessitatibus quaerat commodi, voluptatum, fuga quia repellendus
-        adipisci assumenda corporis laborum ducimus. Voluptates quasi, libero
-        cum quod ipsa vitae corrupti porro cumque, amet officia deserunt.
-        Incidunt cum saepe delectus aperiam veniam distinctio expedita
-        laboriosam iure totam quisquam! Possimus eveniet voluptate ipsum.
-      </v-card-text>
-    </v-card>
-    <p class="text-primary">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit, nisi modi.
-      Et minima eius dignissimos omnis recusandae? Aliquid illo ipsa explicabo
-      nisi itaque consequuntur sapiente exercitationem, beatae dolorem?
-      Repudiandae, velit?
-    </p>
+    <v-btn color="success" nuxt to="/carrinho">
+      Pagina do carrinho
+    </v-btn>
+    <nuxt-icon name="dente-brilho" class="text-h1" />
   </div>
 </template>

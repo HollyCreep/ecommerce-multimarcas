@@ -1,4 +1,5 @@
 .v-application {
+  font-size: 16px;
   font-family: var(--body-font-family);
 
   :is(
@@ -13,18 +14,20 @@
       .text-h3,
       .text-h4,
       .text-h5,
-      .text-h6,
-
+      .text-h6
     ) {
     font-family: var(--heading-font-family);
   }
 
   .font- {
-    &poppins {
-      font-family: 'Poppins' !important;
+    &noto-sans {
+      font-family: 'Noto Sans, Roboto, sans-serif' !important;
     }
-    &inter {
-      font-family: 'Inter' !important;
+    &soleto {
+      font-family: 'Soleto, Roboto, sans-serif' !important;
+    }
+    &exo {
+      font-family: 'Exo 2, Roboto, sans-serif' !important;
     }
   }
 }

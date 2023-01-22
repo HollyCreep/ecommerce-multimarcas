@@ -1,12 +1,12 @@
 :root {
   --font-size: 16px;
-  --body-font-family: 'Noto Sans';
-  --heading-font-family: 'Soleto';
+  --body-font-family: 'Noto Sans, Roboto, sans-serif';
+  --heading-font-family: 'Soleto, Roboto, sans-serif';
 }
 
 :root .odontoSystem {
-  --font-head: 'Exo 2';
+  --font-head: 'Exo 2, Roboto, sans-serif';
 }
 
-$container-size: 120rem;
-$container-spacing: 5vw;
+$container-size: 80rem;
+$container-spacing: 2rem;

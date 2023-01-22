@@ -2,35 +2,29 @@ import type { HookResult } from '@unhead/schema'
 import vuetify from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
+  imports: { dirs: ['stores', 'composables'] },
+
+  components: [{ path: '~/components/', pathPrefix: false }],
+
   css: ['@mdi/font/css/materialdesignicons.min.css', '@/assets/scss/main.scss'],
-  vite: {
-    ssr: {
-      noExternal: ['vuetify'],
-    },
-  },
-  imports: {
-    dirs: ['stores', 'composables'],
-  },
-  build: {
-    transpile: ['vuetify'],
-  },
+
+  vite: { ssr: { noExternal: ['vuetify'] } },
+
+  build: { transpile: ['vuetify'] },
+
   modules: [
+    'nuxt-icons',
+    '@vueuse/nuxt',
+    '@nuxtjs/google-fonts',
+    ['@pinia/nuxt', { autoImports: ['defineStore', 'acceptHMRUpdate'] }],
     async (_options, nuxt) => {
       await nuxt.hooks.hook(
         'vite:extendConfig',
-        (config) =>
-          config.plugins &&
-          (config.plugins.push(vuetify()) as unknown as HookResult)
+        config =>
+          config.plugins
+          && (config.plugins.push(vuetify()) as unknown as HookResult),
       )
     },
-    '@nuxtjs/google-fonts',
-    '@vueuse/nuxt',
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: ['defineStore', 'acceptHMRUpdate'],
-      },
-    ],
   ],
   googleFonts: {
     families: {

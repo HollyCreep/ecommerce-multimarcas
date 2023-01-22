@@ -5,12 +5,13 @@ export default defineNuxtPlugin(({ hook }) => {
     const { toggleTheme } = useThemeController()
     const appConfig = useAppConfig()
     const headers = useRequestHeaders()
-    const url =
-      process.server && headers.host ? headers.host : window.location.host
-    let brand =
-      process.dev && appConfig.domain ? appConfig.domain : Brands.ODONTO_PREV
+    const url
+      = process.server && headers.host ? headers.host : window.location.host
+    let brand
+      = process.dev && appConfig.domain ? appConfig.domain : Brands.ODONTO_PREV
 
-    if (url.includes('system')) brand = Brands.ODONTO_SYSTEM
+    if (url.includes('system'))
+      brand = Brands.ODONTO_SYSTEM
 
     toggleTheme(brand)
   })

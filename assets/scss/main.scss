@@ -1,5 +1,4 @@
 @import './-variables.scss';
-@import './-mixins.scss';
 @import './-typography.scss';
 
 .v-application {
@@ -9,20 +8,10 @@
     filter: grayscale(100%);
   }
 
-  .odp-container {
-    width: calc(100% - #{$container-spacing} * 2);
-    @include container-base-styles;
+  .v-container {
+    max-width: $container-size;
+    padding-right: $container-spacing;
+    padding-left: $container-spacing;
 
-    &-fluid {
-      width: 100%;
-      padding-right: $container-spacing;
-      padding-left: $container-spacing;
-      @include container-base-styles;
-    }
-
-    &-inset {
-      width: calc(100% - #{$container-spacing} * 4);
-      @include container-base-styles;
-    }
   }
-}
+} 
