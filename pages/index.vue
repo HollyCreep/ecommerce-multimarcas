@@ -8,6 +8,18 @@ definePageMeta({
 const themeController = useThemeController()
 const store = useThemeStore()
 const { getActiveBrand } = storeToRefs(store)
+
+const auth = useAuthApi()
+// const productsAPI = useProductsApi()
+
+const { data: teste, error, pending } = await auth.login({
+  username: 'mor_2314',
+  password: '83r5^_',
+})
+
+const user = await auth.getUser()
+
+// const products = await productsAPI.getProducts()
 </script>
 
 <template>
@@ -26,9 +38,16 @@ const { getActiveBrand } = storeToRefs(store)
     >
       mdi-alert-circle-check
     </v-icon>
-    <v-btn color="success" nuxt to="/carrinho">
-      Pagina do carrinho
-    </v-btn>
     <nuxt-icon name="dente-brilho" class="text-h1" />
+
+    <div v-if="pending">
+      {{ pending }}
+    </div>
+    <div v-if="error">
+      {{ error }}
+    </div>
+    <div v-if="teste && !pending" class="text-primary">
+      {{ teste }}
+    </div>
   </div>
 </template>

@@ -2,7 +2,7 @@ import type { HookResult } from '@unhead/schema'
 import vuetify from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
-  imports: { dirs: ['stores', 'composables'] },
+  imports: { dirs: ['stores', 'composables', 'composables', 'composables/**/*.api.ts'] },
 
   components: [{ path: '~/components/', pathPrefix: false }],
 
@@ -36,11 +36,6 @@ export default defineNuxtConfig({
         wght: [400, 600, 700],
         ital: [],
       },
-    },
-  },
-  runtimeConfig: {
-    public: {
-      baseUrl: 'https://api.odontoprev.com.br:8243',
     },
   },
 })
