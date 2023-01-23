@@ -2,7 +2,7 @@ import { Brands } from '~/types/enums'
 
 export default defineNuxtPlugin(({ hook }) => {
   hook('vue:setup', () => {
-    const { toggleTheme } = useThemeController()
+    const { changeTheme } = useThemeController()
     const appConfig = useAppConfig()
     const headers = useRequestHeaders()
     const url
@@ -13,6 +13,6 @@ export default defineNuxtPlugin(({ hook }) => {
     if (url.includes('system'))
       brand = Brands.ODONTO_SYSTEM
 
-    toggleTheme(brand)
+    changeTheme(brand)
   })
 })

@@ -1,4 +1,4 @@
-import { acceptHMRUpdate, defineStore, storeToRefs } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useOdontoPrevStore } from './brands/odontoPrev'
 import { useOdontoSystemStore } from './brands/odontoSystem'
 import { Brands } from '~~/types/enums'
@@ -7,20 +7,20 @@ export const useThemeStore = defineStore('theme', () => {
   const odontoPrevStore = useOdontoPrevStore()
   const odontoSystemStore = useOdontoSystemStore()
 
-  const activeBrand = ref(Brands.ODONTO_PREV)
+  const private_active_brand = ref(Brands.ODONTO_PREV)
 
   const brands = {
-    odontoPrev: storeToRefs(odontoPrevStore),
-    odontoSystem: storeToRefs(odontoSystemStore),
+    odontoPrev: odontoPrevStore,
+    odontoSystem: odontoSystemStore,
   }
 
   function setActiveBrand(domain: Brands) {
-    activeBrand.value = domain
+    private_active_brand.value = domain
   }
 
-  const getActiveBrand = computed(() => brands[activeBrand.value])
+  const activeBrand = computed(() => brands[private_active_brand.value])
 
-  return { getActiveBrand, setActiveBrand }
+  return { activeBrand, setActiveBrand }
 })
 
 if (import.meta.hot)

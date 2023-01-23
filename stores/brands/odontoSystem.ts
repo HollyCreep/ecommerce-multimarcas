@@ -2,9 +2,10 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { Brands, Companies } from '~~/types/enums'
 
 export const useOdontoSystemStore = defineStore('odontoSystem', () => {
-  const name = ref(Companies[Brands.ODONTO_SYSTEM])
+  const name = ref(Brands.ODONTO_SYSTEM)
+  const friendly_name = ref(Companies[Brands.ODONTO_SYSTEM])
   const resources = computed(() => ({ name }))
-  return { name, resources }
+  return { name, friendly_name, resources }
 })
 
 if (import.meta.hot)

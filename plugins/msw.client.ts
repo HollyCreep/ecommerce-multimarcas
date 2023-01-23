@@ -5,6 +5,6 @@ export default defineNuxtPlugin(() => {
     worker.start({
       onUnhandledRequest: 'bypass',
     })
-    worker.printHandlers()
+    // worker.printHandlers()
   }
 })

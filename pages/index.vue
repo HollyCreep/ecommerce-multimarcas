@@ -1,53 +1,23 @@
-<script lang="ts" setup>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Brands } from '~~/types/enums'
+import OdontoPrev from '@/components/pages/home/odontoPrev/index.vue'
+import OdontoSystem from '@/components/pages/home/odontoSystem/index.vue'
 
-definePageMeta({
-  name: 'Teste',
+export default defineComponent({
+  components: {
+    OdontoPrev,
+    OdontoSystem,
+  },
+  setup() {
+    const store = useThemeStore()
+    const { activeBrand } = storeToRefs(store)
+
+    return { activeBrand }
+  },
 })
-const themeController = useThemeController()
-const store = useThemeStore()
-const { getActiveBrand } = storeToRefs(store)
-
-const auth = useAuthApi()
-// const productsAPI = useProductsApi()
-
-const { data: teste, error, pending } = await auth.login({
-  username: 'mor_2314',
-  password: '83r5^_',
-})
-
-const user = await auth.getUser()
-
-// const products = await productsAPI.getProducts()
 </script>
 
 <template>
-  <div>
-    <h1 class="text-primary">
-      Thema: {{ getActiveBrand.name }}
-    </h1>
-    <v-icon
-      color="red"
-      icon="mdi-delete"
-      @click="themeController.toggleTheme(Brands.ODONTO_PREV)"
-    />
-    <v-icon
-      color="primary"
-      @click="themeController.toggleTheme(Brands.ODONTO_SYSTEM)"
-    >
-      mdi-alert-circle-check
-    </v-icon>
-    <nuxt-icon name="dente-brilho" class="text-h1" />
-
-    <div v-if="pending">
-      {{ pending }}
-    </div>
-    <div v-if="error">
-      {{ error }}
-    </div>
-    <div v-if="teste && !pending" class="text-primary">
-      {{ teste }}
-    </div>
-  </div>
+  <component :is="activeBrand.name" />
 </template>

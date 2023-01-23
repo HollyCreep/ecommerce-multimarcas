@@ -5,10 +5,10 @@ export const useThemeController = () => {
   const theme = useTheme()
   const { setActiveBrand } = useThemeStore()
 
-  const toggleTheme = (newTheme: Brands) => {
+  const changeTheme = (newTheme: Brands) => {
     theme.global.name.value = newTheme
     setActiveBrand(newTheme)
   }
 
-  return { toggleTheme }
+  return { changeTheme }
 }
