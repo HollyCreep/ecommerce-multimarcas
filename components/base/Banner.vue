@@ -6,16 +6,24 @@ export default {
 <template>
   <v-banner
     lines="one"
-    icon="mdi-lock"
-    color="deep-purple-accent-4"
-    class="my-4"
+    color="primary"
+    class=""
   >
+    <template #prepend>
+      <nuxt-icon color="primary" name="dente-brilho" size="54px" height="54px" />
+    </template>
+
     <v-banner-text>
-      Banner with one line of text.
+      <!-- <h2>
+        <span class="text-secondary"> BLACKFRIDAY DENTAL</span>
+        DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA
+      </h2> -->
     </v-banner-text>
 
     <template #actions>
-      <v-btn>Action</v-btn>
+      <v-btn variant="outlined" color="secondary">
+        Confira
+      </v-btn>
     </template>
   </v-banner>
 </template>
