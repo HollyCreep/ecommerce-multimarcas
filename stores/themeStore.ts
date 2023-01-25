@@ -7,12 +7,12 @@ export const useThemeStore = defineStore('theme', () => {
   const odontoPrevStore = useOdontoPrevStore()
   const odontoSystemStore = useOdontoSystemStore()
 
-  const private_active_brand = ref(Brands.ODONTO_PREV)
-
   const brands = {
     odontoPrev: odontoPrevStore,
     odontoSystem: odontoSystemStore,
   }
+
+  const private_active_brand = ref(Brands.ODONTO_PREV)
 
   function setActiveBrand(domain: Brands) {
     private_active_brand.value = domain

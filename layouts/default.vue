@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container>
+    <v-container class="py-0">
       <Banner />
       <header>
         <h1 class="text-slate-200 text-xs">

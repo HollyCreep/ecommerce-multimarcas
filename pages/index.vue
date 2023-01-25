@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import OdontoPrev from '@/components/pages/home/odontoPrev/index.vue'
 import OdontoSystem from '@/components/pages/home/odontoSystem/index.vue'
-import Icon from '@/components/base/Icon.vue'
+import { Brands } from '@/types/enums'
 
 export default defineComponent({
   components: {
@@ -13,15 +13,16 @@ export default defineComponent({
   setup() {
     const store = useThemeStore()
     const { activeBrand } = storeToRefs(store)
-    return { activeBrand }
+    const { changeTheme } = useThemeController()
+    return { activeBrand, changeTheme, Brands }
   },
 })
 </script>
 
 <template>
   <component :is="activeBrand.name" />
-  <Icon color="primary" name="dente-brilho" />
-  <v-btn color="success">
+  <v-btn color="success" @click="changeTheme(Brands.ODONTO_PREV)" />
+  <v-btn color="red" @click="changeTheme(Brands.ODONTO_SYSTEM)">
     text
   </v-btn>
 </template>

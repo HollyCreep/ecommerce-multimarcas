@@ -11,7 +11,6 @@ export default defineNuxtConfig({
   vite: { ssr: { noExternal: ['vuetify'] } },
 
   build: { transpile: ['vuetify'] },
-
   modules: [
     'nuxt-icons',
     '@vueuse/nuxt',
@@ -28,14 +27,17 @@ export default defineNuxtConfig({
   ],
   googleFonts: {
     families: {
-      'Exo+2': {
-        wght: [300, 400, 500, 600],
-        ital: [],
-      },
-      'Noto+Sans': {
-        wght: [400, 600, 700],
-        ital: [],
-      },
+      'Roboto+Slab': [300, 400, 500, 600],
     },
+    // families: {
+    //   'Exo+2': {
+    //     wght: [300, 400, 500, 600],
+    //     ital: [],
+    //   },
+    //   'Noto+Sans': {
+    //     wght: [400, 600, 700],
+    //     ital: [],
+    //   },
+    // },
   },
 })
