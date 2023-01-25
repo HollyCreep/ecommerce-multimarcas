@@ -14,19 +14,18 @@ export const useThemeController = () => {
     setActiveBrand(newTheme)
   }
 
-  const getColor = (cor: string) => {
+  const getColor = (color: string) => {
     try {
-      const [color] = cor.replace('-', '').split(' ')
       return (
         theme.global.current.value.colors?.[color]
         || theme.themes.value?.[activeBrand.value.name].colors?.[color]
         || theme.themes.value.light.colors?.[color]
-        || theme.themes.value.light.colors?.[cor]
+        || theme.themes.value.dark.colors?.[color]
         || color
       )
     }
     catch (error) {
-      return cor
+      return color
     }
   }
 
