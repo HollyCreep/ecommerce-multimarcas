@@ -27,17 +27,14 @@ export default defineNuxtConfig({
   ],
   googleFonts: {
     families: {
-      'Roboto+Slab': [300, 400, 500, 600],
+      'Exo+2': {
+        wght: [300, 400, 500, 600],
+        ital: [],
+      },
+      'Noto+Sans': {
+        wght: [400, 600, 700],
+        ital: [],
+      },
     },
-    // families: {
-    //   'Exo+2': {
-    //     wght: [300, 400, 500, 600],
-    //     ital: [],
-    //   },
-    //   'Noto+Sans': {
-    //     wght: [400, 600, 700],
-    //     ital: [],
-    //   },
-    // },
   },
 })
