@@ -29,22 +29,22 @@ const bannerProps = activeBrand.value.resources.components?.banner
     </template>
 
     <v-banner-text>
-      <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="font-weight-regular">
-        {{ `BLACKFRIDAY DENTAL DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA` }}
+      <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="font-weight-light">
+        BLACKFRIDAY DENTAL DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA
       </EnchantedText>
     </v-banner-text>
 
     <template #actions>
-      <v-btn variant="outlined" color="secondary">
+      <v-btn variant="outlined" color="secondary" min-width="180">
         Confira
       </v-btn>
     </template>
   </v-banner>
-  <h1>{{ activeBrand.resources }}</h1>
 </template>
 
 <style lang="scss" scoped>
 .odp-custom-banner {
+  z-index: 99;
   ::v-deep(.v-banner-actions) {
     align-self: unset !important;
   }

@@ -2,7 +2,8 @@ import type { HookResult } from '@unhead/schema'
 import vuetify from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
-  imports: { dirs: ['stores', 'composables', 'composables', 'composables/**/*.api.ts'] },
+  ssr: false,
+  imports: { dirs: ['stores', 'composables', 'composables/**/*.api.ts'] },
 
   components: [{ path: '~/components/', pathPrefix: false }],
 

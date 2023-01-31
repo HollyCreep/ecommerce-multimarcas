@@ -1,12 +1,7 @@
 <template>
   <v-app>
-    <v-container class="py-0">
-      <Banner />
-      <header>
-        <h1 class="text-slate-200 text-xs">
-          Default & Not Mobile Layout
-        </h1>
-      </header>
+    <v-container class="pa-0" fluid>
+      <Banner sticky />
       <v-main>
         <slot />
       </v-main>

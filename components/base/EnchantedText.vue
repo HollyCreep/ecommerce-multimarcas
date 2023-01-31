@@ -145,3 +145,11 @@ function convertObjectToHTMLAtributes(obj: Record<string, any>) {
     <span v-for="(text, index) in slotText" :key="index" v-html="text" />
   </component>
 </template>
+
+<style lang="scss" scoped>
+.odp-text-container {
+  > span {
+    display: block;
+  }
+}
+</style>

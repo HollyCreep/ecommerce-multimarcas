@@ -1,5 +1,5 @@
 import type { Brands, Companies } from './enums'
-import type { IBanner } from '~~/components/base/Banner.vue'
+import type { IBanner } from '~~/components/composables/Banner.vue'
 
 export interface IResources {
   components?: {

@@ -9,10 +9,9 @@
     filter: grayscale(100%);
   }
 
-  .v-container {
+  .v-container:not(.v-container--fluid) {
     max-width: $container-size;
-    padding-right: $container-spacing;
-    padding-left: $container-spacing;
-
+    padding: $container-spacing;
+    margin: 0 auto;
   }
 } 

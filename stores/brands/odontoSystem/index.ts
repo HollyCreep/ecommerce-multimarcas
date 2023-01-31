@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import resources from './-resources'
+import resources from './resources'
 import { Brands, Companies } from '~~/types/enums'
 import type { IThemeStore } from '@/types/index'
 
