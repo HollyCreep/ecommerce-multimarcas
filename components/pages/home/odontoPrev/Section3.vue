@@ -16,13 +16,13 @@
           <v-row>
             <v-col cols="6" class="d-flex align-center">
               <Icon name="click" color="white" secondary-color="primary-lighten-1" width="64" height="64" class="mr-4 flex-shrink-0" />
-              <EnchantedText bold="+ 2.600" class="text-primary-lighten-1">
+              <EnchantedText tag="h3" bold="+ 2.600" class="text-primary-lighten-1">
                 + 2.600 de municípios atendidos
               </EnchantedText>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
-              <Icon name="user-group" color="white" secondary-color="primary-lighten-1" width="64" height="64" class="mr-4 flex-shrink-0" />
-              <EnchantedText bold="+ 27.000" class="text-primary-lighten-1">
+              <Icon name="user-group" color="white" secondary-color="primary-lighten-1" width="94" class="mr-4 flex-shrink-0" />
+              <EnchantedText tag="h3" bold="+ 27.000" class="text-primary-lighten-1">
                 + 27.000 de dentistas credenciados
               </EnchantedText>
             </v-col>
