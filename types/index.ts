@@ -25,4 +25,6 @@ export interface NuxtLink {
   [x: string]: any
 }
 
+export type Awnser = 'S' | 'N'
+export type Period = 'MENSAL' | 'ANUAL'
 export type Link = NuxtLink | ExternalLink

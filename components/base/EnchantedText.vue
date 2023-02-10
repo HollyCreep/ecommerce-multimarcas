@@ -1,11 +1,24 @@
 <script lang="ts" setup>
 import { useSlots } from 'vue'
-import type { Link } from '~~/types'
+export type Mode = 'replace-all' | 'replace-first'
+export type Tag = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
-type Mode = 'replace-all' | 'replace-first'
-type Tag = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+export interface ExternalLink {
+  href: string
+  text: string
+  [x: string]: any
+}
 
-interface Props {
+export interface NuxtLink {
+  text: string
+  children?: NuxtLink[]
+  [x: string]: any
+}
+
+// defineProps current dosn't accept imported Types
+export type Link = NuxtLink | ExternalLink
+
+export interface Props {
   enphasys?: string | string[]
   underline?: string | string[]
   bold?: string | string[]
@@ -85,9 +98,9 @@ function enchantText(text: string, val: PropValue, key: Prop) {
 
       const { attrs, ay11n } = convertObjectToHTMLAtributes(props)
 
-      return `<a href="${link}" ${attrs} target="${
+      return `<a href="${link}" ${attrs} ${download} target="${
           href ? '_blank' : ''
-        }" class="pa-0 font-weight-bold text-decoration-none ${
+        }" class="pa-0 font-weight-bold text-primary ${
           text_color || ''
         }"text>${
           ay11n && `<span class="visually-hidden">${ay11n}</span>`

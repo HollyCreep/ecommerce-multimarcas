@@ -1,7 +1,11 @@
 .v-application {
     .v-btn {
-        font-size: 16px;
-        font-weight: bold;
-        font-family: var(--button-font-family);
+        text-transform: unset;
+
+        &:not(.v-btn--variant-text) {
+            font-size: 16px;
+            font-weight: bold;
+            font-family: var(--button-font-family);
+        }
     }
 }

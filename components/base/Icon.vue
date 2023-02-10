@@ -1,33 +1,16 @@
 <script lang="ts" setup>
-const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  color: {
-    type: String,
-    required: true,
-  },
-  secondaryColor: {
-    type: String,
-    default: 'primary',
-    required: false,
-  },
-  filled: {
-    type: Boolean,
-    default: false,
-    required: false,
-  },
-  width: {
-    type: [String, Number],
-    default: null,
-    required: false,
-  },
-  height: {
-    type: [String, Number],
-    default: null,
-    required: false,
-  },
+export interface IconProps {
+  name: string
+  color: string
+  secondaryColor: string
+  filled?: boolean
+  width?: string | number
+  height?: string | number
+}
+
+const props = withDefaults(defineProps<IconProps>(), {
+  secondaryColor: 'primary',
+  filled: false,
 })
 
 const { getColor } = useThemeController()
@@ -38,7 +21,7 @@ function isNumber(n: any) {
   return !isNaN(parseFloat(n)) && !isNaN(n - 0)
 }
 
-function getValue(prop: string | number) {
+function getValue(prop: string | number | undefined) {
   if (!prop)
     return null
 

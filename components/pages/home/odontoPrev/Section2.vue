@@ -19,12 +19,14 @@ const items = [
 </script>
 
 <template>
-  <v-container class="text-center py-16">
+  <v-container id="odp-home-section-2" class="text-center py-16 bg-background">
     <h2 class="mb-8 mx-auto text-primary" style="max-width: 500px">
       Odontoprev, a mais completa solução odontológica.
     </h2>
     <p class="mb-16 mx-auto" style="max-width: 800px">
-      Somos uma plataforma de cuidado e queremos te proporcionar liberdade de escolha em atendimento odontológico de qualidade. Nossos planos possuem ampla cobertura e a maior rede credenciada do Brasil, além de muitas vantagens e benefícios que tornam a sua experiência fluida, segura e descomplicada. Na Odontoprev você pode confiar!
+      Somos uma plataforma de cuidado e queremos te proporcionar liberdade de escolha em atendimento odontológico de
+      qualidade. Nossos planos possuem ampla cobertura e a maior rede credenciada do Brasil, além de muitas vantagens e
+      benefícios que tornam a sua experiência fluida, segura e descomplicada. Na Odontoprev você pode confiar!
     </p>
 
     <v-row justify="center">
@@ -37,11 +39,3 @@ const items = [
     </v-row>
   </v-container>
 </template>
-
-<section>
-
-    </section>
-
-<style scoped>
-
-</style>

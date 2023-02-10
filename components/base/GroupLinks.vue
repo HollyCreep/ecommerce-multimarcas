@@ -22,7 +22,6 @@ const props = withDefaults(defineProps<{
         :target="item.href ? '_blank' : ''"
         :to="item.to ?? undefined"
         :class="buttonClass"
-        variant="text"
         exact
       >
         {{ item.text }}

@@ -21,24 +21,22 @@ const bannerProps = activeBrand.value.resources.components?.banner
     v-if="bannerProps"
     lines="one"
     color="primary"
-    class="odp-custom-banner align-center justify-center"
+    class="odp-custom-banner px-0"
     :class="bannerProps.color || 'bg-primary'"
   >
-    <template #prepend>
-      <Icon color="primary-lighten-1" secondary-color="white" name="dente-shining" class="text-h3" />
-    </template>
+    <v-container class="py-0 d-flex align-center">
+      <Icon color="primary-lighten-1" secondary-color="white" name="dente-shining" width="54" />
 
-    <v-banner-text>
-      <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="font-weight-light">
-        BLACKFRIDAY DENTAL DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA
-      </EnchantedText>
-    </v-banner-text>
+      <v-banner-text>
+        <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="font-weight-light">
+          BLACKFRIDAY DENTAL DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA
+        </EnchantedText>
+      </v-banner-text>
 
-    <template #actions>
       <v-btn variant="outlined" color="secondary" min-width="180">
         Confira
       </v-btn>
-    </template>
+    </v-container>
   </v-banner>
 </template>
 
@@ -47,6 +45,10 @@ const bannerProps = activeBrand.value.resources.components?.banner
   z-index: 99;
   ::v-deep(.v-banner-actions) {
     align-self: unset !important;
+  }
+
+  .v-container {
+    gap: 1rem;
   }
 
 }

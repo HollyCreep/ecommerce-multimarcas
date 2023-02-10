@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-defineProps<{
-  items: any[]
-}>()
+defineProps<{ items: any[] }>()
 </script>
 
 <template>

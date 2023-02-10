@@ -22,8 +22,9 @@ const menuItems: Link[] = [
 </script>
 
 <template>
-  <v-layout class="row justify-space-between align-center">
+  <v-toolbar color="transparent">
     <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
+    <v-spacer />
     <GroupLinks :items="menuItems" button-class="text-white">
       <template #append>
         <v-slide-group-item>
@@ -33,7 +34,7 @@ const menuItems: Link[] = [
         </v-slide-group-item>
       </template>
     </GroupLinks>
-  </v-layout>
+  </v-toolbar>
 </template>
 
 <style scoped>

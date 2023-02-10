@@ -22,9 +22,9 @@ const [integer, fraction] = (`${value}`).split('.')
       </div>
       <div class="integer font-soleto" v-text="integer || 0" />
       <div class="d-flex flex-column justify-space-evenly">
-        <span class="fraction font-soleto">,{{ fraction || 0 }}</span>
+        <span class="fraction font-soleto">,{{ fraction || '00' }}</span>
 
-        <span class="term font-noto-sans">
+        <span class="period font-noto-sans">
           Mensal
         </span>
       </div>
@@ -38,38 +38,72 @@ const [integer, fraction] = (`${value}`).split('.')
 </template>
 
 <style lang="scss" scoped>
-    .price-tag {
-        width: fit-content;
-        .tooltip {
-            font-size: 18px;
-            line-height: 24px;
-            letter-spacing: 0;
-        }
-        .sign {
-            font-size: 26px;
-            line-height: 34px;
-            letter-spacing: 0;
-        }
-        .integer {
-            font-size: 95px;
-            line-height: 80px;
-            letter-spacing: 0;
-        }
-        .fraction {
-            font-size: 32px;
-            line-height: 32px;
-            letter-spacing: 0;
-        }
-        .term {
-            font-size: 14px;
-            line-height: 17px;
-            letter-spacing: 0;
-        }
-        .caption {
-            font-size: 12px;
-            line-height: 14px;
-            letter-spacing: 0;
-            color: #707070;
-        }
-    }
+.price-tag {
+  width: fit-content;
+
+  .tooltip {
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  .sign {
+    font-size: 26px;
+    line-height: 34px;
+    letter-spacing: 0;
+  }
+
+  .integer {
+    font-size: 96px;
+    line-height: 80px;
+    letter-spacing: 0;
+  }
+
+  .fraction {
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: 0;
+  }
+
+  .period {
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0;
+  }
+
+  .caption {
+    //ok
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0;
+    color: #707070;
+  }
+}
+
+.plan-card:has(.price-tag) {
+  .sign {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .integer {
+    font-size: 60px;
+  }
+
+  .fraction {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .period {
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0;
+  }
+
+  .caption {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
 </style>

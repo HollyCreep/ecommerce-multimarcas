@@ -1,6 +1,9 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    "types": [
+      "@types/lodash"
+    ],
     "typeRoots": [
       "./types/augmentations"
     ]

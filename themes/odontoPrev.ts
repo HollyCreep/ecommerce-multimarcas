@@ -8,6 +8,8 @@ const OdontoPrevTheme: ThemeDefinition = {
     'primary-darken-2': '#003EA6',
     'secondary': '#FF6052',
     'background': '#F9FDFF',
+    'main': '#585858',
+    'border': '#D1D1D1',
   },
 }
 

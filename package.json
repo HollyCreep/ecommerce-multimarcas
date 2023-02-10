@@ -21,11 +21,13 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.1",
     "@nuxtjs/google-fonts": "^3.0.0-1",
+    "@types/lodash": "^4.14.191",
     "@vueuse/nuxt": "^9.12.0",
     "add": "^2.0.6",
     "eslint": "^8.33.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
+    "lodash": "^4.17.21",
     "msw": "^1.0.0",
     "nuxt": "^3.1.1",
     "prettier": "^2.8.3",
