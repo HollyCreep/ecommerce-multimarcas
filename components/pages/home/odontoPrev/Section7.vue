@@ -10,8 +10,8 @@ const logos = [
 </script>
 
 <template>
-  <section id="odp-home-section-7" class="bg-primary-darken-2 text-white pb-8">
-    <v-container>
+  <section id="odp-home-section-7" class="bg-primary-darken-2 text-white">
+    <v-container class="pb-16">
       <div class="text-center text-md-left pt-8">
         <h2 class="font-weight-bold mb-6">
           Clube de benefícios Odontoprev
@@ -80,8 +80,8 @@ const logos = [
         position: absolute;
         width: 40%;
         max-width: 750px;
-        height: calc(100% - $padding);
-        top: $padding;
+        height: 100%;
+        top: 0;
         right: 0;
         background-size: 100% 100%;
         background-image: url(/images/odontoPrev/home/img-3.png);
