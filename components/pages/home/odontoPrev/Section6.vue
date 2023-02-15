@@ -20,7 +20,7 @@ const items = [
 </script>
 
 <template>
-  <section id="odp-home-section-6" class="bg-background">
+  <v-container id="odp-home-section-6" tag="section">
     <h2 class="text-primary font-weight-bold text-center mb-6">
       A importância de um plano dental
     </h2>
@@ -39,7 +39,7 @@ const items = [
       </li>
       <v-img src="/images/odontoPrev/home/img-2.png" class="img" />
     </ul>
-  </section>
+  </v-container>
 </template>
 
 <style lang="scss" scoped>
@@ -57,6 +57,15 @@ const items = [
       grid-template-areas:
         "content1 img content2"
         "content3 img content4";
+    }
+
+    @media (max-width: 600px) {
+      grid-template-areas:
+        "content1"
+        "content2"
+        "img"
+        "content3"
+        "content4";
     }
 
     .content1 {

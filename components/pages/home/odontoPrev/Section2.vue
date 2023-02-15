@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+
+const { mdAndUp } = useDisplay()
 const items = [
   {
     text: 'Ampla \natuação\n nacional',
@@ -19,10 +22,10 @@ const items = [
 </script>
 
 <template>
-  <v-container id="odp-home-section-2" class="text-center py-16 bg-background">
-    <h2 class="mb-8 mx-auto text-primary" style="max-width: 500px">
+  <v-container id="odp-home-section-2" tag="section" class="text-center py-16">
+    <EnchantedText tag="h2" bold="Odontoprev" class="mb-8 mx-auto text-primary" :class="{ 'w-50': mdAndUp }">
       Odontoprev, a mais completa solução odontológica.
-    </h2>
+    </EnchantedText>
     <p class="mb-16 mx-auto" style="max-width: 800px">
       Somos uma plataforma de cuidado e queremos te proporcionar liberdade de escolha em atendimento odontológico de
       qualidade. Nossos planos possuem ampla cobertura e a maior rede credenciada do Brasil, além de muitas vantagens e
@@ -32,7 +35,7 @@ const items = [
     <v-row justify="center">
       <v-col v-for="({ icon, text, bold }, i) in items" :key="i" cols="auto" class="px-16">
         <Icon :name="icon" color="primary" secondary-color="primary-lighten-1" width="78" height="58" />
-        <EnchantedText tag="h5" :bold="bold" class="text-primary mt-4 text-h5">
+        <EnchantedText tag="h3" :bold="bold" class="text-primary mt-4">
           {{ text }}
         </EnchantedText>
       </v-col>

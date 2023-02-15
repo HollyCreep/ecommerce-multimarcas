@@ -46,24 +46,24 @@ function changeSlide(index: number) {
     "
     v-bind="$attrs"
   >
+    <template #prev="{ props: prevProps }">
+      <v-btn
+        variant="plain"
+        color="red"
+        @click="prevProps.onClick"
+      >
+        <v-icon icon="mdi-chevron-left" size="50px" color="primary" />
+      </v-btn>
+    </template>
+    <template #next="{ props: nextProps }">
+      <v-btn
+        variant="plain"
+        @click="nextProps.onClick"
+      >
+        <v-icon icon="mdi-chevron-right" size="50px" color="primary" />
+      </v-btn>
+    </template>
     <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" cover>
-      <template #prev="{ props }">
-        <v-btn
-          variant="elevated"
-          color="success"
-          @click="props.onClick"
-        >
-          Previous slide
-        </v-btn>
-      </template>
-      <template #next>
-        <v-btn
-          variant="text"
-          color="info"
-        >
-          Next slide
-        </v-btn>
-      </template>
       <slot
         :item="item"
         :index="i"

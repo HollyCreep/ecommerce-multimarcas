@@ -14,19 +14,10 @@ const props = withDefaults(defineProps<IconProps>(), {
 })
 
 const { getColor } = useThemeController()
+const { getValue } = useUtils()
 const primaryColor = getColor(props.color)
 const secondaryColor = getColor(props?.secondaryColor || props.color)
 
-function isNumber(n: any) {
-  return !isNaN(parseFloat(n)) && !isNaN(n - 0)
-}
-
-function getValue(prop: string | number | undefined) {
-  if (!prop)
-    return null
-
-  return isNumber(prop) ? `${prop}px` : prop
-}
 const width = getValue(props.width)
 const height = getValue(props.height)
 </script>

@@ -25,7 +25,7 @@ const bannerProps = activeBrand.value.resources.components?.banner
     :class="bannerProps.color || 'bg-primary'"
   >
     <v-container class="py-0 d-flex align-center">
-      <Icon color="primary-lighten-1" secondary-color="white" name="dente-shining" width="54" />
+      <Icon class="flex-shrink-0" color="primary-lighten-1" secondary-color="white" name="dente-shining" width="54" />
 
       <v-banner-text>
         <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="font-weight-light">

@@ -21,10 +21,10 @@ const items = [
       <h1 class="mb-4 font-weight-bold">
         {{ item.content.title }}
       </h1>
-      <p class="mb-4">
+      <p class="mb-4 w-75">
         {{ item.content.text }}
       </p>
-      <p class="mb-4">
+      <p class="mb-8">
         {{ item.content.caption }}
       </p>
       <v-btn color="secondary" :href="item.action.href" size="x-large" class="rounded-lg">

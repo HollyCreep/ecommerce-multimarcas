@@ -8,7 +8,5 @@ const components = { odontoPrev, odontoSystem }
 </script>
 
 <template>
-  <v-card>
-    <component :is="components[activeBrand.name]" />
-  </v-card>
+  <component :is="components[activeBrand.name]" />
 </template>

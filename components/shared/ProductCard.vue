@@ -24,7 +24,7 @@ const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL')
 
 <template>
   <v-card
-    variant="outlined" min-height="100%" max-width="225" class="plan-card text-center"
+    variant="outlined" min-height="100%" max-width="225" class="plan-card text-center bg-white"
     :class="{ 'most-valuable': product.mais_vendido }"
   >
     <div class="title d-flex flex-column align-center py-5" :class="textColor">
@@ -60,7 +60,7 @@ const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL')
       <v-btn color="secondary" variant="flat" rounded="lg" class="my-4">
         Comprar
       </v-btn>
-      <p class="px-7">
+      <p>
         Carência: 90 dias para tratamento e 180 dias para prótese.
       </p>
     </v-card-text>

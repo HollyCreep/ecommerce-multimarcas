@@ -154,7 +154,7 @@ function convertObjectToHTMLAtributes(obj: Record<string, any>) {
 </script>
 
 <template>
-  <component :is="tag" class="odp-text-container" v-bind="$attrs">
+  <component :is="tag" class="odp-text-container">
     <span v-for="(text, index) in slotText" :key="index" v-html="text" />
   </component>
 </template>

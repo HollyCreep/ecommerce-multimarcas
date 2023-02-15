@@ -20,9 +20,9 @@ const [integer, fraction] = (`${value}`).split('.')
       <div class="sign font-soleto">
         R$
       </div>
-      <div class="integer font-soleto" v-text="integer || 0" />
-      <div class="d-flex flex-column justify-space-evenly">
-        <span class="fraction font-soleto">,{{ fraction || '00' }}</span>
+      <div class="integer font-soleto mr-1" v-text="integer || 0" />
+      <div class="d-flex flex-column justify-center align-baseline">
+        <span class="fraction font-soleto mb-1">,{{ fraction || '00' }}</span>
 
         <span class="period font-noto-sans">
           Mensal

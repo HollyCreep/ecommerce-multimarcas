@@ -6,5 +6,6 @@
         <slot />
       </v-main>
     </v-container>
+    <Footer />
   </v-app>
 </template>

@@ -126,13 +126,13 @@ const generateProducts = (): IProduct[] => [
         href: 'https://www.odontoprevonline.com.br/sites/default/files/Plano-Dental-Orto.pdf',
       },
     }, { cobertura: 'Colocação + Manutenção de Aparelho' }, { cobertura: 'Placa de clareamento + Gel' }, { cobertura: 'Documentação Ortodôntica' }, { cobertura: 'Concorra a R$ 10.000 mensalmente' }],
-    logo: 'dente-brilho',
+    logo: 'dente-aparelho',
     planos: generatePlans('Dental\n Orto\n Total'),
   },
 ]
 
 export default [
-  rest.get('https://api.odontoprev.com.br:8243/produ\cts', (_, res, ctx) => {
+  rest.get('https://api.odontoprev.com.br:8243/products', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.delay(500),
