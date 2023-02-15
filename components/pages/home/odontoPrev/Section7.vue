@@ -39,38 +39,41 @@ const logos = [
 </template>
 
 <style lang="scss">
-$padding: 200px;
+  $padding: 200px;
 
 #odp-home-section-7 {
+  position: relative;
+  overflow: hidden;
+  padding-top: $padding;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: calc($padding * 2);
+    top: 0;
+    left: 0;
+    background-color: #F9FDFF;
+    border-radius: 100%;
+    transform: translateY(-50%);
+  }
+
+  @media screen and (max-width: 600px) {
+    padding-top: calc(#{$padding} / 2);
+    &::before {
+      height: $padding;
+    }
+  }
+
   .v-container {
     position: relative;
-    overflow: hidden;
-    padding-top: $padding;
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: calc($padding * 2);
-      top: 0;
-      left: 0;
-      background-color: #F9FDFF;
-      border-radius: 100%;
-      transform: translateY(-50%);
-    }
-
-    @media screen and (max-width: 600px) {
-      &::before {
-        height: $padding;
-      }
-    }
 
     @media screen and (min-width: 600px) {
 
       > div {
-          max-width: 50%;
-          margin-right: auto;
-        }
+        max-width: 50%;
+        margin-right: auto;
+      }
 
       &::after {
         content: '';
