@@ -1,7 +1,10 @@
+import type { IProduct } from '~~/types/product'
+
 export const useProductsApi = () => {
   const { baseUrl } = useAppConfig()
 
-  const getProducts = () => useFetch(() => `${baseUrl}/products`)
+  const fetchProducts = () => useFetch<IProduct[]>(`${baseUrl}/products`)
+  const getProduct = (id: number | string) => useFetch<IProduct>(`${baseUrl}/products/${id}`)
 
-  return { getProducts }
+  return { getProduct, fetchProducts }
 }

@@ -10,5 +10,9 @@ export const useUtils = () => {
     return isNumber(prop) ? `${prop}px` : prop
   }
 
-  return { isNumber, getValue }
+  function getProductFriendlyName(name: string) {
+    return name.replaceAll(' ', '-').toLowerCase()
+  }
+
+  return { isNumber, getValue, getProductFriendlyName }
 }

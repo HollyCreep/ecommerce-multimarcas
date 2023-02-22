@@ -1,6 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from 'msw'
 import type { IEspecialidade, IPlan, IProduct } from '~~/types/product'
+const { getProductFriendlyName } = useUtils()
 
 const randomIntFromInterval = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)
 const randomFloatFromInterval = (min: number, max: number) => parseFloat((Math.random() * (max - min + 1) + min).toFixed(2))
@@ -34,7 +35,7 @@ const generatePlans = (nomeFantasia: string): IPlan[] => {
     {
       nomeFantasia,
       registroAns: '',
-      codigoPlano,
+      codigoPlano: codigoPlano + 1,
       tipoNegociacao: 'ANUAL',
       valorTitular: precoAnual,
       valorDependente: precoAnual,
@@ -48,7 +49,7 @@ const generateProducts = (): IProduct[] => [
   {
     nome: 'Dente de Leite',
     faxaEtaria: 'de 0 a 7 anos',
-    sku: '',
+    sku: '1',
     destaque: true,
     mais_vendido: false,
     vantagens: '',
@@ -67,7 +68,7 @@ const generateProducts = (): IProduct[] => [
   {
     nome: 'Dental Júnior',
     faxaEtaria: 'de 8 a 16 anos',
-    sku: '',
+    sku: '2',
     destaque: true,
     mais_vendido: false,
     vantagens: '',
@@ -83,7 +84,7 @@ const generateProducts = (): IProduct[] => [
   },
   {
     nome: 'bem-estar mais',
-    sku: '',
+    sku: '3',
     destaque: true,
     mais_vendido: true,
     vantagens: '',
@@ -99,7 +100,7 @@ const generateProducts = (): IProduct[] => [
   },
   {
     nome: 'Estética mais',
-    sku: '',
+    sku: '4',
     destaque: true,
     mais_vendido: false,
     vantagens: '',
@@ -115,7 +116,7 @@ const generateProducts = (): IProduct[] => [
   },
   {
     nome: 'Orto Total',
-    sku: '',
+    sku: '5',
     destaque: true,
     mais_vendido: false,
     vantagens: '',
@@ -131,13 +132,25 @@ const generateProducts = (): IProduct[] => [
   },
 ]
 
+const PRODUTOS = generateProducts()
+
 export default [
   rest.get('https://api.odontoprev.com.br:8243/products', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.delay(500),
 
-      ctx.json(generateProducts()),
+      ctx.json(PRODUTOS),
+    )
+  }),
+  rest.get('https://api.odontoprev.com.br:8243/products/:id', (req, res, ctx) => {
+    const { id } = req.params
+    const produto = PRODUTOS.find(product => product.sku === id || getProductFriendlyName(product.nome) === id)
+    return res(
+      ctx.status(200),
+      ctx.delay(500),
+
+      ctx.json(produto),
     )
   }),
 ]

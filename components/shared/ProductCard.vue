@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IProduct } from '~~/types/product'
+import type { IPlan, IProduct } from '~~/types/product'
 
 export interface IPlanCard {
   product: IProduct
@@ -19,7 +19,9 @@ const inconSecondaryColor = props.dark ? getColor(props.color) : 'white'
 
 const borderColor = props.product.mais_vendido ? getColor('secondary') : '#D1D1D1'
 
-const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL')
+const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL') as IPlan
+
+const store = useCartStore()
 </script>
 
 <template>
@@ -57,7 +59,7 @@ const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL')
       </v-btn>
       <v-divider class="my-4" />
       <PriceTag v-if="plan" :value="plan.valorTitular" class="mx-auto" />
-      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4">
+      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="store.addPlanoTitular(plan)">
         Comprar
       </v-btn>
       <p>

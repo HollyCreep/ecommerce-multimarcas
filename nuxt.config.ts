@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   vite: { ssr: { noExternal: ['vuetify'] } },
 
   build: { transpile: ['vuetify'] },
+
   modules: [
     'nuxt-icons',
     '@vueuse/nuxt',
@@ -38,4 +39,8 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  ignore: [
+    'pages/ignore/',
+  ],
 })

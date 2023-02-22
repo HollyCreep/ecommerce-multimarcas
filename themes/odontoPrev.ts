@@ -10,6 +10,9 @@ const OdontoPrevTheme: ThemeDefinition = {
     'background': '#F9FDFF',
     'main': '#585858',
     'border': '#D1D1D1',
+    'warning': '#ffca4a',
+    'error': '#d73e5c',
+    'success': '#49ce7d',
   },
 }
 

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
-  request: () => Promise<any>
+const props = withDefaults(defineProps<{
+  request: (params?: any) => Promise<any>
+  params?: any
   retry?: number
-}>()
+}>(), {
+  params: {},
+})
 
-const { data, pending, error, refresh } = await props.request()
+const { data, pending, error, refresh } = await props.request(props.params)
 
 let attempts = 0
 if (!!error && props.retry && attempts < props.retry) {

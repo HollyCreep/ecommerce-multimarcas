@@ -1,4 +1,4 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import { defineStore } from 'pinia'
 import resources from './resources'
 import { Brands, Companies } from '~~/types/enums'
 import type { IThemeStore } from '~~/types'
@@ -14,6 +14,3 @@ export const useOdontoPrevStore = defineStore('odontoPrev', {
     },
   },
 })
-
-if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(useOdontoPrevStore, import.meta.hot))

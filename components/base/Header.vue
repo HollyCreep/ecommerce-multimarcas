@@ -28,9 +28,7 @@ const menuItems: Link[] = [
     <GroupLinks :items="menuItems" button-class="text-white">
       <template #append>
         <v-slide-group-item>
-          <v-btn variant="text" icon color="white">
-            <v-icon icon="mdi-cart-outline" color="white" />
-          </v-btn>
+          <CartMenu />
         </v-slide-group-item>
       </template>
     </GroupLinks>
