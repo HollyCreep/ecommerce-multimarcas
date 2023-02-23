@@ -26,4 +26,23 @@
     position: absolute;
     white-space: nowrap;
   }
+
+  .no-text-pointer {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .invisible-overflow {
+    overflow: scroll;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    &::-webkit-scrollbar {
+      width: 0px; /* For Chrome, Safari, and Opera */
+      height: 0px;
+    }
+  }
 }

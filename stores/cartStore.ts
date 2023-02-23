@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { ICustomer, IPlan } from '~~/types/product'
-import { CartSteps } from '~/types/enums'
+import { CartSteps } from '~/types/cart'
 
 interface CartContent {
   customer: ICustomer
@@ -14,7 +14,7 @@ interface CartStore {
 }
 
 const defaultValues: CartStore = {
-  step: CartSteps.titular,
+  step: CartSteps.Titular,
   titular: {},
   dependentes: [],
 }

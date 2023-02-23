@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
   imports: { dirs: ['stores', 'composables', 'composables/**/*.api.ts'] },
 
-  components: [{ path: '~/components/', pathPrefix: false }],
+  components: ['~/components', '~/components/shared', '~/components/base'],
 
   css: ['@mdi/font/css/materialdesignicons.min.css', '@/assets/scss/main.scss'],
 

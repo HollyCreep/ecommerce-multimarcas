@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container class="pa-0" fluid>
-      <Banner sticky />
+      <ThemedBanner sticky />
       <v-main>
         <slot />
       </v-main>
