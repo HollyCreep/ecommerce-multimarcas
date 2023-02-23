@@ -36,7 +36,9 @@ const socialMedia: ISocialMedia[] = [
     <v-container>
       <v-row id="odp-footer-main" :no-gutters="mdAndUp" align="center" justify="space-between">
         <v-col cols="auto">
-          <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="260px" />
+          <NuxtLink to="/">
+            <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="260px" />
+          </NuxtLink>
           <v-btn variant="text" size="small" class="mt-4 mb-6 d-block">
             odontoprev.com.br
           </v-btn>

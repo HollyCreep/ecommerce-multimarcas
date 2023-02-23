@@ -2,7 +2,7 @@
 export interface IconProps {
   name: string
   color: string
-  secondaryColor: string
+  secondaryColor?: string
   filled?: boolean
   width?: string | number
   height?: string | number

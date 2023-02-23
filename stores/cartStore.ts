@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { ICustomer, IPlan } from '~~/types/product'
+import { CartSteps } from '~/types/enums'
 
 interface CartContent {
   customer: ICustomer
@@ -7,12 +8,13 @@ interface CartContent {
 }
 
 interface CartStore {
+  step: CartSteps
   titular: CartContent | Partial<CartContent>
   dependentes: CartContent[]
-
 }
 
-const defaultValues = {
+const defaultValues: CartStore = {
+  step: CartSteps.titular,
   titular: {},
   dependentes: [],
 }
@@ -21,7 +23,6 @@ export const useCartStore = defineStore('cart', () => {
   const cart = ref(useLocalStorage<CartStore>('cart', defaultValues))
 
   /* --------------------------------- Titular -------------------------------- */
-
   const addPlanoTitular = (payload: IPlan) => {
     cart.value.titular.plan = payload
   }
@@ -59,6 +60,7 @@ export const useCartStore = defineStore('cart', () => {
     cart.value.dependentes.splice(index, 1)
   }
 
+  /* --------------------------------- Getters -------------------------------- */
   const total = computed(() => {
     if (!cart.value.titular?.plan)
       return 0

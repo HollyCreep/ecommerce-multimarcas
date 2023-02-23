@@ -7,3 +7,9 @@ export enum Companies {
   'odontoPrev' = 'Odontoprev',
   'odontoSystem' = 'Odonto System',
 }
+
+export enum CartSteps {
+  'titular',
+  'dependente',
+  'checkout',
+}

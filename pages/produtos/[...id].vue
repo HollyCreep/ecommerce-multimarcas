@@ -3,15 +3,25 @@ import { storeToRefs } from 'pinia'
 import odontoPrev from '../ignore/produto/odontoPrev/index.vue'
 import odontoSystem from '../ignore/produto/odontoSystem/index.vue'
 
+definePageMeta({
+  validate: async (route) => {
+    const id = route.params.id[0]
+    const productStore = useProductStore()
+    const product = await productStore.getProduct(id)
+
+    return /^\d+$/.test(id) && !!product
+  },
+})
+
 const route = useRoute()
 const router = useRouter()
 const { isNumber, getProductFriendlyName } = useUtils()
 
-const id = route.params.produto[0]
+const id = route.params.id[0]
 const productStore = useProductStore()
 const product = await productStore.getProduct(id)
 
-isNumber(id) && router.replace(`/produtos/${getProductFriendlyName(product.nome)}`)
+isNumber(id) && !!product && router.replace(`/produtos/${getProductFriendlyName(product.nome)}`)
 
 const themeStore = useThemeStore()
 const { activeBrand } = storeToRefs(themeStore)

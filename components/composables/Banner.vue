@@ -34,7 +34,7 @@ const bannerProps = activeBrand.value.resources.components?.banner
       </v-banner-text>
 
       <div class="gap d-flex  justify-center align-center">
-        <v-text-field hide-details variant="outlined" class="rounded-lg" label="Possui um Cupom?" style="min-width: 180px" />
+        <v-text-field density="compact" bg-color="white" single-line hide-details variant="outlined" class="rounded-lg " label="Possui um Cupom?" style="min-width: 180px" />
         <v-btn color="primary" rounded="lg">
           APLICAR
         </v-btn>

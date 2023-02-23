@@ -23,7 +23,9 @@ const menuItems: Link[] = [
 
 <template>
   <v-toolbar id="odp-header" color="transparent">
-    <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
+    <NuxtLink to="/">
+      <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
+    </NuxtLink>
     <v-spacer />
     <GroupLinks :items="menuItems" button-class="text-white">
       <template #append>
