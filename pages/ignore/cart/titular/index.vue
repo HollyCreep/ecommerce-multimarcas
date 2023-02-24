@@ -3,7 +3,12 @@
 </script>
 
 <template>
-  <div>Titular</div>
+  <h2 class="text-primary">
+    Identifique o titular do novo plano
+  </h2>
+  <v-card>
+    <FormCustomer />
+  </v-card>
 </template>
 
 <style scoped>

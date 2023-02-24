@@ -1,6 +1,7 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    "strictNullChecks": false,
     "types": [
       "@types/lodash"
     ],

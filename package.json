@@ -10,13 +10,17 @@
     "reset": "rm -rf node_modules dist .nuxt yarn.lock .output"
   },
   "dependencies": {
+    "@formvuelate/plugin-vee-validate": "^3.9.1",
     "@mdi/font": "^7.1.96",
     "@pinia/nuxt": "^0.4.6",
+    "formvuelate": "^3.9.1",
     "nuxt-icons": "^3.1.0",
     "pinia": "^2.0.29",
     "sass": "^1.57.1",
+    "vee-validate": "^4.5.8",
     "vite-plugin-vuetify": "^1.0.2",
-    "vuetify": "^3.1.1"
+    "vuetify": "^3.1.1",
+    "yup": "^1.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.1",
