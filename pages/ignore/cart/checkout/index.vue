@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormArraySchema } from 'formvuelate'
 import * as Yup from 'yup'
-
+const emits = defineEmits<{ (e: 'valid', value: boolean): boolean }>()
 const schema = ref<FormArraySchema>([
   {
     component: 'FormText',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import odontoPrev from '../ignore/produto/odontoPrev/index.vue'
-import odontoSystem from '../ignore/produto/odontoSystem/index.vue'
+import odontoPrev from '@/components/ignore/produto/odontoPrev/index.vue'
+import odontoSystem from '@/components/ignore/produto/odontoSystem/index.vue'
 
 definePageMeta({
   validate: async (route) => {

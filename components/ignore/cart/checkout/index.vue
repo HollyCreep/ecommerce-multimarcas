@@ -3,7 +3,7 @@ const emits = defineEmits<{ (e: 'valid', value: boolean): boolean }>()
 </script>
 
 <template>
-  <div>Dependente</div>
+  <div>Checkout</div>
 </template>
 
 <style scoped>

@@ -1,4 +1,15 @@
 import * as YUP from 'yup'
+
+YUP.setLocale({
+  mixed: {
+    default: ({ path }) => `O campo ${path} não é válido`,
+    required: ({ path }) => `O campo ${path} é obrigatório`,
+  },
+  string: {
+    email: 'O campo email não é válido',
+  },
+})
+
 // @ts-expect-error Yup Module augmantation/declaration not working properly.
 YUP.addMethod(YUP.string, 'cpf', function (errorMessage = 'CPF inválido') {
   return this.test('cpf-test', errorMessage, function (cpf: string) {

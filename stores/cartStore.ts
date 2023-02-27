@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { ICustomer, IPlan } from '~~/types/product'
+import type { PaymentTypes } from '~/types/cart'
 import { CartSteps } from '~/types/cart'
 
 interface CartContent {
@@ -9,12 +10,14 @@ interface CartContent {
 
 interface CartStore {
   step: CartSteps
+  paymentMethod: PaymentTypes
   titular: CartContent | Partial<CartContent>
   dependentes: CartContent[]
 }
 
 const defaultValues: CartStore = {
   step: CartSteps.Titular,
+  paymentMethod: null,
   titular: {},
   dependentes: [],
 }

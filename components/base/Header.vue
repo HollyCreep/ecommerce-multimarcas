@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Link } from '~~/types'
+import CartMenu from '@/components/shared/cart/CartMenu/index.vue'
 
 const menuItems: Link[] = [
   {

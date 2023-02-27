@@ -3,43 +3,52 @@ import { object, string, ref as yupRef } from 'yup'
 import { useForm } from 'vee-validate'
 import TextInput from './inputs/TextInput.vue'
 import type { ICustomer } from '~~/types/product'
+
 interface ICustomerForm extends ICustomer {
-  password: string
+  senha: string
   repeatPassword: string
   repeatEmail: string
 }
 
-const { handleSubmit, errors } = useForm<ICustomerForm>({
+const emit = defineEmits<{ (e: 'valid', value: boolean): boolean }>()
+
+const { handleSubmit, meta } = useForm<ICustomerForm>({
   validationSchema: object({
-    'email': string().required('O campo email é obrigatório').email('O valor informado não é um email válido'),
-    'repeatEmail': string().required().oneOf([yupRef('email')], 'O campo de email não são iguais'),
-    'password': string().required().min(8),
-    'repeatPassword': string().required().oneOf([yupRef('password')], 'O campo de senha não são iguais'),
-    'nome': string().required(),
-    'phone': string().required(),
-    'data_nascimento': string().required(),
-    'cpf': string().cpf().required(),
-    'rg': string().required(),
-    'nome_mae': string().required(),
-    'exp': string().required(),
-    'endereco.cep': string().required(),
-    'endereco.logradouro': string().required(),
-    'endereco.numero': string().required(),
-    'endereco.complemento': string().required(),
-    'endereco.bairro': string().required(),
-    'endereco.cidade': string().required(),
-    'endereco.estado': string().required(),
+    email: string().required().email(),
+    repeatEmail: string().required().oneOf([yupRef('email')], 'O campo de email não conferem'),
+    senha: string().required().min(8),
+    repeatPassword: string().required('O campo de confirmação de senha é obrigatório').oneOf([yupRef('senha')], 'O campo de senha não conferem'),
+    nome: string().required(),
+    telefone: string().required(),
+    data_nascimento: string().required('O campo data de nascimento é obrigatório'),
+    cpf: string().cpf().required(),
+    rg: string().required(),
+    nome_mae: string().required('O campo nome da mãe é obrigatório'),
+    exp: string().required(),
+    endereco: object({
+      cep: string().required(),
+      logradouro: string().required(),
+      numero: string().required(),
+      complemento: string(),
+      bairro: string().required(),
+      cidade: string().required(),
+      estado: string().required(),
+    }),
   }),
 })
 
-const submit = handleSubmit((values) => {
+watchEffect(async () => {
+  emit('valid', meta.value.valid)
+})
+
+const onSubmit = handleSubmit((values) => {
   alert(JSON.stringify(values, null, 2))
 })
 </script>
 
 <template>
   <v-container>
-    <v-form @submit.prevent="submit">
+    <v-form @submit.prevent="onSubmit">
       <div class="mb-4">
         <h4 class="font-weight-bold text-primary">
           Contato
@@ -64,7 +73,7 @@ const submit = handleSubmit((values) => {
           </v-col>
           <v-col>
             <TextInput
-              name="phone"
+              name="telefone"
               variant="underlined"
               label="Telefone ou celular"
             />
@@ -191,7 +200,7 @@ const submit = handleSubmit((values) => {
         <v-row>
           <v-col cols="12" md="6">
             <TextInput
-              name="password"
+              name="senha"
               variant="underlined"
               label="Nova senha"
               type="password"
@@ -208,7 +217,7 @@ const submit = handleSubmit((values) => {
         </v-row>
       </div>
 
-      <v-btn color="secondary" size="large" type="submit">
+      <v-btn color="secondary" size="large" type="submit" variant="flat">
         Cadastrar
       </v-btn>
     </v-form>

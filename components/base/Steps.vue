@@ -20,8 +20,8 @@ const props = withDefaults(defineProps<IProps>(), {
   color: 'primary',
   inset: true,
   borderStyle: 'solid',
-  borderColor: 'red',
-  textcolor: 'white',
+  borderColor: '#C2C2C2',
+  textcolor: 'text-primary',
 })
 
 defineEmits(['update:step'])
@@ -30,26 +30,33 @@ const { getColor } = useThemeController()
 const borderColor = getColor(props.borderColor)
 const textcolor = getColor(props.textcolor)
 const borderStyle = props.borderStyle
+
+const isActive = (item: IStepItem | string, index: number) => {
+  if (Object.prototype.hasOwnProperty.call(item, 'value'))
+    return props.step === (item as IStepItem).value
+
+  return props.step === index
+}
 </script>
 
 <template>
   <div class="steps" :class="{ inset }">
     <ul class="invisible-overflow">
       <template v-for="(item, index) in items" :key="index">
-        <li class="step-item">
+        <li class="step-item text-main">
           <slot name="item" v-bind="{ item, index }">
             <v-avatar
               size="48"
-              :color="props.step === index ? 'red' : props.color"
+              :color="isActive(item, index) ? props.color : '#C2C2C2'"
               class="no-text-pointer"
               @click="$emit('update:step', (item as IStepItem)?.value || index)"
             >
               <v-icon v-if="!!(item as IStepItem)?.required && !!(item as IStepItem)?.valid" icon="mdi-check-bold" />
-              <h5 v-else>
+              <h5 v-else class="text-white">
                 {{ index + 1 }}
               </h5>
             </v-avatar>
-            <span class="text-body-1" :class="textcolor">{{ (item as IStepItem)?.text || item }}</span>
+            <span class="text-body-1" :class="{ [textcolor]: isActive(item, index) }">{{ (item as IStepItem)?.text || item }}</span>
           </slot>
           <slot name="append" v-bind="{ item, index }" />
         </li>
@@ -70,10 +77,10 @@ $border-color: v-bind(borderColor);
   height: 1px;
   top: calc(#{$avatar-height} / 2);
   border-top: 1px #{$border-style} #{$border-color};
-  width: calc(100% + #{$gap});
+  width: calc(100% - #{$gap} * 2);
 
   @if $inset {
-    left: 50%;
+    left: calc(50% + #{$gap} * 1.5);
   } @else {
     left: 0;
   }

@@ -1,9 +1,5 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  <v-card max-width="400">
+  <v-card v-bind="$attrs">
     <v-card-text class="d-flex flex-column align-center justify-center ">
       <Icon name="empty-cart" color="primary" width="150" :aspect-ratio="2 / 1" />
       <h3 class="my-4">
@@ -25,7 +21,3 @@
     </v-card-actions>
   </v-card>
 </template>
-
-<style scoped>
-
-</style>

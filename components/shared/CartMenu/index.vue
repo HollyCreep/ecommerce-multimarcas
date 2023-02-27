@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EmptyCart from './EmptyCart.vue'
 import ItemsList from './ItemsList.vue'
+import EmptyCart from '@/components/functionals/EmptyCart.vue'
 
 const menu = ref(false)
 const store = useCartStore()
@@ -21,6 +21,6 @@ const store = useCartStore()
       </v-btn>
     </template>
 
-    <component :is="store.count ? ItemsList : EmptyCart" />
+    <component :is="store.count ? ItemsList : EmptyCart" max-width="400" />
   </v-menu>
 </template>
