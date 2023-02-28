@@ -41,6 +41,7 @@ export default defineNuxtConfig({
   },
 
   ignore: [
-    'pages/ignore/',
+    'components/ignore/home/',
+    'components/ignore/produto/',
   ],
 })

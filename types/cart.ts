@@ -1,8 +1,16 @@
 export enum CartSteps {
-  'Titular',
-  'Dependente',
-  'Checkout',
+  titular,
+  dependente,
+  checkout,
 }
+
+export const CART_ROUTES = {
+  [CartSteps.titular]: '/carrinho/titular',
+  [CartSteps.dependente]: '/carrinho/dependente',
+  [CartSteps.checkout]: '/carrinho/checkout',
+} as const
+
+export type CartRoute = typeof CART_ROUTES[CartSteps]
 
 export type PaymentComponets = 'FormBoleto' | 'FormCreditCard'
 

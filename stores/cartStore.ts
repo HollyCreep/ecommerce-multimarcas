@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import type { ICustomer, IPlan } from '~~/types/product'
-import type { PaymentTypes } from '~/types/cart'
 import { CartSteps } from '~/types/cart'
+import type { PaymentTypes } from '~/types/cart'
+
+import type { Period } from '~~/types'
+import type { ICartStepItem } from '~~/components/cart/Steps.vue'
 
 interface CartContent {
   customer: ICustomer
@@ -9,14 +12,14 @@ interface CartContent {
 }
 
 interface CartStore {
-  step: CartSteps
+  selectedPeriodType: Period
   paymentMethod: PaymentTypes
   titular: CartContent | Partial<CartContent>
   dependentes: CartContent[]
 }
 
 const defaultValues: CartStore = {
-  step: CartSteps.Titular,
+  selectedPeriodType: 'MENSAL',
   paymentMethod: null,
   titular: {},
   dependentes: [],
@@ -24,6 +27,11 @@ const defaultValues: CartStore = {
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref(useLocalStorage<CartStore>('cart', defaultValues))
+  const steps = ref<Record<CartSteps, ICartStepItem>>({
+    [CartSteps.titular]: { text: 'Cadastrar titular', valid: false, required: true },
+    [CartSteps.dependente]: { text: 'Cadastrar dependente', valid: false, required: false },
+    [CartSteps.checkout]: { text: 'Detalhes Pagamento' },
+  })
 
   /* --------------------------------- Titular -------------------------------- */
   const addPlanoTitular = (payload: IPlan) => {
@@ -91,8 +99,13 @@ export const useCartStore = defineStore('cart', () => {
     return [planoTitular, ...planosDependentes]
   })
 
+  const isValid = computed(() => {
+    return Object.values(steps.value).every(step => !!step.valid)
+  })
+
   return {
     cart,
+    steps,
 
     addPlanoTitular,
     addDadosTitular,
@@ -108,6 +121,7 @@ export const useCartStore = defineStore('cart', () => {
     total,
     count,
     items,
+    isValid,
   }
 })
 

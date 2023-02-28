@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Link } from '~~/types'
-import CartMenu from '@/components/shared/cart/CartMenu/index.vue'
 
 const menuItems: Link[] = [
   {
@@ -31,7 +30,7 @@ const menuItems: Link[] = [
     <GroupLinks :items="menuItems" button-class="text-white">
       <template #append>
         <v-slide-group-item>
-          <CartMenu />
+          <CartCartMenu />
         </v-slide-group-item>
       </template>
     </GroupLinks>
