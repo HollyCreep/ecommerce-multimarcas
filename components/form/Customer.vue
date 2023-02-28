@@ -47,179 +47,177 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <v-container>
-    <v-form @submit.prevent="onSubmit">
-      <div class="mb-4">
-        <h4 class="font-weight-bold text-primary">
-          Contato
-        </h4>
-        <v-divider class="my-4" />
-        <v-row>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="email"
-              variant="underlined"
-              label="Email"
-              type="email"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="repeatEmail"
-              variant="underlined"
-              label="Repita o email"
-              type="email"
-            />
-          </v-col>
-          <v-col>
-            <TextInput
-              name="telefone"
-              variant="underlined"
-              label="Telefone ou celular"
-            />
-          </v-col>
-        </v-row>
-      </div>
+  <v-form @submit.prevent="onSubmit">
+    <div class="mb-4">
+      <h4 class="font-weight-bold text-primary">
+        Contato
+      </h4>
+      <v-divider class="my-4" />
+      <v-row>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="email"
+            variant="underlined"
+            label="Email"
+            type="email"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="repeatEmail"
+            variant="underlined"
+            label="Repita o email"
+            type="email"
+          />
+        </v-col>
+        <v-col>
+          <TextInput
+            name="telefone"
+            variant="underlined"
+            label="Telefone ou celular"
+          />
+        </v-col>
+      </v-row>
+    </div>
 
-      <div class="mb-4">
-        <h4 class="font-weight-bold text-primary">
-          Dados pessoais
-        </h4>
-        <v-divider class="my-4" />
-        <v-row>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="nome"
-              variant="underlined"
-              label="Nome"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="data_nascimento"
-              variant="underlined"
-              label="Data de Nascimento"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="cpf"
-              variant="underlined"
-              label="CPF"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="rg"
-              variant="underlined"
-              label="RG"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="nome_mae"
-              variant="underlined"
-              label="Nome da mãe"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="exp"
-              variant="underlined"
-              label="Exp"
-            />
-          </v-col>
-        </v-row>
-      </div>
+    <div class="mb-4">
+      <h4 class="font-weight-bold text-primary">
+        Dados pessoais
+      </h4>
+      <v-divider class="my-4" />
+      <v-row>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="nome"
+            variant="underlined"
+            label="Nome"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="data_nascimento"
+            variant="underlined"
+            label="Data de Nascimento"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="cpf"
+            variant="underlined"
+            label="CPF"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="rg"
+            variant="underlined"
+            label="RG"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="nome_mae"
+            variant="underlined"
+            label="Nome da mãe"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="exp"
+            variant="underlined"
+            label="Exp"
+          />
+        </v-col>
+      </v-row>
+    </div>
 
-      <div class="mb-4">
-        <h4 class="font-weight-bold text-primary">
-          Endereço
-        </h4>
-        <v-divider class="my-4" />
-        <v-row>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.cep"
-              variant="underlined"
-              label="Cep"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.logradouro"
-              variant="underlined"
-              label="Logradouro"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.numero"
-              variant="underlined"
-              label="Número"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.complemento"
-              variant="underlined"
-              label="Complemento"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.bairro"
-              variant="underlined"
-              label="Bairro"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.cidade"
-              variant="underlined"
-              label="Cidade"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="endereco.estado"
-              variant="underlined"
-              label="Estado"
-            />
-          </v-col>
-        </v-row>
-      </div>
+    <div class="mb-4">
+      <h4 class="font-weight-bold text-primary">
+        Endereço
+      </h4>
+      <v-divider class="my-4" />
+      <v-row>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.cep"
+            variant="underlined"
+            label="Cep"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.logradouro"
+            variant="underlined"
+            label="Logradouro"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.numero"
+            variant="underlined"
+            label="Número"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.complemento"
+            variant="underlined"
+            label="Complemento"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.bairro"
+            variant="underlined"
+            label="Bairro"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.cidade"
+            variant="underlined"
+            label="Cidade"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="endereco.estado"
+            variant="underlined"
+            label="Estado"
+          />
+        </v-col>
+      </v-row>
+    </div>
 
-      <div class="mb-4">
-        <h4 class="font-weight-bold text-primary">
-          Senha de acesso
-        </h4>
-        <v-divider class="my-4" />
-        <v-row>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="senha"
-              variant="underlined"
-              label="Nova senha"
-              type="password"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <TextInput
-              name="repeatPassword"
-              variant="underlined"
-              label="Confirme a senha"
-              type="password"
-            />
-          </v-col>
-        </v-row>
-      </div>
+    <div class="mb-4">
+      <h4 class="font-weight-bold text-primary">
+        Senha de acesso
+      </h4>
+      <v-divider class="my-4" />
+      <v-row>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="senha"
+            variant="underlined"
+            label="Nova senha"
+            type="password"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextInput
+            name="repeatPassword"
+            variant="underlined"
+            label="Confirme a senha"
+            type="password"
+          />
+        </v-col>
+      </v-row>
+    </div>
 
-      <v-btn color="secondary" size="large" type="submit" variant="flat">
-        Cadastrar
-      </v-btn>
-    </v-form>
-  </v-container>
+    <v-btn color="secondary" size="large" type="submit" variant="flat">
+      Cadastrar
+    </v-btn>
+  </v-form>
 </template>

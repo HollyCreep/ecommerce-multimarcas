@@ -2,14 +2,20 @@
 import EmptyCart from '~~/components/cart/EmptyCart.vue'
 const store = useCartStore()
 
-const hasPlan = computed(() => !!store.cart.titular.plan)
+const hasPlan = computed(() => !!store.state.titular.plan)
 </script>
 
 <template>
-  <h1 v-if="hasPlan">
-    Resumo OK
-  </h1>
-  <EmptyCart v-else variant="flat" color="background" />
+  <v-container>
+    <div v-if="hasPlan">
+      <h2 class="font-weight-bold text-primary">
+        <Icon name="cart-fill" color="primary" />
+        Resumo
+      </h2>
+      <FormLogin />
+    </div>
+    <EmptyCart v-else variant="flat" color="background" />
+  </v-container>
 </template>
 
 <style scoped>

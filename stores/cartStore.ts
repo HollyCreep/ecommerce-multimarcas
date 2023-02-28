@@ -26,7 +26,7 @@ const defaultValues: CartStore = {
 }
 
 export const useCartStore = defineStore('cart', () => {
-  const cart = ref(useLocalStorage<CartStore>('cart', defaultValues))
+  const state = ref(useLocalStorage<CartStore>('cart', defaultValues))
   const steps = ref<Record<CartSteps, ICartStepItem>>({
     [CartSteps.titular]: { text: 'Cadastrar titular', valid: false, required: true },
     [CartSteps.dependente]: { text: 'Cadastrar dependente', valid: false, required: false },
@@ -35,62 +35,62 @@ export const useCartStore = defineStore('cart', () => {
 
   /* --------------------------------- Titular -------------------------------- */
   const addPlanoTitular = (payload: IPlan) => {
-    cart.value.titular.plan = payload
+    state.value.titular.plan = payload
   }
   const addDadosTitular = (payload: ICustomer) => {
-    cart.value.titular.customer = payload
+    state.value.titular.customer = payload
   }
   const updateDadosTitular = (payload: Partial<ICustomer>) => {
-    if (!cart.value.titular.customer)
+    if (!state.value.titular.customer)
       return new Error('Preencha todos os dados do titular')
-    cart.value.titular.customer = { ...cart.value.titular.customer, ...payload }
+    state.value.titular.customer = { ...state.value.titular.customer, ...payload }
   }
   const addTitular = (payload: CartContent) => {
-    cart.value.titular = payload
+    state.value.titular = payload
   }
   const deleteTitular = () => {
-    cart.value.titular = {}
-    cart.value.dependentes = []
+    state.value.titular = {}
+    state.value.dependentes = []
   }
   const deletePlanoTitular = () => {
-    cart.value.titular.plan = undefined
+    state.value.titular.plan = undefined
   }
 
   /* ------------------------------- Dependentes ------------------------------ */
   const addDependente = (payload: CartContent) => {
-    cart.value.dependentes.push(payload)
+    state.value.dependentes.push(payload)
   }
   const updateDadosDependente = (payload: Partial<ICustomer>, index: number) => {
-    const dependente = cart.value.dependentes[index]
+    const dependente = state.value.dependentes[index]
 
     if (!dependente)
       return new Error('Dependente não encontrado')
-    cart.value.dependentes[index] = { ...dependente, ...payload }
+    state.value.dependentes[index] = { ...dependente, ...payload }
   }
   const removerDependente = (index: number) => {
-    cart.value.dependentes.splice(index, 1)
+    state.value.dependentes.splice(index, 1)
   }
 
   /* --------------------------------- Getters -------------------------------- */
   const total = computed(() => {
-    if (!cart.value.titular?.plan)
+    if (!state.value.titular?.plan)
       return 0
 
-    const totalDependentes = Object.values(cart.value.dependentes).reduce((acc, { plan }) => {
+    const totalDependentes = Object.values(state.value.dependentes).reduce((acc, { plan }) => {
       const valorDependente = plan?.valorDependente || 0
       return acc + valorDependente
     }, 0)
 
-    return cart.value.titular.plan.valorTitular + totalDependentes
+    return state.value.titular.plan.valorTitular + totalDependentes
   })
 
   const count = computed(() => {
-    const { titular, dependentes } = cart.value
+    const { titular, dependentes } = state.value
     return Number(!!titular.plan) + dependentes.length
   })
 
   const items = computed(() => {
-    const { titular, dependentes } = cart.value
+    const { titular, dependentes } = state.value
     if (!titular.plan)
       return []
 
@@ -104,7 +104,7 @@ export const useCartStore = defineStore('cart', () => {
   })
 
   return {
-    cart,
+    state,
     steps,
 
     addPlanoTitular,

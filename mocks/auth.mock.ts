@@ -1,25 +1,70 @@
 // src/mocks/handlers.js
 import { rest } from 'msw'
+import type { ICustomer } from '~~/types/product'
+
+const mockedUser: ICustomer = {
+  nome: 'User',
+  email: 'user@email.com',
+  telefone: '(11) 9999-9999',
+  data_nascimento: '25/12/2000',
+  cpf: '11122233345',
+  rg: '12345678',
+  nome_mae: 'User mom',
+  exp: 'ssp',
+  endereco: {
+    cep: '06455-000',
+    logradouro: 'Alameda Araguaia',
+    numero: '2104',
+    complemento: '',
+    bairro: 'Alphaville',
+    cidade: 'Barueri',
+    estado: 'SP',
+  },
+}
+
+const BASIC_ODONTOPREV = 'ZjBiZmE3NDhhNWQ1MTViODdmYThmZDg2NDM5ZWMwNTE=MjQzYWIzNTYzNDBlODU5MmFjNmI1ODdjOGExNmU2YWQ2NGU0MDAxMg=='
+const BASIC_BB = 'NmUzYTdlMjkyMGI5NmM5NGEwM2QwYjgxNmQ0MDdmNzg=MWMxMDBjZGJlYzAzYzM3ZWNlZGNhOTJjODVlNzk4NWIxZTA5ZWMwYg=='
 
 export default [
-  rest.post('https://api.odontoprev.com.br:8243/auth/login', (_, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem('is-authenticated', 'true')
+  rest.post('https://api.odontoprev.com.br:8243/authenticate/token', (req, res, ctx) => {
+    let token = ''
+    const basic = req.headers.get('Authorization')
+
+    switch (basic) {
+      case BASIC_ODONTOPREV:
+        token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJsb2NhbGhvc3QiLCJicmFuZCI6Ik9kb250b3ByZXYiLCJleHAiOjE2Nzc2MTAyODUsImlhdCI6MTY3NzYwNjY4NX0.uUeJAU7xwBN0U9mYJf9p6EO-wPTu8p5v54ZOJH_Xi6M'
+        break
+      case BASIC_BB:
+        token = 'NmUzYTdlMjkyMGI5NmM5NGEwM2QwYjgxNmQ0MDdmNzg=MWMxMDBjZGJlYzAzYzM3ZWNlZGNhOTJjODVlNzk4NWIxZTA5ZWMwYg=='
+        break
+
+      default:
+        token = null
+        break
+    }
+
+    if (!token) {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          error: 'Invalid Credentials',
+        }),
+      )
+    }
 
     return res(
       ctx.status(200),
       ctx.json({
-        username: 'admin',
+        token,
       }),
     )
   }),
 
-  rest.get('https://api.odontoprev.com.br:8243/auth/user', (_, res, ctx) => {
-    // Check if the user is authenticated in this session
-    const isAuthenticated = sessionStorage.getItem('is-authenticated')
+  rest.post('https://api.odontoprev.com.br:8243/authenticate/login', async (req, res, ctx) => {
+    const body = await req.json()
+    const isAuthenticated = body.login === 'user' && body.senha === '12345678'
 
     if (!isAuthenticated) {
-      // If not authenticated, respond with a 403 error
       return res(
         ctx.status(403),
         ctx.json({
@@ -28,11 +73,10 @@ export default [
       )
     }
 
-    // If authenticated, return a mocked user details
     return res(
       ctx.status(200),
       ctx.json({
-        username: 'admin',
+        user: mockedUser,
       }),
     )
   }),

@@ -18,7 +18,7 @@ export const useProductStore = defineStore('product', () => {
     return product.value
   }
 
-  const fetchFeaturedProducts = async (): Promise<IProduct[]> => {
+  const getFeaturedProducts = async (): Promise<IProduct[]> => {
     const { fetchProducts } = useProductsApi()
     const { data } = await fetchProducts()
 
@@ -28,7 +28,7 @@ export const useProductStore = defineStore('product', () => {
     return featuredProducts.value
   }
 
-  return { product, featuredProducts, getProduct, fetchFeaturedProducts }
+  return { product, featuredProducts, getProduct, getFeaturedProducts }
 })
 
 if (import.meta.hot)

@@ -1,15 +1,33 @@
+import { storeToRefs } from 'pinia'
+import type { ICustomer } from '~~/types/product'
+
+interface ILoginDTO {
+  token: string
+  expiration_date: Date | string
+}
+
 export const useAuthApi = () => {
   const { baseUrl } = useAppConfig()
+  const store = useAuthStore()
+  const { getActiveBrandBasicToken } = useThemeController()
 
-  const login = async (credentials: { username: string; password: string }) => useFetch(() => `${baseUrl}/auth/login`, {
+  const basic = getActiveBrandBasicToken()
+  const { token } = storeToRefs(store)
+
+  const authenticate = () => useFetch<ILoginDTO>(() => `${baseUrl}/authenticate/token`, {
+    headers: {
+      authentication: `Basic ${basic}`,
+    },
+  })
+
+  const login = (credentials: { login: string; senha: string }) => useFetch<ICustomer>(() => `${baseUrl}/authenticate/login`, {
+    headers: {
+      authentication: `Bearer ${token}`,
+    },
     method: 'POST',
-    body: JSON.stringify(credentials),
+    body: credentials,
     server: false,
   })
 
-  const getUser = async () => useFetch(() => `${baseUrl}/auth/user`, {
-    server: false,
-  })
-
-  return { login, getUser }
+  return { login, authenticate }
 }

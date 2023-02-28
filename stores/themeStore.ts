@@ -18,7 +18,7 @@ export const useThemeStore = defineStore('theme', () => {
     private_active_brand.value = domain
   }
 
-  const activeBrand = computed(() => brands[private_active_brand.value])
+  const activeBrand = computed(() => Object.prototype.hasOwnProperty.call(brands, private_active_brand.value) ? brands[private_active_brand.value as keyof typeof brands] : null)
 
   return { activeBrand, setActiveBrand }
 })

@@ -10,6 +10,8 @@ declare module 'yup' {
 declare module '@nuxt/schema' {
   interface AppConfigInput {
     domain?: Brands
+    baseUrl?: string
+    basicTokens?: Record<Brands, string>
   }
 }
 

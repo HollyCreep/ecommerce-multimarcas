@@ -51,6 +51,7 @@ export interface ICustomer {
   data_nascimento: string
   cpf: string
   rg: string
+  exp: string
   nome_mae?: string
   endereco: IAddress
   senha?: string

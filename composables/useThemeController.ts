@@ -3,19 +3,22 @@ import { useTheme } from 'vuetify'
 import type { Brands } from '~~/types/enums'
 
 export const useThemeController = () => {
-  const theme = useTheme()
   const themeStore = useThemeStore()
 
   const { setActiveBrand } = themeStore
   const { activeBrand } = storeToRefs(themeStore)
 
   const changeTheme = (newTheme: Brands) => {
+    const theme = useTheme()
+
     theme.global.name.value = newTheme
     setActiveBrand(newTheme)
   }
 
   const getColor = (color: string) => {
     try {
+      const theme = useTheme()
+
       return (
         theme.global.current.value.colors?.[color]
         || theme.themes.value?.[activeBrand.value.name].colors?.[color]
@@ -29,5 +32,16 @@ export const useThemeController = () => {
     }
   }
 
-  return { changeTheme, getColor }
+  const getActiveBrandBasicToken = () => {
+    try {
+      const { basicTokens } = useAppConfig()
+      const brand = activeBrand.value.name
+      return basicTokens[brand]
+    }
+    catch (error) {
+      return null
+    }
+  }
+
+  return { changeTheme, getColor, getActiveBrandBasicToken }
 }
