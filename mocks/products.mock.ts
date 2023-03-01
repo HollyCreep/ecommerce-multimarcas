@@ -3,21 +3,28 @@ import { rest } from 'msw'
 import type { IEspecialidade, IPlan, IProduct } from '~~/types/product'
 const { getProductFriendlyName } = useUtils()
 
-const randomIntFromInterval = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)
 const randomFloatFromInterval = (min: number, max: number) => parseFloat((Math.random() * (max - min + 1) + min).toFixed(2))
 
 const generateEspecialidades = (codigoPlano: number): IEspecialidade[] => {
-  return new Array(randomIntFromInterval(1, 10)).fill({
-    codigo: Math.floor(Math.random() * 100),
-    codigoPlano,
-    nome: 'Especialidade',
-    diasCarencia: Math.floor(Math.random() * 100),
-  }).map((e, i) => ({ ...e, nome: `Especialidade ${i}` }))
+  return [
+    {
+      codigo: Math.floor(Math.random() * 100),
+      codigoPlano,
+      nome: 'tratamento',
+      diasCarencia: Math.floor(Math.random() * 1000),
+    },
+    {
+      codigo: Math.floor(Math.random() * 100),
+      codigoPlano,
+      nome: 'prótese',
+      diasCarencia: Math.floor(Math.random() * 1000),
+    },
+  ]
 }
 
 const generatePlans = (nomeFantasia: string): IPlan[] => {
   const precoMensal = randomFloatFromInterval(23, 150)
-  const precoAnual = (precoMensal * 12) - (precoMensal * 12 * 0.10)
+  const precoAnual = +((precoMensal * 12) - (precoMensal * 12 * 0.10)).toFixed(2)
   const codigoPlano = Math.floor(Math.random() * 10000)
   const especialidades = generateEspecialidades(codigoPlano)
 

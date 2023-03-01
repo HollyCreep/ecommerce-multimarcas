@@ -1,5 +1,5 @@
 import type { Brands, Companies } from './enums'
-import type { IBanner } from '~~/components/composables/Banner.vue'
+import type { IBanner } from '@/components/themed/Banner.vue'
 
 export interface IResources {
   components?: {
@@ -10,7 +10,7 @@ export interface IResources {
 export interface IThemeStore {
   name: Brands
   friendly_name: Companies
-//   resources: IResources
+  resources?: IResources
 }
 
 export interface ExternalLink {
@@ -28,3 +28,4 @@ export interface NuxtLink {
 export type Awnser = 'S' | 'N'
 export type Period = 'MENSAL' | 'ANUAL'
 export type Link = NuxtLink | ExternalLink
+export type DynamicBrandComponent = Partial<Record<Brands, any>> & Record<Brands.ODONTO_PREV, any>

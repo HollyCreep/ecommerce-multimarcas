@@ -59,7 +59,7 @@ const store = useCartStore()
       </v-btn>
       <v-divider class="my-4" />
       <PriceTag v-if="plan" :value="plan.valorTitular" class="mx-auto" />
-      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="store.addPlanoTitular(plan)">
+      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="store.addPlanoTitular(product)">
         Comprar
       </v-btn>
       <p>

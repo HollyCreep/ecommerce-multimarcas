@@ -13,7 +13,7 @@ export interface IBanner {
 const themeStore = useThemeStore()
 const { activeBrand } = storeToRefs(themeStore)
 
-const bannerProps = activeBrand.value.resources.components?.banner
+const bannerProps = activeBrand.value?.resources?.components?.banner || null
 </script>
 
 <template>

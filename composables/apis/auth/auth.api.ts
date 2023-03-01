@@ -20,7 +20,7 @@ export const useAuthApi = () => {
     },
   })
 
-  const login = (credentials: { login: string; senha: string }) => useFetch<ICustomer>(() => `${baseUrl}/authenticate/login`, {
+  const login = (credentials: { login: string; senha: string }) => useFetch<{ user: ICustomer }>(() => `${baseUrl}/authenticate/login`, {
     headers: {
       authentication: `Bearer ${token}`,
     },

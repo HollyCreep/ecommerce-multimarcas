@@ -2,9 +2,10 @@
 import { storeToRefs } from 'pinia'
 import odontoPrev from '@/components/ignore/home/odontoPrev/index.vue'
 import odontoSystem from '@/components/ignore/home/odontoSystem/index.vue'
+import type { DynamicBrandComponent } from '~~/types'
 const store = useThemeStore()
 const { activeBrand } = storeToRefs(store)
-const components = { odontoPrev, odontoSystem }
+const components: DynamicBrandComponent = { odontoPrev, odontoSystem }
 </script>
 
 <template>

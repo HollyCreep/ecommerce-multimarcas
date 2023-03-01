@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { object, string, ref as yupRef } from 'yup'
 import { useForm } from 'vee-validate'
+import { omit } from 'lodash'
 import TextInput from './inputs/TextInput.vue'
 import type { ICustomer } from '~~/types/product'
 
@@ -10,9 +11,10 @@ interface ICustomerForm extends ICustomer {
   repeatEmail: string
 }
 
-const emit = defineEmits<{ (e: 'valid', value: boolean): boolean }>()
+const props = defineProps<{ customer?: ICustomer }>()
+const emit = defineEmits<{ (e: 'valid', value: boolean): boolean; (e: 'update:customer', value: ICustomer): ICustomer }>()
 
-const { handleSubmit, meta } = useForm<ICustomerForm>({
+const { handleSubmit, meta, setValues } = useForm<ICustomerForm>({
   validationSchema: object({
     email: string().required().email(),
     repeatEmail: string().required().oneOf([yupRef('email')], 'O campo de email não conferem'),
@@ -41,9 +43,14 @@ watchEffect(async () => {
   emit('valid', meta.value.valid)
 })
 
-const onSubmit = handleSubmit((values) => {
-  alert(JSON.stringify(values, null, 2))
+const onSubmit = handleSubmit((FormCustomer) => {
+  const customer = omit(FormCustomer, ['repeatPassword', 'repeatEmail'])
+  emit('update:customer', customer)
 })
+
+watch(() => props.customer, (newValue) => {
+  setValues({ ...newValue, repeatPassword: newValue.senha, repeatEmail: newValue.email })
+}, { deep: true, immediate: true })
 </script>
 
 <template>

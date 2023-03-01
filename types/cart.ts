@@ -1,3 +1,6 @@
+import type { IEspecialidade } from './product'
+import type { Awnser, Period } from '.'
+
 export enum CartSteps {
   titular,
   dependente,
@@ -25,4 +28,18 @@ export interface IPaymentMethod {
 
 export interface State {
   companyPaymentMethods: IPaymentMethod[]
+}
+
+export interface ComputedCartItem {
+  valor: number
+  logo: string
+  nomeFantasia: string
+  registroAns: string
+  codigoPlano: number
+  tipoNegociacao: Period
+  valorTitular: number
+  valorDependente: number
+  coParticipacao: Awnser
+  especialidades: IEspecialidade[]
+  delete: () => void
 }

@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import odontoPrev from '@/components/ignore/produto/odontoPrev/index.vue'
 import odontoSystem from '@/components/ignore/produto/odontoSystem/index.vue'
+import type { DynamicBrandComponent } from '~~/types'
 
 definePageMeta({
   validate: async (route) => {
@@ -25,7 +26,7 @@ isNumber(id) && !!product && router.replace(`/produtos/${getProductFriendlyName(
 
 const themeStore = useThemeStore()
 const { activeBrand } = storeToRefs(themeStore)
-const components = { odontoPrev, odontoSystem }
+const components: DynamicBrandComponent = { odontoPrev, odontoSystem }
 </script>
 
 <template>

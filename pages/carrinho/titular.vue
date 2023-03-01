@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import type { TransitionProps } from 'vue'
 import type { CartRoute } from '~~/types/cart'
+import { CartSteps } from '~~/types/cart'
 
-const handleFormValidationChange = (val: boolean) => {
+const store = useCartStore()
+const { state } = storeToRefs(store)
 
+const handleFormValidationChange = (value: boolean) => {
+  store.updateStepValidation({ value, step: CartSteps.titular })
 }
 
 definePageMeta({
@@ -24,11 +29,10 @@ definePageMeta({
 <template>
   <div>
     <h2 class="text-primary font-weight-bold mb-8">
-      <Icon name="user" color="primary" secondary-color="primary-lighten-1" />
-      Identifique o titular do novo plano
+      <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-4" />Identifique o titular do novo plano
     </h2>
-    <v-card>
-      <FormCustomer @valid="handleFormValidationChange" />
+    <v-card class="px-6 py-8">
+      <FormCustomer v-model:customer="state.titular.customer" @valid="handleFormValidationChange" />
     </v-card>
   </div>
 </template>

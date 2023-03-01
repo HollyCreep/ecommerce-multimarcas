@@ -24,6 +24,7 @@ watchEffect(async () => {
 const onSubmit = handleSubmit(async (values) => {
   const { login } = useAuthStore()
   await login(values)
+  navigateTo('/carrinho/titular')
 })
 </script>
 
@@ -34,7 +35,7 @@ const onSubmit = handleSubmit(async (values) => {
         Tem uma conta ?
       </h3>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <TextInput
             name="login"
             variant="underlined"
@@ -43,7 +44,7 @@ const onSubmit = handleSubmit(async (values) => {
             density="compact"
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <TextInput
             name="senha"
             variant="underlined"

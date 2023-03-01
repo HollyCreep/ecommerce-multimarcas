@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
-import type { ICustomer, IPlan } from '~~/types/product'
+import type { ICustomer, IProduct } from '~~/types/product'
 import { CartSteps } from '~/types/cart'
-import type { PaymentTypes } from '~/types/cart'
+import type { ComputedCartItem, PaymentTypes } from '~/types/cart'
 
 import type { Period } from '~~/types'
 import type { ICartStepItem } from '~~/components/cart/Steps.vue'
 
 interface CartContent {
   customer: ICustomer
-  plan: IPlan
+  product: IProduct
 }
 
 interface CartStore {
@@ -26,16 +26,23 @@ const defaultValues: CartStore = {
 }
 
 export const useCartStore = defineStore('cart', () => {
-  const state = ref(useLocalStorage<CartStore>('cart', defaultValues))
+  /* -------------------------------------------------------------------------- */
+  /*                                    STATE                                   */
+  /* -------------------------------------------------------------------------- */
+  const state = ref(useLocalStorage<CartStore>('cart', defaultValues, { mergeDefaults: true }))
   const steps = ref<Record<CartSteps, ICartStepItem>>({
     [CartSteps.titular]: { text: 'Cadastrar titular', valid: false, required: true },
     [CartSteps.dependente]: { text: 'Cadastrar dependente', valid: false, required: false },
     [CartSteps.checkout]: { text: 'Detalhes Pagamento' },
   })
 
-  /* --------------------------------- Titular -------------------------------- */
-  const addPlanoTitular = (payload: IPlan) => {
-    state.value.titular.plan = payload
+  /* -------------------------------------------------------------------------- */
+  /*                                  CADASTRO                                  */
+  /* -------------------------------------------------------------------------- */
+
+  /* TITULAR __________________________________________________________________ */
+  const addPlanoTitular = (payload: IProduct) => {
+    state.value.titular.product = payload
   }
   const addDadosTitular = (payload: ICustomer) => {
     state.value.titular.customer = payload
@@ -53,10 +60,10 @@ export const useCartStore = defineStore('cart', () => {
     state.value.dependentes = []
   }
   const deletePlanoTitular = () => {
-    state.value.titular.plan = undefined
+    state.value.titular.product = undefined
   }
 
-  /* ------------------------------- Dependentes ------------------------------ */
+  /* DEPENDENTE _______________________________________________________________ */
   const addDependente = (payload: CartContent) => {
     state.value.dependentes.push(payload)
   }
@@ -71,36 +78,61 @@ export const useCartStore = defineStore('cart', () => {
     state.value.dependentes.splice(index, 1)
   }
 
-  /* --------------------------------- Getters -------------------------------- */
-  const total = computed(() => {
-    if (!state.value.titular?.plan)
+  /* -------------------------------------------------------------------------- */
+  /*                                  PAGAMENTO                                 */
+  /* -------------------------------------------------------------------------- */
+  const changePeriod = (payload: Period) => {
+    state.value.selectedPeriodType = payload
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                    STEPS                                   */
+  /* -------------------------------------------------------------------------- */
+  const updateStepValidation = (payload: { value: boolean; step: CartSteps }) => {
+    steps.value[payload.step].valid = payload.value
+  }
+  const isValid = computed((): boolean => {
+    return Object.values(steps.value).every(step => !!step.valid)
+  })
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  PRODUTOS                                  */
+  /* -------------------------------------------------------------------------- */
+  const total = computed((): number => {
+    if (!state.value.titular?.product)
       return 0
 
-    const totalDependentes = Object.values(state.value.dependentes).reduce((acc, { plan }) => {
+    const totalDependentes = Object.values(state.value.dependentes).reduce((acc, { product }) => {
+      const plan = product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
       const valorDependente = plan?.valorDependente || 0
       return acc + valorDependente
     }, 0)
 
-    return state.value.titular.plan.valorTitular + totalDependentes
+    const planoTitular = state.value.titular.product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
+
+    return planoTitular.valorTitular + totalDependentes
   })
 
-  const count = computed(() => {
+  const count = computed((): number => {
     const { titular, dependentes } = state.value
-    return Number(!!titular.plan) + dependentes.length
+    return Number(!!titular.product) + dependentes.length
   })
 
-  const items = computed(() => {
+  const items = computed((): ComputedCartItem[] => {
     const { titular, dependentes } = state.value
-    if (!titular.plan)
+    if (!titular.product)
       return []
 
-    const planoTitular = { ...titular.plan, valor: titular.plan.valorTitular, delete: deletePlanoTitular }
-    const planosDependentes = Object.values(dependentes).map(({ plan }, i) => ({ ...plan, valor: plan.valorDependente, delete: () => removerDependente(i) }))
-    return [planoTitular, ...planosDependentes]
-  })
+    const plan = state.value.titular.product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
+    const planoTitular = { ...plan, valor: plan.valorTitular, logo: state.value.titular.product.logo, delete: deletePlanoTitular }
 
-  const isValid = computed(() => {
-    return Object.values(steps.value).every(step => !!step.valid)
+    const planosDependentes = Object.values(dependentes).map(({ product }, i) => {
+      const plan = product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
+
+      return { ...plan, valor: plan.valorDependente, logo: product.logo, delete: () => removerDependente(i) }
+    })
+
+    return [planoTitular, ...planosDependentes]
   })
 
   return {
@@ -118,10 +150,14 @@ export const useCartStore = defineStore('cart', () => {
     updateDadosDependente,
     removerDependente,
 
+    changePeriod,
+
+    updateStepValidation,
+    isValid,
+
     total,
     count,
     items,
-    isValid,
   }
 })
 

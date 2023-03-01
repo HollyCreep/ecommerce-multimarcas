@@ -21,7 +21,10 @@ export const useAuthStore = defineStore('auth', () => {
     if (error.value)
       return Promise.reject(error.value)
 
-    data.value && (user.value = data.value)
+    if (data.value) {
+      const { addDadosTitular } = useCartStore()
+      addDadosTitular(data.value.user)
+    }
 
     return user.value
   }

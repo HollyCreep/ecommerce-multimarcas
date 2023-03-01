@@ -1,18 +1,29 @@
 <script  lang="ts" setup>
+type Size = 'small' | 'medium' | 'large'
+
 const props = withDefaults(defineProps<{
   value: number
   tooltip?: string
   caption?: string
+  size?: Size
 }>(), {
   caption: 'débito em conta / cartão',
+  size: 'large',
 })
 
 const { value, tooltip, caption } = props
 const [integer, fraction] = (`${value}`).split('.')
+
+const fonts: Record<Size, string> = {
+  small: '10px',
+  medium: '14px',
+  large: '16px',
+}
+const fontSize = computed(() => fonts[props.size])
 </script>
 
 <template>
-  <div class="price-tag d-flex flex-column text-primary ">
+  <div class="price-tag d-flex flex-column" :class="[size, !!$attrs.dark ? 'text-white' : 'text-primary']">
     <slot name="tooltip">
       <div v-if="tooltip" class="tooltip font-soletos" v-text="tooltip" />
     </slot>
@@ -29,7 +40,7 @@ const [integer, fraction] = (`${value}`).split('.')
         </span>
       </div>
     </div>
-    <div class="caption font-noto-sans font-weight-bold text-right">
+    <div class="caption font-noto-sans font-weight-bold text-right" :class="{ 'text-white': !!$attrs.dark }">
       <slot name="append">
         {{ caption }}
       </slot>
@@ -40,41 +51,36 @@ const [integer, fraction] = (`${value}`).split('.')
 <style lang="scss" scoped>
 .price-tag {
   width: fit-content;
+  font-size: v-bind(fontSize);
 
   .tooltip {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125em;
     letter-spacing: 0;
   }
 
   .sign {
-    font-size: 26px;
-    line-height: 34px;
+    font-size: 1.5em;
     letter-spacing: 0;
   }
 
   .integer {
-    font-size: 96px;
-    line-height: 80px;
+    font-size: 6em;
+    line-height: 1.1;
     letter-spacing: 0;
   }
 
   .fraction {
-    font-size: 32px;
-    line-height: 32px;
+    font-size: 2em;
     letter-spacing: 0;
   }
 
   .period {
-    font-size: 14px;
-    line-height: 17px;
+    font-size: .875em;
     letter-spacing: 0;
   }
 
   .caption {
-    //ok
-    font-size: 12px;
-    line-height: 14px;
+    font-size: .75em;
     letter-spacing: 0;
     color: #707070;
   }
@@ -83,7 +89,7 @@ const [integer, fraction] = (`${value}`).split('.')
 .plan-card:has(.price-tag) {
   .sign {
     font-size: 18px;
-    line-height: 24px;
+    line-height: 24rpx;
   }
 
   .integer {
@@ -92,18 +98,18 @@ const [integer, fraction] = (`${value}`).split('.')
 
   .fraction {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 20rpx;
   }
 
   .period {
     font-size: 12px;
-    line-height: 14px;
+    line-height: 14rpx;
     letter-spacing: 0;
   }
 
   .caption {
     font-size: 10px;
-    line-height: 12px;
+    line-height: 12rpx;
   }
 }
 </style>

@@ -11,7 +11,7 @@ const { fetchProducts } = useProductsApi()
       <RequestLoader v-slot="{ data }" :request="fetchProducts" :retry="3">
         <v-slide-group center-active>
           <v-slide-group-item v-for="(product, i) in data" :key="i">
-            <ProductCard
+            <PlanCard
               v-ripple :product="product" color="primary-lighten-1" :dark="i >= 2"
               class="mx-2"
             />
