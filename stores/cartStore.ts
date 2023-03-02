@@ -1,22 +1,9 @@
 import { defineStore } from 'pinia'
-import type { ICustomer, IProduct } from '~~/types/product'
-import { CartSteps } from '~/types/cart'
-import type { ComputedCartItem, PaymentTypes } from '~/types/cart'
+import type { IProduct } from '~~/types/product'
+import type { IDependente, ITitular } from '~~/types/customer'
+import type { CartDependente, CartSteps, CartStore, CartTitular, ComputedCartItem, ICartStepItem } from '~/types/cart'
 
 import type { Period } from '~~/types'
-import type { ICartStepItem } from '~~/components/cart/Steps.vue'
-
-interface CartContent {
-  customer: ICustomer
-  product: IProduct
-}
-
-interface CartStore {
-  selectedPeriodType: Period
-  paymentMethod: PaymentTypes
-  titular: CartContent | Partial<CartContent>
-  dependentes: CartContent[]
-}
 
 const defaultValues: CartStore = {
   selectedPeriodType: 'MENSAL',
@@ -30,11 +17,11 @@ export const useCartStore = defineStore('cart', () => {
   /*                                    STATE                                   */
   /* -------------------------------------------------------------------------- */
   const state = ref(useLocalStorage<CartStore>('cart', defaultValues, { mergeDefaults: true }))
-  const steps = ref<Record<CartSteps, ICartStepItem>>({
-    [CartSteps.titular]: { text: 'Cadastrar titular', valid: false, required: true },
-    [CartSteps.dependente]: { text: 'Cadastrar dependente', valid: false, required: false },
-    [CartSteps.checkout]: { text: 'Detalhes Pagamento' },
-  })
+  const private_steps = ref<ICartStepItem[]>([
+    { text: 'Cadastrar titular', step: 'titular', valid: false, required: true },
+    { text: 'Cadastrar dependente', step: 'dependente', valid: false, required: false },
+    { text: 'Detalhes Pagamento', step: 'checkout' },
+  ])
 
   /* -------------------------------------------------------------------------- */
   /*                                  CADASTRO                                  */
@@ -44,15 +31,15 @@ export const useCartStore = defineStore('cart', () => {
   const addPlanoTitular = (payload: IProduct) => {
     state.value.titular.product = payload
   }
-  const addDadosTitular = (payload: ICustomer) => {
+  const addDadosTitular = (payload: ITitular) => {
     state.value.titular.customer = payload
   }
-  const updateDadosTitular = (payload: Partial<ICustomer>) => {
+  const updateDadosTitular = (payload: Partial<ITitular>) => {
     if (!state.value.titular.customer)
       return new Error('Preencha todos os dados do titular')
     state.value.titular.customer = { ...state.value.titular.customer, ...payload }
   }
-  const addTitular = (payload: CartContent) => {
+  const addTitular = (payload: CartTitular) => {
     state.value.titular = payload
   }
   const deleteTitular = () => {
@@ -64,10 +51,13 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   /* DEPENDENTE _______________________________________________________________ */
-  const addDependente = (payload: CartContent) => {
+  const addDependente = (payload: CartDependente) => {
     state.value.dependentes.push(payload)
   }
-  const updateDadosDependente = (payload: Partial<ICustomer>, index: number) => {
+  const getDependente = (index: number | string) => {
+    return state.value.dependentes?.[+index]?.customer || undefined
+  }
+  const updateDadosDependente = (payload: Partial<IDependente>, index: number) => {
     const dependente = state.value.dependentes[index]
 
     if (!dependente)
@@ -88,8 +78,13 @@ export const useCartStore = defineStore('cart', () => {
   /* -------------------------------------------------------------------------- */
   /*                                    STEPS                                   */
   /* -------------------------------------------------------------------------- */
+  const steps = computed((): ICartStepItem[] => {
+    return private_steps.value.flatMap(item => (item.step === 'dependente' && !state.value.dependentes.length) ? [] : item)
+  })
   const updateStepValidation = (payload: { value: boolean; step: CartSteps }) => {
-    steps.value[payload.step].valid = payload.value
+    const index = private_steps.value.findIndex(item => item.step === payload.step)
+    if (index >= 0)
+      private_steps.value[index].valid = payload.value
   }
   const isValid = computed((): boolean => {
     return Object.values(steps.value).every(step => !!step.valid)
@@ -147,6 +142,7 @@ export const useCartStore = defineStore('cart', () => {
     deletePlanoTitular,
 
     addDependente,
+    getDependente,
     updateDadosDependente,
     removerDependente,
 

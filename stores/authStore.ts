@@ -1,8 +1,8 @@
-import type { ICustomer } from '~~/types/product'
+import type { ITitular } from '~~/types/customer'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>(null)
-  const user = ref<ICustomer>(null)
+  const user = ref<ITitular>(null)
 
   const authenticate = async () => {
     const { authenticate } = useAuthApi()
@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
     data.value.token && (token.value = data.value.token)
   }
 
-  const login = async (credentials: { login: string; senha: string }): Promise<ICustomer> => {
+  const login = async (credentials: { login: string; senha: string }): Promise<ITitular> => {
     const { login } = useAuthApi()
     const { data, error } = await login(credentials)
 

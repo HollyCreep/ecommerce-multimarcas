@@ -3,18 +3,18 @@ import { object, string, ref as yupRef } from 'yup'
 import { useForm } from 'vee-validate'
 import { omit } from 'lodash'
 import TextInput from './inputs/TextInput.vue'
-import type { ICustomer } from '~~/types/product'
+import type { ITitular } from '~~/types/customer'
 
-interface ICustomerForm extends ICustomer {
+interface ITitularForm extends ITitular {
   senha: string
   repeatPassword: string
   repeatEmail: string
 }
 
-const props = defineProps<{ customer?: ICustomer }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): boolean; (e: 'update:customer', value: ICustomer): ICustomer }>()
+const props = defineProps<{ customer?: ITitular }>()
+const emit = defineEmits<{ (e: 'valid', value: boolean): boolean; (e: 'update:customer', value: ITitular): ITitular }>()
 
-const { handleSubmit, meta, setValues } = useForm<ICustomerForm>({
+const { handleSubmit, meta, setValues, submitForm } = useForm<ITitularForm>({
   validationSchema: object({
     email: string().required().email(),
     repeatEmail: string().required().oneOf([yupRef('email')], 'O campo de email não conferem'),
@@ -49,8 +49,15 @@ const onSubmit = handleSubmit((FormCustomer) => {
 })
 
 watch(() => props.customer, (newValue) => {
-  setValues({ ...newValue, repeatPassword: newValue.senha, repeatEmail: newValue.email })
+  if (newValue) {
+    setValues({ ...newValue, repeatPassword: newValue.senha, repeatEmail: newValue.email })
+    submitForm()
+  }
 }, { deep: true, immediate: true })
+
+const cpfMask = { mask: '###.###.###-##' }
+const dataMask = { mask: ['##/##/##', '##/##/####'] }
+const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
 </script>
 
 <template>
@@ -79,6 +86,7 @@ watch(() => props.customer, (newValue) => {
         </v-col>
         <v-col>
           <TextInput
+            v-maska:[phoneMask]
             name="telefone"
             variant="underlined"
             label="Telefone ou celular"
@@ -102,6 +110,7 @@ watch(() => props.customer, (newValue) => {
         </v-col>
         <v-col cols="12" md="6">
           <TextInput
+            v-maska:[dataMask]
             name="data_nascimento"
             variant="underlined"
             label="Data de Nascimento"
@@ -109,16 +118,24 @@ watch(() => props.customer, (newValue) => {
         </v-col>
         <v-col cols="12" md="6">
           <TextInput
+            v-maska:[cpfMask]
             name="cpf"
             variant="underlined"
             label="CPF"
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <TextInput
             name="rg"
             variant="underlined"
             label="RG"
+          />
+        </v-col>
+        <v-col cols="12" md="2">
+          <TextInput
+            name="exp"
+            variant="underlined"
+            label="Exp"
           />
         </v-col>
         <v-col cols="12" md="6">
@@ -126,13 +143,6 @@ watch(() => props.customer, (newValue) => {
             name="nome_mae"
             variant="underlined"
             label="Nome da mãe"
-          />
-        </v-col>
-        <v-col cols="12" md="6">
-          <TextInput
-            name="exp"
-            variant="underlined"
-            label="Exp"
           />
         </v-col>
       </v-row>
@@ -223,7 +233,7 @@ watch(() => props.customer, (newValue) => {
       </v-row>
     </div>
 
-    <v-btn color="secondary" size="large" type="submit" variant="flat">
+    <v-btn color="secondary" size="large" type="submit" variant="flat" :disabled="!meta.valid">
       Cadastrar
     </v-btn>
   </v-form>

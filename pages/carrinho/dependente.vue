@@ -2,6 +2,12 @@
 import type { TransitionProps } from 'vue'
 import type { CartRoute } from '~~/types/cart'
 
+const store = useCartStore()
+
+const handleFormValidationChange = (value: boolean) => {
+  store.updateStepValidation({ value, step: 'dependente' })
+}
+
 definePageMeta({
   pageTransition: {
     name: 'slide-right',
@@ -18,7 +24,23 @@ definePageMeta({
 </script>
 
 <template>
-  <div>Dependente</div>
+  <v-row>
+    <v-col cols="12">
+      <h2 class="text-primary font-weight-bold mb-2">
+        <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-4" />Identifique o titular do novo plano
+      </h2>
+    </v-col>
+    <v-col cols="12" md="7">
+      <v-card class="px-6 py-8">
+        <FormDependente @done="e => store.addDependente({ customer: e, product: store.state.titular.product })" @valid="handleFormValidationChange" />
+      </v-card>
+    </v-col>
+    <v-col cols="4" offset-md="1">
+      <CartSteps class="mb-8" />
+      <CartPlanPeriodSwitcher class="mb-8" />
+      <CartSummaryCard v-for="plan in store.items" :key="plan.codigoPlano" :plan="plan" class="mb-6" dark />
+    </v-col>
+  </v-row>
 </template>
 
 <style scoped>

@@ -2,12 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { CART_ROUTES } from '~~/types/cart'
 
-export interface ICartStepItem {
-  text: string
-  valid?: boolean
-  required?: boolean
-}
-
 const rawColors = {
   primary: 'primary',
   text: 'main',
@@ -29,7 +23,7 @@ const { steps } = storeToRefs(store)
   <div class="steps">
     <ul class="invisible-overflow">
       <template v-for="(item, index) in steps" :key="index">
-        <nuxt-link :to="CART_ROUTES[index]" class="step-item" exact-active-class="step-item-active" :class="{ 'step-item-valid': !!item.valid }">
+        <nuxt-link :to="CART_ROUTES[item.step]" class="step-item" exact-active-class="step-item-active" :class="{ 'step-item-valid': !!item.valid }">
           <v-avatar
             size="48"
             class="no-text-pointer"
@@ -47,67 +41,67 @@ const { steps } = storeToRefs(store)
 </template>
 
 <style lang="scss" scoped>
-$gap: 2rem;
-$line-size: 4px;
-$avatar-height: 48px;
-$muted-color: v-bind(mutedColor);
-$primary-color: v-bind(primaryColor);
-$valid-color: v-bind(validColor);
-$text-color: v-bind(textcolor);
+  $gap: 2rem;
+  $line-size: 4px;
+  $avatar-height: 48px;
+  $muted-color: v-bind(mutedColor);
+  $primary-color: v-bind(primaryColor);
+  $valid-color: v-bind(validColor);
+  $text-color: v-bind(textcolor);
 
-.steps {
-  ul {
-    width: 100%;
-    display: inline-flex;
-    position: relative;
-    gap: $gap;
-
-    .step-item {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-      position: relative;
+  .steps {
+    ul {
       width: 100%;
-      text-align: center;
-      flex: 1;
-      text-decoration: inherit;
-      color: $text-color;
+      display: inline-flex;
+      position: relative;
+      gap: $gap;
 
-      .v-avatar {
-        background: $muted-color;
-      }
+      .step-item {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        flex: 1;
+        text-decoration: inherit;
+        color: $text-color;
 
-      &:not(:last-of-type)::before {
-        content: '';
-        position: absolute;
-        height: $line-size;
-        top: calc(#{$avatar-height} / 2);
-        background: $muted-color;
-        width: calc(100% + #{$gap});
-        left: 50%;
-
-        background: linear-gradient(to left, #{$muted-color} 50%, #{$primary-color} 50%) right;
-        background-size: 200%;
-        transition: .5s ease-out;
-      }
-
-      &-active {
         .v-avatar {
-          background: $primary-color;
+          background: $muted-color;
         }
-      }
 
-      &-valid {
-        &::before {
-          background-position: left !important;
+        &:not(:last-of-type)::before {
+          content: '';
+          position: absolute;
+          height: $line-size;
+          top: calc(#{$avatar-height} / 2);
+          background: $muted-color;
+          width: calc(100% + #{$gap});
+          left: 50%;
+
+          background: linear-gradient(to left, #{$muted-color} 50%, #{$primary-color} 50%) right;
+          background-size: 200%;
+          transition: .5s ease-out;
         }
-        &:not(.step-item-active) .v-avatar {
-          background: $valid-color;
-          border: #{$line-size} solid #{$primary-color};
+
+        &-active {
+          .v-avatar {
+            background: $primary-color;
+          }
+        }
+
+        &-valid {
+          &::before {
+            background-position: left !important;
+          }
+          &:not(.step-item-active) .v-avatar {
+            background: $valid-color;
+            border: #{$line-size} solid #{$primary-color};
+          }
         }
       }
     }
   }
-}
 </style>

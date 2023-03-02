@@ -79,7 +79,7 @@ function changeSlide(index: number) {
 .odp-hero-carousel {
   position: relative;
 
-  ::v-deep(.v-carousel__controls .v-btn) {
+  ::deep(.v-carousel__controls .v-btn) {
       &.v-btn--active i .delimiter::after {
         content: '';
         position: absolute;

@@ -43,16 +43,3 @@ export interface IAddress {
   cidade: string
   estado: string
 }
-
-export interface ICustomer {
-  email: string
-  telefone: string
-  nome: string
-  data_nascimento: string
-  cpf: string
-  rg: string
-  exp: string
-  nome_mae?: string
-  endereco: IAddress
-  senha?: string
-}

@@ -2,9 +2,16 @@
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import type { ISocialMedia } from '../shared/SocialMediaButtons.vue'
 
+const props = withDefaults(defineProps<{
+  color?: string
+}>(), {
+  color: 'background',
+})
+
 const { mdAndUp } = useDisplay()
 const { getColor } = useThemeController()
-const backgroundColor = getColor('primary')
+const waveColor = getColor('primary')
+const backgroundColor = getColor(props.color)
 
 const leftItems = [
   { text: 'Política de privacidade', href: '' },
@@ -93,11 +100,11 @@ const socialMedia: ISocialMedia[] = [
 
 <style lang="scss" scoped>
     #odp-footer {
-      background-color: v-bind(backgroundColor);
+      background-color: v-bind(waveColor);
       @media screen and (min-width: 600px) {
         background-image: url(assets/icons/wave.svg);
         background-size: cover;
-        background-color: #F4F4F6;
+        background-color: v-bind(backgroundColor);
         padding-top: 150px;
       }
     }

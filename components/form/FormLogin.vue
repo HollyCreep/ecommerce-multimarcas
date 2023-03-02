@@ -2,6 +2,7 @@
 import { object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import TextInput from './inputs/TextInput.vue'
+import { CART_ROUTES } from '~~/types/cart'
 
 interface ILoginForm {
   senha: string
@@ -24,7 +25,7 @@ watchEffect(async () => {
 const onSubmit = handleSubmit(async (values) => {
   const { login } = useAuthStore()
   await login(values)
-  navigateTo('/carrinho/titular')
+  navigateTo(CART_ROUTES.titular)
 })
 </script>
 

@@ -2,10 +2,10 @@
 definePageMeta({
   validate: async (route) => {
     const id = route.params.id[0]
-    const productStore = useProductStore()
-    const product = await productStore.getProduct(id)
+    const { getDependente } = useCartStore()
+    const dependente = getDependente(id)
 
-    return /^\d+$/.test(id) && !!product
+    return !!dependente
   },
 })
 

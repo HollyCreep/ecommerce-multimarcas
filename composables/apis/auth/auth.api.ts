@@ -1,5 +1,5 @@
 import { storeToRefs } from 'pinia'
-import type { ICustomer } from '~~/types/product'
+import type { ITitular } from '~~/types/customer'
 
 interface ILoginDTO {
   token: string
@@ -20,7 +20,7 @@ export const useAuthApi = () => {
     },
   })
 
-  const login = (credentials: { login: string; senha: string }) => useFetch<{ user: ICustomer }>(() => `${baseUrl}/authenticate/login`, {
+  const login = (credentials: { login: string; senha: string }) => useFetch<{ user: ITitular }>(() => `${baseUrl}/authenticate/login`, {
     headers: {
       authentication: `Bearer ${token}`,
     },

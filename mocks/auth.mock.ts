@@ -1,8 +1,8 @@
 // src/mocks/handlers.js
 import { rest } from 'msw'
-import type { ICustomer } from '~~/types/product'
+import type { ITitular } from '~~/types/customer'
 
-const mockedUser: ICustomer = {
+const mockedUser: ITitular = {
   nome: 'User',
   email: 'user@email.com',
   telefone: '(11) 9999-9999',
@@ -20,6 +20,7 @@ const mockedUser: ICustomer = {
     cidade: 'Barueri',
     estado: 'SP',
   },
+  senha: '12345678',
 }
 
 const BASIC_ODONTOPREV = 'ZjBiZmE3NDhhNWQ1MTViODdmYThmZDg2NDM5ZWMwNTE=MjQzYWIzNTYzNDBlODU5MmFjNmI1ODdjOGExNmU2YWQ2NGU0MDAxMg=='
