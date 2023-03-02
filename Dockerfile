@@ -1,13 +1,21 @@
-FROM node:14-stretch-slim as builder-front
-WORKDIR "/home/node/app"
-COPY . /home/node/app
-RUN npm install --no-optional
-RUN npm run generate
+FROM node:lts as builder
 
-FROM nginx
-WORKDIR "/usr/share/nginx/html"
-COPY --from=builder-front /home/node/app/dist /usr/share/nginx/html
-COPY ./substitute_environment_variables.sh /substitute_environment_variables.sh
-RUN chmod +x /substitute_environment_variables.sh
-ENTRYPOINT ["/substitute_environment_variables.sh"]
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+COPY package.json ./
+COPY yarn.lock yarn.lock ./
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn generate
+
+EXPOSE 4000
+ENV HOST=0.0.0.0
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=4000
+
+CMD [ "yarn", "start" ]
 
