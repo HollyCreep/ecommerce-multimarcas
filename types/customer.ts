@@ -21,3 +21,5 @@ export interface IDependente {
   exp: string
   nome_mae?: string
 }
+
+export type ICustomer = ITitular | IDependente

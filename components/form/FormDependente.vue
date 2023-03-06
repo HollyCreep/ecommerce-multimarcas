@@ -2,17 +2,32 @@
 import { object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import TextInput from './inputs/TextInput.vue'
+import type { IProduct } from '~~/types/product'
+import type { CartDependente } from '~~/types/cart'
 import type { IDependente } from '~~/types/customer'
 
-interface IDependenteForm extends IDependente {
-  // checkbox: string
-}
+const props = defineProps<{ dependente?: CartDependente }>()
+const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submit', value: CartDependente): void }>()
+const { getFeaturedProducts } = useProductStore()
+const store = useCartStore()
 
-const props = defineProps<{ dependente?: IDependente }>()
+const state = ref<{
+  radioInput: number
+  selectedProductIndex: number
+  selectedProduct: IProduct
+  products: IProduct[]
+  loading: boolean
+  errorPlan: string
+}>({
+  radioInput: 1,
+  selectedProductIndex: null,
+  selectedProduct: store.state.titular.product,
+  products: [],
+  loading: false,
+  errorPlan: '',
+})
 
-const emit = defineEmits<{ (e: 'valid', value: boolean): boolean; (e: 'done', value: IDependente): IDependente }>()
-
-const { handleSubmit, meta, setValues, submitForm } = useForm<IDependenteForm>({
+const { handleSubmit, meta, setValues, validate } = useForm<IDependente>({
   validationSchema: object({
     nome: string().required(),
     data_nascimento: string().required('O campo data de nascimento é obrigatório'),
@@ -27,20 +42,44 @@ watchEffect(async () => {
   emit('valid', meta.value.valid)
 })
 
-watch(() => props.dependente, (newValue) => {
-  if (newValue) {
-    setValues({ ...newValue })
-    submitForm()
+watchEffect(async () => {
+  const product = state.value.products[state.value.selectedProductIndex]
+  if (product)
+    state.value.selectedProduct = product
+})
+
+const handleProductTypeChange = (newValue: number) => {
+  state.value.selectedProductIndex = null
+  state.value.selectedProduct = newValue === 1 ? store.state.titular.product : null
+}
+
+onMounted(async () => {
+  state.value.loading = true
+  state.value.products = await getFeaturedProducts()
+  state.value.loading = false
+
+  if (props.dependente) {
+    setValues({ ...props.dependente.customer })
+    if (store.state.titular.product.sku !== props.dependente.product.sku) {
+      state.value.radioInput = 2
+      const index = state.value.products.findIndex(p => p.sku === props.dependente.product.sku)
+      if (index >= 0)
+        state.value.selectedProductIndex = index
+    }
+
+    validate()
   }
-}, { deep: true, immediate: true })
+})
 
 const onSubmit = handleSubmit((dependente) => {
-  emit('done', dependente)
+  state.value.errorPlan = state.value.selectedProduct ? '' : 'O plano é obrigatório'
+  if (state.value.errorPlan)
+    return
+  emit('submit', { customer: dependente, product: state.value.selectedProduct })
 })
 
 const cpfMask = { mask: '###.###.###-##' }
 const dataMask = { mask: ['##/##/##', '##/##/####'] }
-const radioInput = ref('1')
 </script>
 
 <template>
@@ -105,13 +144,78 @@ const radioInput = ref('1')
       <v-divider class="my-4" />
     </div>
 
-    <v-radio-group v-model="radioInput" color="primary">
-      <v-radio class="text-main font-weight-bold font-soleto" label="É o mesmo plano do titular" value="1" />
-      <v-radio class="text-main font-weight-bold font-soleto" label="É outro plano" value="2" />
+    <v-radio-group v-model="state.radioInput" name="product" color="primary" @update:model-value="handleProductTypeChange">
+      <v-radio
+        class="text-main font-weight-bold font-soleto"
+        label="É o mesmo plano do titular"
+        :value="1"
+      />
+      <v-radio
+        class="text-main font-weight-bold font-soleto"
+        label="É outro plano"
+        :disabled="state.loading || !state.products.length"
+        :value="2"
+      />
     </v-radio-group>
 
-    <v-btn color="secondary" size="large" type="submit" variant="flat" :disabled="!meta.valid">
-      Cadastrar
+    <v-scroll-y-transition>
+      <v-item-group
+        v-if="state.radioInput === 2 && state.products.length"
+        v-model="state.selectedProductIndex"
+        selected-class="bg-primary"
+        class="plan-card-container"
+        mandatory
+        @update:model-value="state.errorPlan = ''"
+      >
+        <v-item
+          v-for="(product, i) in state.products"
+          v-slot="{ selectedClass, isSelected, toggle }"
+          :key="i"
+        >
+          <CartSmallPlanCard
+            :product="product"
+            :class="[selectedClass]"
+            :active="isSelected"
+            @click="toggle"
+          />
+        </v-item>
+      </v-item-group>
+    </v-scroll-y-transition>
+
+    <v-scroll-x-transition>
+      <v-container v-if="state.loading">
+        <v-row
+          class="fill-height"
+          align-content="center"
+          justify="center"
+        >
+          <v-col
+            class="text-subtitle-1 text-center"
+            cols="12"
+          >
+            Buscando planos...
+          </v-col>
+          <v-col cols="6">
+            <v-progress-linear
+              rounded
+              indeterminate
+              color="primary"
+              size="3rem"
+              class="mx-auto d-block"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-scroll-x-transition>
+
+    <v-scroll-x-transition>
+      <h5 v-if="state.errorPlan" class="text-error">
+        {{ state.errorPlan }}
+      </h5>
+    </v-scroll-x-transition>
+
+    <v-btn color="secondary" size="large" type="submit" variant="flat" class="mt-4">
+      {{ dependente ? 'Continuar' : 'Cadastrar' }}
     </v-btn>
   </v-form>
 </template>
@@ -120,6 +224,13 @@ const radioInput = ref('1')
   :deep(.v-radio-group) {
     label {
       opacity: 100% !important;
+      font-size: 12px;
     }
+  }
+
+  .plan-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 </style>

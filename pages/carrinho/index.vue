@@ -10,7 +10,7 @@ const store = useCartStore()
     </h2>
     <div class="mb-10">
       <CartPlanPeriodSwitcher class="mb-8" />
-      <CartSummaryCard v-for="plan in store.items" :key="plan.codigoPlano" :plan="plan" class="mb-6" dark />
+      <CartFeaturedPlanCard v-for="{ plan } in store.items" :key="plan.codigoPlano" :plan="plan" class="mb-6" dark />
       <div class="text-right">
         <v-btn color="secondary" variant="flat" size="large" width="188" to="carrinho/titular">
           Comprar

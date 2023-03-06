@@ -1,4 +1,4 @@
-FROM node:lts as builder
+FROM node:19-alpine3.17 as builder-front
 
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
@@ -12,10 +12,7 @@ COPY . .
 
 RUN yarn generate
 
-EXPOSE 4000
-ENV HOST=0.0.0.0
-ENV NUXT_HOST=0.0.0.0
-ENV NUXT_PORT=4000
-
-CMD [ "yarn", "start" ]
-
+FROM nginx:1.23.3
+WORKDIR "/usr/share/nginx/html"
+COPY --from=builder-front /home/node/app/.output/public /usr/share/nginx/html
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

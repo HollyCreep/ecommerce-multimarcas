@@ -12,9 +12,9 @@ interface ITitularForm extends ITitular {
 }
 
 const props = defineProps<{ customer?: ITitular }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): boolean; (e: 'update:customer', value: ITitular): ITitular }>()
+const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'update:customer', value: ITitular): void; (e: 'submit'): void }>()
 
-const { handleSubmit, meta, setValues, submitForm } = useForm<ITitularForm>({
+const { handleSubmit, meta, setValues, validate } = useForm<ITitularForm>({
   validationSchema: object({
     email: string().required().email(),
     repeatEmail: string().required().oneOf([yupRef('email')], 'O campo de email não conferem'),
@@ -46,14 +46,15 @@ watchEffect(async () => {
 const onSubmit = handleSubmit((FormCustomer) => {
   const customer = omit(FormCustomer, ['repeatPassword', 'repeatEmail'])
   emit('update:customer', customer)
+  emit('submit')
 })
 
-watch(() => props.customer, (newValue) => {
-  if (newValue) {
-    setValues({ ...newValue, repeatPassword: newValue.senha, repeatEmail: newValue.email })
-    submitForm()
+onMounted(() => {
+  if (props.customer) {
+    setValues({ ...props.customer, repeatPassword: props.customer.senha, repeatEmail: props.customer.email })
+    validate()
   }
-}, { deep: true, immediate: true })
+})
 
 const cpfMask = { mask: '###.###.###-##' }
 const dataMask = { mask: ['##/##/##', '##/##/####'] }
@@ -234,7 +235,7 @@ const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
     </div>
 
     <v-btn color="secondary" size="large" type="submit" variant="flat" :disabled="!meta.valid">
-      Cadastrar
+      {{ customer ? 'Continuar' : 'Cadastrar' }}
     </v-btn>
   </v-form>
 </template>

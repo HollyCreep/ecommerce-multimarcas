@@ -12,7 +12,7 @@ const { fetchProducts } = useProductsApi()
         <v-slide-group center-active>
           <v-slide-group-item v-for="(product, i) in data" :key="i">
             <PlanCard
-              v-ripple :product="product" color="primary-lighten-1" :dark="i >= 2"
+              v-ripple :product="product" color="primary-lighten-1" :dark="!!product.faxaEtaria"
               class="mx-2"
             />
           </v-slide-group-item>

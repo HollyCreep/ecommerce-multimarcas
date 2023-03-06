@@ -10,6 +10,11 @@ function getRouteStep(cartRoute: CartRoute) {
   }
 }
 
+function formatNumber(number: number): string {
+  return number < 10 ? `0${number}` : `${number}`
+}
+
 export default {
   getRouteStep,
+  formatNumber,
 }

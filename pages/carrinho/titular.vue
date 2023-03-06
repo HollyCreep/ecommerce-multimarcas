@@ -2,12 +2,19 @@
 import { storeToRefs } from 'pinia'
 import type { TransitionProps } from 'vue'
 import type { CartRoute } from '~~/types/cart'
+import { CART_ROUTES } from '~~/types/cart'
 
 const store = useCartStore()
 const { state } = storeToRefs(store)
 
+const [titular] = store.items
+
 const handleFormValidationChange = (value: boolean) => {
   store.updateStepValidation({ value, step: 'titular' })
+}
+
+const handleFormSubmit = () => {
+  navigateTo(CART_ROUTES.checkout)
 }
 
 definePageMeta({
@@ -34,13 +41,13 @@ definePageMeta({
     </v-col>
     <v-col cols="12" md="7">
       <v-card class="px-6 py-8">
-        <FormTitular v-model:customer="state.titular.customer" @valid="handleFormValidationChange" />
+        <FormTitular v-model:customer="state.titular.customer" @valid="handleFormValidationChange" @submit="handleFormSubmit" />
       </v-card>
     </v-col>
     <v-col cols="4" offset-md="1">
       <CartSteps class="mb-8" />
       <CartPlanPeriodSwitcher class="mb-8" />
-      <CartSummaryCard v-for="plan in store.items" :key="plan.codigoPlano" :plan="plan" class="mb-6" dark />
+      <CartFeaturedPlanCard :plan="titular.plan" class="mb-6" dark />
     </v-col>
   </v-row>
 </template>

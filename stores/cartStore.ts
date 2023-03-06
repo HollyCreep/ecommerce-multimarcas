@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { IProduct } from '~~/types/product'
 import type { IDependente, ITitular } from '~~/types/customer'
-import type { CartDependente, CartSteps, CartStore, CartTitular, ComputedCartItem, ICartStepItem } from '~/types/cart'
+import type { CartDependente, CartSteps, CartStore, CartTitular, ICartSummary, IComputedCartItem } from '~/types/cart'
 
 import type { Period } from '~~/types'
 
@@ -10,6 +10,10 @@ const defaultValues: CartStore = {
   paymentMethod: null,
   titular: {},
   dependentes: [],
+  steps: [
+    { text: 'Cadastrar titular', step: 'titular', valid: false, required: true },
+    { text: 'Detalhes Pagamento', step: 'checkout' },
+  ],
 }
 
 export const useCartStore = defineStore('cart', () => {
@@ -17,11 +21,6 @@ export const useCartStore = defineStore('cart', () => {
   /*                                    STATE                                   */
   /* -------------------------------------------------------------------------- */
   const state = ref(useLocalStorage<CartStore>('cart', defaultValues, { mergeDefaults: true }))
-  const private_steps = ref<ICartStepItem[]>([
-    { text: 'Cadastrar titular', step: 'titular', valid: false, required: true },
-    { text: 'Cadastrar dependente', step: 'dependente', valid: false, required: false },
-    { text: 'Detalhes Pagamento', step: 'checkout' },
-  ])
 
   /* -------------------------------------------------------------------------- */
   /*                                  CADASTRO                                  */
@@ -52,17 +51,28 @@ export const useCartStore = defineStore('cart', () => {
 
   /* DEPENDENTE _______________________________________________________________ */
   const addDependente = (payload: CartDependente) => {
+    if (!payload.customer)
+      return new Error('Preencha todos os dados do dependente')
+    if (!payload.product)
+      return new Error('Produto inválido')
     state.value.dependentes.push(payload)
   }
-  const getDependente = (index: number | string) => {
-    return state.value.dependentes?.[+index]?.customer || undefined
+  const getDependente = (index: number) => {
+    return state.value.dependentes?.[index] || undefined
   }
-  const updateDadosDependente = (payload: Partial<IDependente>, index: number) => {
+  const updateDadosDependente = (payload: Partial<IDependente>, index: number): void | Error => {
     const dependente = state.value.dependentes[index]
 
     if (!dependente)
       return new Error('Dependente não encontrado')
     state.value.dependentes[index] = { ...dependente, ...payload }
+  }
+  const updateDependente = (payload: CartDependente, index: number): void | Error => {
+    const dependente = state.value.dependentes[index]
+
+    if (!dependente)
+      return new Error('Dependente não encontrado')
+    state.value.dependentes[index] = payload
   }
   const removerDependente = (index: number) => {
     state.value.dependentes.splice(index, 1)
@@ -78,16 +88,13 @@ export const useCartStore = defineStore('cart', () => {
   /* -------------------------------------------------------------------------- */
   /*                                    STEPS                                   */
   /* -------------------------------------------------------------------------- */
-  const steps = computed((): ICartStepItem[] => {
-    return private_steps.value.flatMap(item => (item.step === 'dependente' && !state.value.dependentes.length) ? [] : item)
-  })
   const updateStepValidation = (payload: { value: boolean; step: CartSteps }) => {
-    const index = private_steps.value.findIndex(item => item.step === payload.step)
+    const index = state.value.steps.findIndex(item => item.step === payload.step)
     if (index >= 0)
-      private_steps.value[index].valid = payload.value
+      state.value.steps[index].valid = payload.value
   }
   const isValid = computed((): boolean => {
-    return Object.values(steps.value).every(step => !!step.valid)
+    return Object.values(state.value.steps).every(step => !!step.valid)
   })
 
   /* -------------------------------------------------------------------------- */
@@ -113,26 +120,40 @@ export const useCartStore = defineStore('cart', () => {
     return Number(!!titular.product) + dependentes.length
   })
 
-  const items = computed((): ComputedCartItem[] => {
+  const items = computed((): IComputedCartItem[] => {
     const { titular, dependentes } = state.value
     if (!titular.product)
       return []
 
     const plan = state.value.titular.product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
-    const planoTitular = { ...plan, valor: plan.valorTitular, logo: state.value.titular.product.logo, delete: deletePlanoTitular }
+    const computedTitular = {
+      plan: { ...plan, valor: plan.valorTitular, logo: state.value.titular.product.logo },
+      customer: state.value.titular.customer,
+      update: updateDadosTitular,
+      delete: deletePlanoTitular,
+    }
 
-    const planosDependentes = Object.values(dependentes).map(({ product }, i) => {
+    const computedDependentes = Object.values(dependentes).map(({ customer, product }, i) => {
       const plan = product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
 
-      return { ...plan, valor: plan.valorDependente, logo: product.logo, delete: () => removerDependente(i) }
+      return { plan: { ...plan, valor: plan.valorDependente, logo: product.logo }, customer, update: (payload: Partial<IDependente>) => updateDadosDependente(payload, i), delete: () => removerDependente(i) }
     })
 
-    return [planoTitular, ...planosDependentes]
+    return [computedTitular, ...computedDependentes]
+  })
+
+  const resumo = computed((): ICartSummary => {
+    const [titular, ...dependentes] = items.value
+    const qtdDependentes = cartUtils.formatNumber(dependentes.length)
+    const totalVidas = cartUtils.formatNumber(count.value)
+    const valorTotal = total.value
+    const period = state.value.selectedPeriodType
+
+    return { titular, dependentes, qtdDependentes, totalVidas, valorTotal, period }
   })
 
   return {
     state,
-    steps,
 
     addPlanoTitular,
     addDadosTitular,
@@ -143,6 +164,7 @@ export const useCartStore = defineStore('cart', () => {
 
     addDependente,
     getDependente,
+    updateDependente,
     updateDadosDependente,
     removerDependente,
 
@@ -154,6 +176,7 @@ export const useCartStore = defineStore('cart', () => {
     total,
     count,
     items,
+    resumo,
   }
 })
 

@@ -1,50 +1,115 @@
 <script setup lang="ts">
-import type { ComputedCartItem } from '~~/types/cart'
+import { storeToRefs } from 'pinia'
+import { CART_ROUTES } from '~~/types/cart'
 
-const props = defineProps<{
-  plan: ComputedCartItem
-  dark?: boolean
-}>()
-
-const carencia = computed(() => props.plan.especialidades.reduce((acc, val) => {
-  acc.push(`${val.diasCarencia} dias para ${val.nome}`)
-  return acc
-}, [] as string[]).join(' e '))
+const store = useCartStore()
+const { resumo } = storeToRefs(store)
 </script>
 
 <template>
-  <v-card class="pa-4 rounded-lg" :color="dark ? 'primary' : '#F6F6F6'" :dark="dark" max-width="460">
-    <div class="title d-flex align-center " :class="{ 'text-primary': !dark }">
-      <Icon :key="+dark" :name="plan.logo" :color="dark ? 'white' : 'primary'" secondary-color="primary-lighten-1" class="text-h2 mr-3" />
-      <div>
-        <p class="text-subtitle-1 font-soleto">
-          Plano
+  <v-card class="py-8 px-6">
+    <h2 class="text-primary font-weight-bold mb-8">
+      <Icon name="cart-fill" color="primary" secondary-color="primary-lighten-1" />
+      Resumo do pedido
+    </h2>
+    <CartPlanPeriodSwitcher class="mb-8" />
+    <v-slide-x-transition
+      class="resumo-plans-list mb-4"
+      tag="ul"
+      group
+    >
+      <li key="titular" class="mb-3">
+        <p class="text-subtitle-2 font-noto-sans mb-1">
+          Titular
         </p>
-        <h4 class="font-weight-bold">
-          {{ plan.nomeFantasia }}
-        </h4>
-      </div>
-    </div>
-    <v-divider class="border-opacity-100 border-t-md border-primary my-2" />
+        <div class="d-flex justify-space-between text-main">
+          <p class="font-weight-bold text-subtitle-1 font-noto-sans">
+            {{ resumo.titular.plan.nomeFantasia }}
+          </p>
+          <div class="d-flex align-center">
+            <p class=" text-subtitle-1 font-noto-sans mr-2">
+              <span class="font-weight-bold">R$</span> {{ resumo.titular.plan.valor }}
+            </p>
+            <v-menu>
+              <template #activator="{ props }">
+                <v-btn icon="mdi-dots-vertical" v-bind="props" variant="text" density="compact" size="small" />
+              </template>
 
-    <v-row justify="space-between" align="center">
-      <v-col cols="5">
-        <p class="mb-2">
-          Contrato: <span class="text-capitalize font-weight-bold">{{ plan.tipoNegociacao.toLowerCase() }}</span>
+              <v-list density="compact">
+                <v-list-item :to="CART_ROUTES.titular">
+                  <v-list-item-title><v-icon size="small" class="mr-2" icon="mdi-pencil" color="amber" /> Editar</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="resumo.titular.delete">
+                  <v-list-item-title><v-icon size="small" color="error" class="mr-2" icon="mdi-delete" />Excluir</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
+        </div>
+      </li>
+      <template v-if="resumo.dependentes && resumo.dependentes.length">
+        <p class="text-subtitle-2 font-noto-sans mb-1">
+          Dependentes: {{ resumo.qtdDependentes }}
         </p>
-        <p style="font-size: 10px; line-height: 12px" :class="{ 'text-main': !dark }">
-          Carência: {{ carencia }}
-        </p>
-      </v-col>
-      <v-col cols="auto">
-        <PriceTag :value="plan.valor" size="small" :dark="dark" />
-      </v-col>
-    </v-row>
+        <li v-for="(dep, i) in resumo.dependentes" :key="`dependente-${i}`">
+          <div class="text-main d-flex justify-space-between align-center">
+            <p class="d-inline-block font-weight-bold text-subtitle-1 font-noto-sans text-truncate">
+              {{ dep.customer.nome }}
+            </p>
+            <div class="d-inline-flex align-center">
+              <p class=" text-subtitle-1 font-noto-sans mr-2">
+                <span class="font-weight-bold">R$</span> {{ dep.plan.valor }}
+              </p>
+              <v-menu>
+                <template #activator="{ props }">
+                  <v-btn icon="mdi-dots-vertical" v-bind="props" variant="text" density="compact" size="small" />
+                </template>
+
+                <v-list>
+                  <v-list-item :to="`${CART_ROUTES.dependente}/${i}`">
+                    <v-list-item-title><v-icon size="small" class="mr-2" icon="mdi-pencil" color="amber" /> Editar</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="dep.delete">
+                    <v-list-item-title><v-icon size="small" color="error" class="mr-2" icon="mdi-delete" />Excluir</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+          </div>
+          <p class="text-subtitle-2 font-noto-sans">
+            {{ dep.plan.nomeFantasia }}
+          </p>
+        </li>
+      </template>
+    </v-slide-x-transition>
+
+    <v-btn color="secondary" variant="text" prepend-icon="mdi-plus" class="font-weight-bold text-subtitle-1 font-noto-sans px-0" density="comfortable" :to="CART_ROUTES.dependente">
+      Adicionar dependente
+    </v-btn>
+
+    <v-divider class="my-2" />
+
+    <div class="d-flex justify-space-between text-main mb-1">
+      <p class="text-subtitle-2 font-noto-sans">
+        Vidas
+      </p>
+      <p class=" text-subtitle-1 font-noto-sans">
+        <span class="font-weight-bold">Total:</span> R${{ resumo.valorTotal }}
+      </p>
+    </div>
+    <div class="d-flex justify-space-between text-main mb-1">
+      <p class="f text-subtitle-1 font-noto-sans">
+        <span class="font-weight-bold">Total:</span> {{ resumo.totalVidas }}
+      </p>
+      <p class=" text-subtitle-2 font-noto-sans font-weight-bold text-capitalize">
+        {{ resumo.period.toLowerCase() }}
+      </p>
+    </div>
   </v-card>
 </template>
 
-<style lang="scss" scoped>
-.summary-card {
-
+<style scoped>
+.resumo-plans-list{
+  list-style: none;
 }
 </style>

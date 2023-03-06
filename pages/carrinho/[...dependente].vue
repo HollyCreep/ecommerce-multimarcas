@@ -1,11 +1,34 @@
 <script setup lang="ts">
 import type { TransitionProps } from 'vue'
-import type { CartRoute } from '~~/types/cart'
+import type { CartDependente, CartRoute } from '~~/types/cart'
+import { CART_ROUTES } from '~~/types/cart'
+
+definePageMeta({
+  validate: async (route) => {
+    const [_ignore, index] = route.params.dependente
+
+    if (!index)
+      return true
+
+    const { getDependente } = useCartStore()
+    const dependente = getDependente(+index)
+
+    return !!dependente
+  },
+})
 
 const store = useCartStore()
+const route = useRoute()
+const [_ignore, index] = route.params.dependente
+const dependente = store.getDependente(+index)
 
 const handleFormValidationChange = (value: boolean) => {
   store.updateStepValidation({ value, step: 'dependente' })
+}
+
+const handleFormSubmit = (val: CartDependente) => {
+  dependente ? store.updateDependente(val, +index) : store.addDependente(val)
+  navigateTo(CART_ROUTES.checkout)
 }
 
 definePageMeta({
@@ -27,18 +50,13 @@ definePageMeta({
   <v-row>
     <v-col cols="12">
       <h2 class="text-primary font-weight-bold mb-2">
-        <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-4" />Identifique o titular do novo plano
+        <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-4" />Identifique o dependente
       </h2>
     </v-col>
     <v-col cols="12" md="7">
       <v-card class="px-6 py-8">
-        <FormDependente @done="e => store.addDependente({ customer: e, product: store.state.titular.product })" @valid="handleFormValidationChange" />
+        <FormDependente :dependente="dependente" @submit="handleFormSubmit" @valid="handleFormValidationChange" />
       </v-card>
-    </v-col>
-    <v-col cols="4" offset-md="1">
-      <CartSteps class="mb-8" />
-      <CartPlanPeriodSwitcher class="mb-8" />
-      <CartSummaryCard v-for="plan in store.items" :key="plan.codigoPlano" :plan="plan" class="mb-6" dark />
     </v-col>
   </v-row>
 </template>

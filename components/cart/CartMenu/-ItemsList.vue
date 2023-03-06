@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+
 const store = useCartStore()
+const { items } = storeToRefs(store)
 </script>
 
 <template>
@@ -8,30 +11,29 @@ const store = useCartStore()
       Resumo do Pedido
     </h5>
     <ul class="cart-plans-list">
-      <li v-for="(plan, i) in store.items" :key="i" class="text-primary">
+      <li v-for="(item, i) in items" :key="i" class="text-primary">
         <v-btn
           color="primary"
           icon="mdi-delete"
           size="x-small"
           variant="plain"
-          @click="plan.delete"
+          @click="item.delete"
         />
-
         <div class="plan-main-content">
           <p class="text-caption">
             Plano
           </p>
           <p class="font-weight-bold text-caption">
-            {{ plan.nomeFantasia }}
+            {{ item.plan.nomeFantasia }}
           </p>
         </div>
 
         <div class="plan-price text-right">
           <p>
-            R$ {{ plan.valor }}
+            R$ {{ item.plan.valor }}
           </p>
           <p class="text-lowercase">
-            {{ plan.tipoNegociacao }}
+            {{ item.plan.tipoNegociacao }}
           </p>
         </div>
       </li>

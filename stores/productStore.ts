@@ -3,7 +3,7 @@ import type { IProduct } from '~~/types/product'
 
 export const useProductStore = defineStore('product', () => {
   const product = useLocalStorage<IProduct>('staged_product', null, { serializer: StorageSerializers.object })
-  const featuredProducts = useLocalStorage<IProduct[]>('featured_products', null, { serializer: StorageSerializers.object })
+  const featuredProducts = useLocalStorage<IProduct[]>('featured_products', [], { serializer: StorageSerializers.object })
 
   const getProduct = async (id: string): Promise<IProduct> => {
     const { getProductFriendlyName } = useUtils()
@@ -19,11 +19,13 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const getFeaturedProducts = async (): Promise<IProduct[]> => {
-    const { fetchProducts } = useProductsApi()
-    const { data } = await fetchProducts()
+    if (!featuredProducts.value.length) {
+      const { fetchProducts } = useProductsApi()
+      const { data } = await fetchProducts()
 
-    if (data && data.value)
-      featuredProducts.value = data.value
+      if (data && data.value)
+        featuredProducts.value = data.value
+    }
 
     return featuredProducts.value
   }
