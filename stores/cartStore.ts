@@ -112,7 +112,7 @@ export const useCartStore = defineStore('cart', () => {
 
     const planoTitular = state.value.titular.product.planos.find(p => p.tipoNegociacao === state.value.selectedPeriodType)
 
-    return planoTitular.valorTitular + totalDependentes
+    return +Number(planoTitular.valorTitular + totalDependentes).toFixed(2)
   })
 
   const count = computed((): number => {

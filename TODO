@@ -1,0 +1,15 @@
+
+Cart:
+  ☐ Tela de sucesso venda
+  ☐ Transaction Cartão
+  ☐ Boleto
+  ☐ Débito
+  ☐ Tela de detalhe produto
+  ☐ Tratar erros requests
+  ☐ Limpar carrinho apos concluir venda
+  ☐ Checar responsividade
+  ✔ Parse total carrinho ( 2 casas decimais ) @done(23-03-07 16:06)
+  ☐ Modal termos de uso
+  ☐ Ajustar parcelas
+  ✔ Remover login @done(23-03-07 16:26)
+  ✔ Remover cart menu @done(23-03-07 16:26)

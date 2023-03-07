@@ -44,4 +44,17 @@ export default defineNuxtConfig({
     'components/ignore/home/',
     'components/ignore/produto/',
   ],
+
+  runtimeConfig: {
+    public: {
+      baseUrl: '',
+      baseUrlBFF: '',
+      basicTokenBFF: '',
+      basicTokens: {
+        odontoPrev: '',
+        odontoSystem: '',
+        bbDental: '',
+      },
+    },
+  },
 })

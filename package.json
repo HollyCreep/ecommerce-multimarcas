@@ -2,11 +2,12 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --dotenv .env.development",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "proxy": "lcp --proxyUrl http://localhost:8000",
     "reset": "rm -rf node_modules dist .nuxt yarn.lock .output"
   },
   "dependencies": {

@@ -14,10 +14,6 @@ const menuItems: Link[] = [
     text: 'Dúvidas',
     href: '',
   },
-  {
-    text: 'Login',
-    href: '',
-  },
 ]
 </script>
 
@@ -27,13 +23,7 @@ const menuItems: Link[] = [
       <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
     </NuxtLink>
     <v-spacer />
-    <GroupLinks :items="menuItems" button-class="text-white">
-      <template #append>
-        <v-slide-group-item>
-          <CartCartMenu />
-        </v-slide-group-item>
-      </template>
-    </GroupLinks>
+    <GroupLinks :items="menuItems" button-class="text-white" />
   </v-toolbar>
 </template>
 

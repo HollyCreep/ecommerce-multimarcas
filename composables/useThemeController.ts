@@ -34,7 +34,7 @@ export const useThemeController = () => {
 
   const getActiveBrandBasicToken = () => {
     try {
-      const { basicTokens } = useAppConfig()
+      const { public: { basicTokens } } = useRuntimeConfig()
       const brand = activeBrand.value.name
       return basicTokens[brand]
     }

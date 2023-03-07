@@ -63,6 +63,9 @@ const flipCreditCard = ref(false)
 const flipCard = () => {
   flipCreditCard.value = !flipCreditCard.value
 }
+
+const { getCompanyAvaiblePaymentMethods } = useCartPaymentApi()
+const res = await getCompanyAvaiblePaymentMethods()
 </script>
 
 <template>

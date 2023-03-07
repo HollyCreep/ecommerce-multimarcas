@@ -1,12 +1,12 @@
 import type { ICobrarCartaoDTO, IPaymentMethod, ITokenizarCartaoDTO } from '~~/types/payment'
 
 export const useCartPaymentApi = () => {
-  const { baseUrl, basicTokenBFF } = useAppConfig()
+  const { public: { baseUrl, baseUrlBFF, basicTokenBFF } } = useRuntimeConfig()
 
   const generateTokenBFF = () =>
-    useFetch<{ access_token: string; scope: string; token_type: string; expires_in: number }>(() => `${baseUrl}/token`, {
+    useFetch<{ access_token: string; scope: string; token_type: string; expires_in: number }>(() => `${baseUrlBFF}/token`, {
       headers: {
-        authentication: `Basic ${basicTokenBFF}`,
+        Authorization: `Basic ${basicTokenBFF}`,
       },
       method: 'POST',
       server: false,
@@ -18,7 +18,7 @@ export const useCartPaymentApi = () => {
       const token = await getToken()
       return useFetch<IPaymentMethod[]>(() => `${baseUrl}/payment/available`, {
         headers: {
-          authentication: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
     }
@@ -28,16 +28,16 @@ export const useCartPaymentApi = () => {
   }
 
   const gerarNumeroProposta = (token: string) =>
-    useFetch<{ numeroProposta: string }>(() => `${baseUrl}/dcss/vendas/1.0/propostas/numero/canal/7073`, {
+    useFetch<{ numeroProposta: string }>(() => `${baseUrlBFF}/dcss/vendas/1.0/propostas/numero/canal/7073`, {
       headers: {
-        authentication: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
 
   const generateTokenBrasspag = (numeroProposta: string, token: string) =>
-    useFetch<{ sucesso: number; mensagem?: string; accessToken: string }>(() => `${baseUrl}/mip/1.0/captura/ticket/acessar/EcommercePFOdonto/${numeroProposta}`, {
+    useFetch<{ sucesso: number; mensagem?: string; accessToken: string }>(() => `${baseUrlBFF}/mip/1.0/captura/ticket/acessar/EcommercePFOdonto/${numeroProposta}`, {
       headers: {
-        authentication: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
 
@@ -49,9 +49,9 @@ export const useCartPaymentApi = () => {
     })
 
   const cobrarCartao = (params: ICobrarCartaoDTO, token: string) =>
-    useFetch<IPaymentMethod[]>(() => `${baseUrl}/mip/1.0/captura/ticket/cobrar`, {
+    useFetch<IPaymentMethod[]>(() => `${baseUrlBFF}/mip/1.0/captura/ticket/cobrar`, {
       headers: {
-        authentication: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: params,
       method: 'POST',
