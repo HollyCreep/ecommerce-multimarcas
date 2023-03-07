@@ -1,5 +1,3 @@
-import type { ITitular } from '~~/types/customer'
-
 export const useAuthApi = () => {
   const { public: { baseUrl } } = useRuntimeConfig()
   const { getActiveBrandBasicToken } = useThemeController()
@@ -22,14 +20,5 @@ export const useAuthApi = () => {
     parseResponse: res => JSON.parse(res),
   })
 
-  const login = (credentials: { login: string; senha: string }, token: string) => useFetch<{ user: ITitular }>(() => `${baseUrl}/authenticate/login`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    method: 'POST',
-    body: credentials,
-    server: false,
-  })
-
-  return { login, generateToken, validateToken }
+  return { generateToken, validateToken }
 }

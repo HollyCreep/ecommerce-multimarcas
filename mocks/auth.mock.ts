@@ -61,24 +61,4 @@ export default [
     )
   }),
 
-  rest.post('https://api.odontoprev.com.br:8243/authenticate/login', async (req, res, ctx) => {
-    const body = await req.json()
-    const isAuthenticated = body.login === 'user' && body.senha === '12345678'
-
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: 'Not authorized',
-        }),
-      )
-    }
-
-    return res(
-      ctx.status(200),
-      ctx.json({
-        user: mockedUser,
-      }),
-    )
-  }),
 ]

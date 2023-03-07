@@ -1,19 +1,6 @@
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>(null)
 
-  const login = async (credentials: { login: string; senha: string }): Promise<void | Error> => {
-    const { login } = useAuthApi()
-    const { data, error } = await login(credentials, token.value)
-
-    if (error.value)
-      return Promise.reject(error.value)
-
-    if (data.value) {
-      const { addDadosTitular } = useCartStore()
-      addDadosTitular(data.value.user)
-    }
-  }
-
   const getToken = async (): Promise<string> => {
     try {
       const { generateToken, validateToken } = useAuthApi()
@@ -34,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { login, getToken }
+  return { getToken }
 })
 
 if (import.meta.hot)
