@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CART_ROUTES } from '~~/types/cart'
 import type { IPlan, IProduct } from '~~/types/product'
 
 export interface IPlanCard {
@@ -22,6 +23,11 @@ const borderColor = props.product.mais_vendido ? getColor('secondary') : '#D1D1D
 const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL') as IPlan
 
 const store = useCartStore()
+
+const handlePurshaseButton = (product: IProduct) => {
+  store.addPlanoTitular(product)
+  navigateTo(CART_ROUTES.carrinho)
+}
 </script>
 
 <template>
@@ -59,7 +65,7 @@ const store = useCartStore()
       </v-btn>
       <v-divider class="my-4" />
       <PriceTag v-if="plan" :value="plan.valorTitular" class="mx-auto" />
-      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="store.addPlanoTitular(product)">
+      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="handlePurshaseButton(product)">
         Comprar
       </v-btn>
       <p>

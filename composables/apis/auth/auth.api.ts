@@ -1,26 +1,27 @@
-import { storeToRefs } from 'pinia'
 import type { ITitular } from '~~/types/customer'
-
-interface ILoginDTO {
-  token: string
-  expiration_date: Date | string
-}
 
 export const useAuthApi = () => {
   const { baseUrl } = useAppConfig()
-  const store = useAuthStore()
   const { getActiveBrandBasicToken } = useThemeController()
-
   const basic = getActiveBrandBasicToken()
-  const { token } = storeToRefs(store)
 
-  const authenticate = () => useFetch<ILoginDTO>(() => `${baseUrl}/authenticate/token`, {
+  const validateToken = (token: string) => useFetch<{ brand: number; tokenValidate: boolean }>(() => `${baseUrl}/authenticate/validtoken`, {
+    headers: {
+      authentication: `Bearer ${token}`,
+    },
+    method: 'POST',
+    server: false,
+  })
+
+  const generateToken = () => useFetch<{ token: string }>(() => `${baseUrl}/authenticate/token`, {
     headers: {
       authentication: `Basic ${basic}`,
     },
+    method: 'POST',
+    server: false,
   })
 
-  const login = (credentials: { login: string; senha: string }) => useFetch<{ user: ITitular }>(() => `${baseUrl}/authenticate/login`, {
+  const login = (credentials: { login: string; senha: string }, token: string) => useFetch<{ user: ITitular }>(() => `${baseUrl}/authenticate/login`, {
     headers: {
       authentication: `Bearer ${token}`,
     },
@@ -29,5 +30,5 @@ export const useAuthApi = () => {
     server: false,
   })
 
-  return { login, authenticate }
+  return { login, generateToken, validateToken }
 }

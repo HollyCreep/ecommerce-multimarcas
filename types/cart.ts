@@ -4,6 +4,7 @@ import type { PaymentTypes } from './payment'
 import type { Period } from '.'
 
 export const CART_ROUTES = {
+  carrinho: '/carrinho',
   titular: '/carrinho/titular',
   dependente: '/carrinho/dependente',
   checkout: '/carrinho/checkout',

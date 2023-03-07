@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { CART_ROUTES } from '~~/types/cart'
+
 const store = useCartStore()
+
+definePageMeta({
+  middleware: () => {
+    const store = useCartStore()
+    if (store.state.titular.customer)
+      return CART_ROUTES.checkout
+  },
+})
 </script>
 
 <template>

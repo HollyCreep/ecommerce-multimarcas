@@ -1,4 +1,6 @@
 import * as YUP from 'yup'
+// @ts-expect-error não existe tipagem
+import VueCardFormat from 'vue-credit-card-validation/src/validation'
 
 YUP.setLocale({
   mixed: {
@@ -32,6 +34,7 @@ YUP.addMethod(YUP.string, 'cpf', function (errorMessage = 'CPF inválido') {
     return result ?? createError({ path, message: errorMessage })
   })
 })
+
 // @ts-expect-error Yup Module augmantation/declaration not working properly.
 YUP.addMethod(YUP.string, 'cnpj', function (errorMessage = 'CNPJ inválido') {
   return this.test('cnpj-test', errorMessage, function (cnpj: string) {
@@ -61,6 +64,43 @@ YUP.addMethod(YUP.string, 'cnpj', function (errorMessage = 'CNPJ inválido') {
     n = 11 - n % 11
     n = n >= 10 ? 0 : n
     if (parseInt(c[13]) !== n)
+      return createError({ path, message: errorMessage })
+
+    return true
+  })
+})
+
+// @ts-expect-error Yup Module augmantation/declaration not working properly.
+YUP.addMethod(YUP.string, 'cardNumber', function (errorMessage = 'Número do cartão inválido') {
+  return this.test('credit-card-number-test', errorMessage, function (number: string) {
+    const { path, createError } = this
+    const result = VueCardFormat.validateCardNumber(number)
+
+    if (!result)
+      return createError({ path, message: errorMessage })
+
+    return true
+  })
+})
+// @ts-expect-error Yup Module augmantation/declaration not working properly.
+YUP.addMethod(YUP.string, 'cardExpiry', function (errorMessage = 'Data de expiração inválida') {
+  return this.test('credit-card-expiry-test', errorMessage, function (value: string) {
+    const { path, createError } = this
+    const result = VueCardFormat.validateCardExpiry(value)
+
+    if (!result)
+      return createError({ path, message: errorMessage })
+
+    return true
+  })
+})
+// @ts-expect-error Yup Module augmantation/declaration not working properly.
+YUP.addMethod(YUP.string, 'cardCVV', function (errorMessage = 'CVV inválido') {
+  return this.test('credit-card-cvv-test', errorMessage, function (number: string) {
+    const { path, createError } = this
+    const result = VueCardFormat.validateCardCVC(number)
+
+    if (!result)
       return createError({ path, message: errorMessage })
 
     return true

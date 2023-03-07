@@ -24,3 +24,11 @@
 }
 
 
+@font-face {
+  font-family: 'OCR';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'),
+    url('@/assets/fonts/OCR/OCR-A-Std-Regular.ttf') format('truetype');
+  font-display: swap;
+}

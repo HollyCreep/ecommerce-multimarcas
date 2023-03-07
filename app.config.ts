@@ -8,4 +8,5 @@ export default defineAppConfig({
     odontoSystem: '',
     bbDental: 'NmUzYTdlMjkyMGI5NmM5NGEwM2QwYjgxNmQ0MDdmNzg=MWMxMDBjZGJlYzAzYzM3ZWNlZGNhOTJjODVlNzk4NWIxZTA5ZWMwYg==',
   },
+  basicTokenBFF: 'dUd0QnRwdWJpZWJMUmdjRzNWSDlmNXJoX1dFYTowclpzRjAwQllvc19oR0RpMmJ0X0I2WHFiUk1h',
 })

@@ -25,12 +25,7 @@ definePageMeta({
       </h2>
     </v-col>
     <v-col cols="12" md="7">
-      <v-card class="px-6 py-8">
-        <h4 class="text-primary font-weight-bold">
-          Escolha a forma de pagamento
-        </h4>
-        <FormPayment />
-      </v-card>
+      <FormPayment />
     </v-col>
     <v-col cols="12" md="4" offset-md="1" order="first" order-md="last">
       <CartSteps class="mb-8" />
