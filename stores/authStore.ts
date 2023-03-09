@@ -1,19 +1,39 @@
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string>(null)
+  const token = useLocalStorage<string>('bearer', null)
+
+  const { public: { baseUrl } } = useRuntimeConfig()
+  const { getActiveBrandBasicToken } = useThemeController()
+  const basic = getActiveBrandBasicToken()
+
+  const validateToken = (token: string) => useFetch<{ brand: number; tokenValidate: boolean }>(() => `${baseUrl}/authenticate/validtoken`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'POST',
+    server: false,
+    parseResponse: res => JSON.parse(res),
+  })
+
+  const generateToken = () => useFetch<{ token: string }>(() => `${baseUrl}/authenticate/token`, {
+    headers: {
+      Authorization: `Basic ${basic}`,
+    },
+    method: 'POST',
+    server: false,
+    parseResponse: res => JSON.parse(res),
+  })
 
   const getToken = async (): Promise<string> => {
     try {
-      const { generateToken, validateToken } = useAuthApi()
-
       if (token.value) {
-        const { data } = await validateToken(token.value)
-        if (data.value.tokenValidate)
+        const { data: res } = await validateToken(token.value)
+        if (res.value.tokenValidate)
           return token.value
       }
 
-      const { data } = await generateToken()
-      if (data.value)
-        token.value = data.value.token
+      const { data: res2 } = await generateToken()
+      if (res2.value)
+        token.value = res2.value.token
       return token.value
     }
     catch (error) {

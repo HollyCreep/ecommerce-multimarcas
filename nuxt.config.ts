@@ -48,8 +48,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: '',
-      baseUrlBFF: '',
-      basicTokenBFF: '',
       basicTokens: {
         odontoPrev: '',
         odontoSystem: '',

@@ -142,7 +142,7 @@ const generateProducts = (): IProduct[] => [
 const PRODUTOS = generateProducts()
 
 export default [
-  rest.get('https://api.odontoprev.com.br:8243/products', (_, res, ctx) => {
+  rest.get('*/products', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.delay(500),
@@ -150,7 +150,7 @@ export default [
       ctx.json(PRODUTOS),
     )
   }),
-  rest.get('https://api.odontoprev.com.br:8243/products/:id', (req, res, ctx) => {
+  rest.get('*/products', (req, res, ctx) => {
     const { id } = req.params
     const produto = PRODUTOS.find(product => product.sku === id || getProductFriendlyName(product.nome) === id)
     return res(
