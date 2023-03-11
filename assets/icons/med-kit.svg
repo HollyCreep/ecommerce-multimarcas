@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="66.867" height="57.223" viewBox="0 0 66.867 57.223">
+  <g id="Grupo_11414" data-name="Grupo 11414" transform="translate(1.5 22.5)">
+    <g id="consulta_de_rotina" data-name="consulta de rotina" transform="translate(0 -20)">
+      <g id="first-aid-kit-6282_72611fa9-6183-4cee-a1b4-7ef316df2dcd">
+        <g id="Elipse_1474" data-name="Elipse 1474" transform="translate(18.433 17.552)" fill="none" class="stroke-secondary" stroke-width="2">
+          <circle cx="13.778" cy="13.778" r="13.778" stroke="none"/>
+          <circle cx="13.778" cy="13.778" r="12.778" fill="none"/>
+        </g>
+        <rect id="layer1" width="63.867" height="44.707" rx="6" transform="translate(0 8.516)" fill="none" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <path id="layer1-2" data-name="layer1" d="M23,15.516V11.258A4.258,4.258,0,0,1,27.258,7H37.9a4.258,4.258,0,0,1,4.258,4.258v4.258" transform="translate(-0.647 -8)" fill="none" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <path id="layer2" d="M33.985,29.722H29.263V25H25.722v4.722H21v3.541h4.722v4.722h3.541V33.263h4.722Z" transform="translate(4.933 0.052)" class="secondary stroke-secondary"  stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

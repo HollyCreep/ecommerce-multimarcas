@@ -42,7 +42,7 @@ export default defineNuxtConfig({
 
   ignore: [
     'components/ignore/home/',
-    'components/ignore/produto/',
+    // 'components/ignore/produto/',
   ],
 
   runtimeConfig: {

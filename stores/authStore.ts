@@ -26,8 +26,8 @@ export const useAuthStore = defineStore('auth', () => {
   const getToken = async (): Promise<string> => {
     try {
       if (token.value) {
-        const { data: res } = await validateToken(token.value)
-        if (res.value.tokenValidate)
+        const { data: res, error } = await validateToken(token.value)
+        if (!error.value && res.value.tokenValidate)
           return token.value
       }
 

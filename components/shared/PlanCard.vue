@@ -60,7 +60,7 @@ const handlePurshaseButton = (product: IProduct) => {
       </v-list>
       <a class="text-primary" href="https://www.google.com.br">Veja cobertura completa</a>
       <a class="text-primary" href="https://www.google.com.br">Condições gerais do plano</a>
-      <v-btn color="primary" variant="outlined" rounded="lg" class="mt-4" :to="`produtos/${product.sku}`">
+      <v-btn color="primary" variant="outlined" rounded="lg" class="mt-4" :to="`/produtos/${product.sku}`">
         Saiba mais
       </v-btn>
       <v-divider class="my-4" />

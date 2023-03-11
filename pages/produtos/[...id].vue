@@ -21,6 +21,7 @@ const { isNumber, getProductFriendlyName } = useUtils()
 const id = route.params.id[0]
 const productStore = useProductStore()
 const product = await productStore.getProduct(id)
+provide('product', product)
 
 isNumber(id) && !!product && router.replace(`/produtos/${getProductFriendlyName(product.nome)}`)
 

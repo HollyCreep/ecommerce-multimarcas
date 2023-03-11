@@ -150,7 +150,7 @@ export default [
       ctx.json(PRODUTOS),
     )
   }),
-  rest.get('*/products', (req, res, ctx) => {
+  rest.get('*/products/:id', (req, res, ctx) => {
     const { id } = req.params
     const produto = PRODUTOS.find(product => product.sku === id || getProductFriendlyName(product.nome) === id)
     return res(

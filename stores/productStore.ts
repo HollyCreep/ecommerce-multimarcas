@@ -9,9 +9,9 @@ export const useProductStore = defineStore('product', () => {
     const { getProductFriendlyName } = useUtils()
     if (!product.value || (product.value.sku !== id && getProductFriendlyName(product.value.nome) !== id)) {
       const { getProduct } = useProductsApi()
-      const { data } = await getProduct(id)
+      const { data, error } = await getProduct(id)
 
-      if (data && data.value)
+      if (!error.value && data.value)
         product.value = data.value
     }
 
@@ -21,9 +21,9 @@ export const useProductStore = defineStore('product', () => {
   const getFeaturedProducts = async (): Promise<IProduct[]> => {
     if (!featuredProducts.value.length) {
       const { fetchProducts } = useProductsApi()
-      const { data } = await fetchProducts()
+      const { data, error } = await fetchProducts()
 
-      if (data && data.value)
+      if (!error.value && data.value)
         featuredProducts.value = data.value
     }
 
