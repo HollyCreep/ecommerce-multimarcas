@@ -20,11 +20,17 @@ const borderColor = getColor(props.color)
   <fieldset>
     <legend v-text="title" />
     <div class="list">
-      <v-list-item v-for="(item, n) in items" :key="n" :title="item" class="item">
-        <template #prepend>
-          <v-icon :icon="icon" :color="color" size="2rem" />
-        </template>
-      </v-list-item>
+      <template v-for="(item, n) in items" :key="n">
+        <v-tooltip :text="item" location="end">
+          <template #activator="{ props: tooltipProps }">
+            <v-list-item :title="item" class="item" v-bind="tooltipProps">
+              <template #prepend>
+                <v-icon :icon="icon" :color="color" size="2rem" />
+              </template>
+            </v-list-item>
+          </template>
+        </v-tooltip>
+      </template>
     </div>
   </fieldset>
 </template>

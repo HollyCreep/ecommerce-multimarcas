@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import Slider from './Slider.vue'
-import Card from './Card.vue'
+import ComparatorCard from './ComparatorCard.vue'
+import type { IProduct } from '~~/types/product'
 const { getFeaturedProducts } = useProductStore()
 const state = ref({
   products: [],
 })
 
+const product = inject<IProduct>('product')
+const compareProduct = ref<IProduct>(null)
+
 const item1 = ref({
-  produto: state.value.products[0],
+  produto: product,
   cobertura: {
     title: 'Cobertura',
     color: 'primary-lighten-1',
@@ -32,8 +36,8 @@ const item1 = ref({
     ],
   },
 })
-const item2 = ref({
-  produto: state.value.products[0],
+const item2 = computed(() => ({
+  produto: compareProduct.value,
   cobertura: {
     title: 'Cobertura',
     color: 'primary-lighten-1',
@@ -58,7 +62,7 @@ const item2 = ref({
       'Prótese (completa)',
     ],
   },
-})
+}))
 
 onMounted(async () => {
   state.value.products = await getFeaturedProducts()
@@ -68,21 +72,13 @@ onMounted(async () => {
 <template>
   <v-row>
     <v-col cols="12" md="3" order-md="last">
-      <Slider :produtos="state.products" />
+      <Slider :produtos="state.products" @update:selected-product="$event => compareProduct = $event" />
     </v-col>
-    <v-col cols="4">
-      <Card id="card-target" class="fill-height" v-bind="item1" variant="flat" color="red" />
+    <v-col cols="12" md="5" order-md="2">
+      <ComparatorCard v-if="compareProduct" active v-bind="item2" variant="flat" color="transparent" />
     </v-col>
-    <v-col cols="5" style="position: relative;">
-      <Card class="fill-height active-card" v-bind="item2" color="red" />
+    <v-col cols="12" md="4">
+      <ComparatorCard id="card-target" v-bind="item1" variant="flat" color="transparent" />
     </v-col>
   </v-row>
 </template>
-
-<style lang="scss" scoped>
-$col-padding: 24px;
-$container-padding: 64px;
-    .active-card {
-        transform: scaleY(1.125);
-    }
-</style>

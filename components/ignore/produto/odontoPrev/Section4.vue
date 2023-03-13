@@ -4,7 +4,7 @@
 
 <template>
   <section>
-    <v-container>
+    <v-container class="mb-4">
       <h2 class="text-primary font-weight-bold">
         Ainda não encontrou seu plano ideal? Compare os produtos!
       </h2>

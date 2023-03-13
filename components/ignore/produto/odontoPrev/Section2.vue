@@ -73,7 +73,7 @@ const cards: IFieldSetCard[] = [
         </v-col>
       </v-row>
 
-      <h2 class="text-primary font-weight-bold mb-8">
+      <h2 class="text-primary font-weight-bold my-8">
         Informações do Plano
       </h2>
       <v-row>

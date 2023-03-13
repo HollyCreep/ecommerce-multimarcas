@@ -6,9 +6,11 @@ const props = withDefaults(defineProps<{
   tooltip?: string
   caption?: string
   size?: Size
+  textColor?: string
 }>(), {
   caption: 'débito em conta / cartão',
   size: 'large',
+  textColor: 'text-primary',
 })
 
 const { value, tooltip, caption } = props
@@ -23,7 +25,7 @@ const fontSize = computed(() => fonts[props.size])
 </script>
 
 <template>
-  <div class="price-tag d-flex flex-column" :class="[size, !!$attrs.dark ? 'text-white' : 'text-primary']">
+  <div class="price-tag d-flex flex-column" :class="[size, !!$attrs.dark ? 'text-white' : textColor]">
     <slot name="tooltip">
       <div v-if="tooltip" class="tooltip font-soletos" v-text="tooltip" />
     </slot>
