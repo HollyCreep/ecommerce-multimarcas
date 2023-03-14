@@ -29,7 +29,7 @@ const precoTitular = props.produto.planos.find(p => p.tipoNegociacao === 'MENSAL
           <FieldSetCard v-bind="naoCobertura" />
         </div>
 
-        <div class="d-flex justify-space-between mt-4">
+        <div class="d-flex justify-space-around mt-4">
           <PriceTag :value="precoTitular" size="small" text-color="text-primary-lighten-1">
             <template #append>
               <span class="text-white">débito em conta / cartão</span>

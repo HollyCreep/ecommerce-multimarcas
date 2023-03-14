@@ -5,6 +5,7 @@ export enum PaymentTypes {
 export interface IPaymentMethod {
   id: string
   name: PaymentTypes
+  installments?: number
 }
 
 export interface State {

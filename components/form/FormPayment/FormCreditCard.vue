@@ -12,7 +12,7 @@ const { handleSubmit, meta, values } = useForm<IFormCreditCard>({
     Expiration: string().cardExpiry().required(),
     SecurityCode: string().cardCVV().required(),
     HolderName: string().required(),
-    parcelas: string().required(),
+    installments: string().required(), // 1 | 3 | 6 | 12
     terms: bool().required().equals([true]),
   }),
 })
@@ -141,7 +141,7 @@ const res = await getCompanyAvaiblePaymentMethods()
       @brand="activeBrand = $event"
     />
 
-    <SelectInput name="parcelas" :items="parcelas" variant="underlined" label="Parcelas*" />
+    <SelectInput name="installments" :items="parcelas" variant="underlined" label="Parcelas*" />
 
     <InputsCheckboxInput color="primary" name="terms">
       <EnchantedText :link="{ text: 'termos de contrato', href: 'https://odontoprev.com.br/termos-de-uso' }">
