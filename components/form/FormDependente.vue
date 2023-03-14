@@ -183,7 +183,7 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
     </v-scroll-y-transition>
 
     <v-scroll-x-transition>
-      <v-container v-if="state.loading">
+      <div v-if="state.loading" class="container">
         <v-row
           class="fill-height"
           align-content="center"
@@ -205,7 +205,7 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
             />
           </v-col>
         </v-row>
-      </v-container>
+      </div>
     </v-scroll-x-transition>
 
     <v-scroll-x-transition>

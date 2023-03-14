@@ -24,28 +24,26 @@ const items = [
 </script>
 
 <template>
-  <section class="bg-primary-darken-1">
-    <v-container>
-      <v-timeline direction="horizontal" side="start" line-color="primary-lighten-1">
-        <v-timeline-item>
-          <EnchantedText tag="h2" class="font-weight-bold">
-            {{ 'Carência\n Reduzida!' }}
-          </EnchantedText>
-          <h3 class="font-noto-sans">
-            Até 31/01
-          </h3>
-        </v-timeline-item>
-        <v-timeline-item v-for="(item, i) in items" :key="i" dot-color="primary-darken-1" size="x-small">
-          <template #opposite>
-            <h4 class="font-weight-bold font-noto-sans" v-text="item.term" />
-          </template>
-          <div class="text-center">
-            <Icon filled :name="item.icon" color="white" secondary-color="primary-lighten-1" height="54px" />
-            <h4 class="font-noto-sans" v-text="item.text" />
-          </div>
-        </v-timeline-item>
-      </v-timeline>
-    </v-container>
+  <section class="bg-primary-darken-1 container-fluid py-8">
+    <v-timeline direction="horizontal" side="start" line-color="primary-lighten-1">
+      <v-timeline-item>
+        <EnchantedText tag="h2" class="font-weight-bold">
+          {{ 'Carência\n Reduzida!' }}
+        </EnchantedText>
+        <h3 class="font-noto-sans">
+          Até 31/01
+        </h3>
+      </v-timeline-item>
+      <v-timeline-item v-for="(item, i) in items" :key="i" dot-color="primary-darken-1" size="x-small">
+        <template #opposite>
+          <h4 class="font-weight-bold font-noto-sans" v-text="item.term" />
+        </template>
+        <div class="text-center">
+          <Icon filled :name="item.icon" color="white" secondary-color="primary-lighten-1" height="54px" />
+          <h4 class="font-noto-sans" v-text="item.text" />
+        </div>
+      </v-timeline-item>
+    </v-timeline>
   </section>
 </template>
 

@@ -4,7 +4,7 @@ const { fetchProducts } = useProductsApi()
 
 <template>
   <section id="odp-home-section-5" class="pb-16 ">
-    <v-container id="plans" class="px-0">
+    <div id="plans" class="px-0 container">
       <h2 class="text-primary text-center font-weight-bold mb-16">
         Os melhores planos para você
       </h2>
@@ -18,7 +18,7 @@ const { fetchProducts } = useProductsApi()
           </v-slide-group-item>
         </v-slide-group>
       </RequestLoader>
-    </v-container>
+    </div>
   </section>
 </template>
 

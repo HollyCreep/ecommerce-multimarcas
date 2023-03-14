@@ -20,7 +20,7 @@ const items = [
 </script>
 
 <template>
-  <v-container id="odp-home-section-6" tag="section">
+  <section id="odp-home-section-6" class="container">
     <h2 class="text-primary font-weight-bold text-center mb-6">
       A importância de um plano dental
     </h2>
@@ -39,7 +39,7 @@ const items = [
       </li>
       <v-img src="/images/odontoPrev/home/img-2.png" class="img" />
     </ul>
-  </v-container>
+  </section>
 </template>
 
 <style lang="scss" scoped>

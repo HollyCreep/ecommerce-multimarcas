@@ -1,6 +1,7 @@
 @import './-transitions.scss';
 @import './-fonts.scss';
 @import './-variables.scss';
+@import './-mixins.scss';
 @import './-typography.scss';
 @import './-overides.scss';
 
@@ -11,10 +12,49 @@
     filter: grayscale(100%);
   }
 
-  .v-container:not(.v-container--fluid) {
-    max-width: $container-size;
-    padding: $container-spacing;
-    margin: 0 auto;
+  .container {
+    @include container-base-styles;
+
+    &-fluid {
+      @include container-fluid-base-styles;
+    }
+
+    &-inset {
+      @include container-inset-base-styles;
+    }
+
+    @media screen and (min-width: 960px) {
+      &-fluid {
+        &.md-left {
+          padding-left: 0;
+        }
+        &.md-right {
+          padding-right: 0;
+        }
+        &.md-inset {
+          padding-left: calc(#{$container-padding} * 2);
+          padding-right: calc(#{$container-padding} * 2);
+        }
+        &.md-inset-left {
+          padding-left: calc(#{$container-padding} * 2);
+        }
+        &.md-inset-right {
+          padding-right: calc(#{$container-padding} * 2);
+        }
+      }
+
+      &-inset {
+        &.md-left {
+          margin-right: unset;
+          margin-left: auto;
+        }
+        &.md-right {
+          margin-left: unset;
+          margin-right: auto;
+        }
+      }
+
+    }
   }
 
   // For accessability

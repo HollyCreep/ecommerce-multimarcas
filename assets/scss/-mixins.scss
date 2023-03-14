@@ -1,0 +1,28 @@
+@mixin container-base-styles {
+  margin: 0 auto;
+  max-width: $container-size;
+  width: calc(100% - #{$container-min-padding} * 2);
+  
+  @media screen and (min-width: 1264px) {
+    width: calc(100% - #{$container-padding} * 2);
+  }
+}
+
+@mixin container-fluid-base-styles {
+  @include container-base-styles;
+  width: 100% !important;
+  padding: 0 $container-min-padding;
+  
+  @media screen and (min-width: 1264px) {
+    padding: 0 $container-padding;
+  }
+}
+
+@mixin container-inset-base-styles {
+  @include container-base-styles;
+  width: calc(100% - #{$container-min-padding} * 4);
+  
+  @media screen and (min-width: 1264px) {
+    width: calc(100% - #{$container-padding} * 4);
+  }
+}

@@ -9,12 +9,12 @@ defineProps<{ items: any[] }>()
       v-bind="{ ...{ height: 'auto' }, ...$attrs }"
       :items="items"
     >
-      <v-container class="h-100 py-6 d-flex flex-column" style="gap: 2rem">
+      <div class="container h-100 py-6 d-flex flex-column" style="gap: 2rem">
         <Header />
         <div class="hero-content">
           <slot v-bind="props" />
         </div>
-      </v-container>
+      </div>
     </Carousel>
   </div>
 </template>

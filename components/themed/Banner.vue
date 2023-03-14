@@ -24,11 +24,11 @@ const bannerProps = activeBrand.value?.resources?.components?.banner || null
     class="odp-custom-banner px-0"
     :class="bannerProps.color || 'bg-primary'"
   >
-    <v-container class="gap py-0 d-flex align-center">
+    <div class="container gap py-0 d-flex align-center">
       <Icon class="flex-shrink-0" color="primary-lighten-1" secondary-color="white" name="dente-shining" width="54" />
 
       <v-banner-text class="flex-grow-1 flex-shrink-1 px-0">
-        <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="text text-center font-weight-light">
+        <EnchantedText tag="h2" color="secondary" highlight="BLACKFRIDAY DENTAL" bold="BLACKFRIDAY DENTAL" class="text text-lg-center font-weight-light">
           BLACKFRIDAY DENTAL DESCONTOS DE ATÉ 20% E LIVRE DE CARÊNCIA
         </EnchantedText>
       </v-banner-text>
@@ -39,7 +39,7 @@ const bannerProps = activeBrand.value?.resources?.components?.banner || null
           APLICAR
         </v-btn>
       </div>
-    </v-container>
+    </div>
   </v-banner>
 </template>
 
