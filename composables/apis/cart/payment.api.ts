@@ -1,43 +1,63 @@
-import type { IPaymentMethod } from '~~/types/payment'
+import type { RequestOptions } from '../apiWrapper.api'
+import type { CreditCardBrands, ICreditCard, IPaymentMethod, Sistema } from '~~/types/payment'
+
+export interface ISaveAbandonedCartParams {
+  email: string
+  phone: string
+  planCode: number
+  quantity: number
+  price: number
+}
+
+export interface IGeneratePaymentTokenResponse {
+  sucesso: number
+  accessToken: string
+  mensagem?: string
+}
+
+export interface ITokenizarCartaoDTO extends ICreditCard {
+  AccessToken: string
+}
+
+interface ITokenizarCartaoResponse { PaymentToken: string }
+
+export interface ISaveCreditCardTokenLogDTO {
+  order: number
+  PaymentToken: string
+}
+
+interface ISaveCreditCardTokenLogResponse { PaymentToken: string }
+
+export interface ICobrarCartaoDTO {
+  flag: CreditCardBrands
+  cpf: string
+  name: string
+  paymentToken: string
+  installments: number
+  proposal: string
+  system: Sistema
+  price: string
+}
+
+interface ICobrarCartaoResponse { sucesso: number; mensagem: string }
 
 export const useCartPaymentApi = () => {
-  const { public: { baseUrl, baseUrlBFF, basicTokenBFF } } = useRuntimeConfig()
   const api = useApi()
+  const namespace = '/payment'
 
-  // const generateTokenBFF = () => api.get('/token', { baseURL: baseUrlBFF, headers: { Authorization: `Basic ${basicTokenBFF}` } })
+  const getCompanyAvaiblePaymentMethods = (options?: RequestOptions<IPaymentMethod[]>) => api.get<IPaymentMethod[]>(`${namespace}/available`, options)
 
-  const getCompanyAvaiblePaymentMethods = () => api.get<IPaymentMethod[]>('/payment/available')
+  const generatePaymentToken = (numeroProposta: string, options?: RequestOptions<IGeneratePaymentTokenResponse>) => api.post<IGeneratePaymentTokenResponse>(`${namespace}/token`, { ...options, body: { proposal: numeroProposta } })
 
-  // const gerarNumeroProposta = (token: string) =>
-  //   useFetch<{ numeroProposta: string }>(() => `${baseUrlBFF}/dcss/vendas/1.0/propostas/numero/canal/7073`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
+  const tokenizarCartao = (params: ITokenizarCartaoDTO, options?: RequestOptions<ITokenizarCartaoResponse>) => api.post<ITokenizarCartaoResponse>('/post/api/public/v1/card', {
+    ...options,
+    baseURL: 'https://transactionsandbox.pagador.com.br',
+    body: params,
+  })
 
-  // const generateTokenBrasspag = (numeroProposta: string, token: string) =>
-  //   useFetch<{ sucesso: number; mensagem?: string; accessToken: string }>(() => `${baseUrlBFF}/mip/1.0/captura/ticket/acessar/EcommercePFOdonto/${numeroProposta}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
+  const saveCreditCardTokenLog = (params: ISaveCreditCardTokenLogDTO, options?: RequestOptions<ISaveCreditCardTokenLogResponse>) => api.post<ISaveCreditCardTokenLogResponse>(`${namespace}/token/card/log`, { ...options, body: params })
 
-  // const tokenizarCartao = (params: ITokenizarCartaoDTO) =>
-  //   useFetch<IPaymentMethod[]>(() => 'https://transactionsandbox.pagador.com.br/post/api/public/v1/card', {
-  //     body: params,
-  //     method: 'POST',
-  //     server: false,
-  //   })
+  const cobrarCartao = (params: ICobrarCartaoDTO, options?: RequestOptions<ICobrarCartaoResponse>) => api.post<ICobrarCartaoResponse>(`${namespace}/credit/pay`, { ...options, body: params })
 
-  // const cobrarCartao = (params: ICobrarCartaoDTO, token: string) =>
-  //   useFetch<IPaymentMethod[]>(() => `${baseUrlBFF}/mip/1.0/captura/ticket/cobrar`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     body: params,
-  //     method: 'POST',
-  //     server: false,
-  //   })
-
-  return { getCompanyAvaiblePaymentMethods }
+  return { getCompanyAvaiblePaymentMethods, generatePaymentToken, tokenizarCartao, saveCreditCardTokenLog, cobrarCartao }
 }

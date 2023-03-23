@@ -19,9 +19,14 @@ const nameRef = toRef(props, 'name')
 const { errors, handleChange, value } = useField(nameRef)
 const formattedValue = ref('')
 
-const onMaska = (event: CustomEvent<MaskaDetail>) => {
-  formattedValue.value = (event.detail as MaskaDetail).masked
-  handleChange((event.detail as MaskaDetail).unmasked)
+watch(value, () => {
+  if (props.masked && formattedValue.value.length && !value.value)
+    formattedValue.value = ''
+})
+
+const onMaska = ({ detail }: CustomEvent<MaskaDetail>) => {
+  formattedValue.value = detail.masked
+  handleChange(detail.unmasked)
 }
 </script>
 

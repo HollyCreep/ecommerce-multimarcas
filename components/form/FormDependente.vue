@@ -2,6 +2,7 @@
 import { object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import TextInput from './inputs/TextInput.vue'
+import RadioInput from './inputs/RadioInput.vue'
 import type { IProduct } from '~~/types/product'
 import type { CartDependente } from '~~/types/cart'
 import type { IDependente } from '~~/types/customer'
@@ -35,6 +36,7 @@ const { handleSubmit, meta, setValues, validate } = useForm<IDependente>({
     rg: string().required(),
     nome_mae: string().required('O campo nome da mãe é obrigatório'),
     exp: string().required(),
+    gender: string().required('O campo gênero é obrigatório').oneOf(['MASCULINO', 'FEMININO']),
   }),
 })
 
@@ -133,6 +135,9 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
             variant="underlined"
             label="Nome da mãe"
           />
+        </v-col>
+        <v-col cols="12" md="6">
+          <RadioInput name="gender" label="Gênero" inline color="primary" density="compact" />
         </v-col>
       </v-row>
     </div>

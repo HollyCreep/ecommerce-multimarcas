@@ -4,6 +4,17 @@ import type { CartDependente, CartRoute } from '~~/types/cart'
 import { CART_ROUTES } from '~~/types/cart'
 
 definePageMeta({
+  middleware(to, from) {
+    const store = useCartStore()
+    if (!store.state.titular.customer || !store.state.titular.product)
+      return CART_ROUTES.carrinho
+
+    if (Object.prototype.hasOwnProperty.call(to.meta.pageTransition, 'name')) {
+      const previousStep = cartUtils.getRouteStep(from.path as CartRoute)
+      const currentStep = cartUtils.getRouteStep(to.path as CartRoute);
+      (to.meta.pageTransition as TransitionProps).name = currentStep > previousStep ? 'slide-left' : 'slide-right'
+    }
+  },
   validate: async (route) => {
     const [_ignore, index] = route.params.dependente
 

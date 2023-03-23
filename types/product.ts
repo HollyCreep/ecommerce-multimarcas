@@ -33,13 +33,3 @@ export interface IProduct {
   logo: string
   planos: IPlan[]
 }
-
-export interface IAddress {
-  cep: string
-  logradouro: string
-  numero: string | number
-  complemento?: string
-  bairro: string
-  cidade: string
-  estado: string
-}

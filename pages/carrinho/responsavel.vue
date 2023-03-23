@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import type { TransitionProps } from 'vue'
 import type { CartRoute } from '~~/types/cart'
 import { CART_ROUTES } from '~~/types/cart'
+
+const store = useCartStore()
+const { state } = storeToRefs(store)
+
+const handleFormSubmit = () => {
+  navigateTo(CART_ROUTES.checkout)
+}
 
 definePageMeta({
   pageTransition: {
@@ -24,12 +32,16 @@ definePageMeta({
 
 <template>
   <v-row>
-    <v-col cols="12" md="7">
-      <FormPayment />
+    <v-col cols="12">
+      <h2 class="text-primary font-weight-bold mb-2">
+        <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-4" />Identifique o responsável
+      </h2>
+      <p>Por se tratar de um titular menor de idade, é necessário a inclusão de um responsável.</p>
     </v-col>
-    <v-col cols="12" md="4" offset-md="1" order="first" order-md="last">
-      <CartSteps class="mb-8" />
-      <CartSummaryCard />
+    <v-col cols="12" md="7">
+      <v-card class="px-6 py-8">
+        <FormResponsavel v-model:responsavel="state.responsavel" @submit="handleFormSubmit" />
+      </v-card>
     </v-col>
   </v-row>
 </template>

@@ -1,5 +1,5 @@
 import type { IPlan, IProduct } from './product'
-import type { ICustomer, IDependente, ITitular } from './customer'
+import type { ICustomer, IDependente, IResponsavel, ITitular } from './customer'
 import type { PaymentTypes } from './payment'
 import type { Period } from '.'
 
@@ -7,6 +7,7 @@ export const CART_ROUTES = {
   carrinho: '/carrinho',
   titular: '/carrinho/titular',
   dependente: '/carrinho/dependente',
+  responsavel: '/carrinho/responsavel',
   checkout: '/carrinho/checkout',
 } as const
 
@@ -25,16 +26,16 @@ export interface IComputedCartPLan extends IPlan {
   logo: string
 }
 
-export interface IComputedCartItem {
+export interface IComputedCartItem<T = ICustomer> {
   plan: IComputedCartPLan
-  customer: ICustomer
+  customer: T
   delete: (params?: any) => void
   update: (params?: any) => void
 }
 
 export interface ICartSummary {
-  titular: IComputedCartItem
-  dependentes: IComputedCartItem[]
+  titular: IComputedCartItem<ITitular>
+  dependentes: IComputedCartItem<IDependente>[]
   qtdDependentes: number | string
   totalVidas: number | string
   valorTotal: number
@@ -55,6 +56,10 @@ export interface CartStore {
   selectedPeriodType: Period
   paymentMethod: PaymentTypes
   titular: CartTitular
+  responsavel: IResponsavel
   dependentes: CartDependente[]
   steps: ICartStepItem[]
+  contactId: number
+  clientOrderId: number
+  numberProposal: string
 }
