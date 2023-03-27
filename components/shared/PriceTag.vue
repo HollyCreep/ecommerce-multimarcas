@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   size?: Size
   textColor?: string
 }>(), {
-  caption: 'débito em conta / cartão',
+  caption: 'cartão de crédito / débito em conta',
   size: 'large',
   textColor: 'text-primary',
 })

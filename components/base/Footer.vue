@@ -17,24 +17,23 @@ const leftItems = [
   { text: 'Política de privacidade', href: '' },
   { text: 'Termos e condições', href: '' },
   { text: 'ANS', href: '' },
-  { text: 'Institucional', href: '' },
-  { text: 'Imprensa', href: '' },
-  { text: 'Trabalhe conosco', href: '' },
-  { text: 'Fornecedor', href: '' },
+  { text: 'Seja nosso corretor', href: '' },
 ]
 
 const rightItems = [
   { text: 'Porque comprar?', href: '' },
   { text: 'Encontre seu dentista', href: '' },
   { text: 'Conheça os planos', href: '' },
-  { text: 'Dúvidas Login', href: '' },
+  { text: 'Dúvidas', href: '' },
+  { text: 'Login', href: '' },
+
 ]
 
 const socialMedia: ISocialMedia[] = [
-  { svg: 'facebook', href: '' },
-  { svg: 'linkedin', href: '' },
-  { svg: 'youtube', href: '' },
-  { svg: 'instagram', href: '' },
+  { svg: 'facebook', href: 'https://www.facebook.com/OdontoprevOficial' },
+  { svg: 'linkedin', href: 'https://www.linkedin.com/company/odontoprev' },
+  { svg: 'youtube', href: 'https://www.youtube.com/user/OdontoPrevOficial' },
+  { svg: 'instagram', href: 'https://www.instagram.com/odontoprevoficial/?hl=en' },
 ]
 </script>
 
@@ -45,10 +44,8 @@ const socialMedia: ISocialMedia[] = [
         <NuxtLink to="/">
           <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="260px" />
         </NuxtLink>
-        <v-btn variant="text" size="small" class="mt-4 mb-6 d-block">
-          odontoprev.com.br
-        </v-btn>
-        <div class="d-flex">
+
+        <div class="d-flex mt-8">
           <GroupLinks :items="leftItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="border-e-md border-opacity-100 border-primary-darken-2 pr-4" />
 
           <GroupLinks :items="rightItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="pl-4" />
@@ -60,7 +57,7 @@ const socialMedia: ISocialMedia[] = [
         <v-row :no-gutters="mdAndUp" align="end" justify="space-between" class="text-center text-md-left mt-4 mt-md-0">
           <v-col cols="12" md="auto">
             <p class="mb-2">
-              Deficientes auditivos
+              Deficientes visuais
             </p>
             <v-btn color="primary-darken-2" class="mb-2" size="small">
               0800 722 2191

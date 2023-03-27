@@ -1,5 +1,18 @@
+<script setup lang="ts">
+import { CART_ROUTES } from '~~/types/cart'
+import type { IProduct } from '~~/types/product'
+
+const store = useCartStore()
+const product = await useProductStore().getProduct('2')
+
+const handlePurshaseButton = (product: IProduct) => {
+  store.addPlanoTitular(product)
+  navigateTo(CART_ROUTES.carrinho)
+}
+</script>
+
 <template>
-  <section id="odp-home-section-4" class="container-fluid md-inset-right bg-background pb-10 d-flex justify-end align-center">
+  <section id="plano-destaque" class="container-fluid md-inset-right bg-background pb-10 d-flex justify-end align-center">
     <div class="text-center text-md-left mx-lg-auto ml-md-auto">
       <h2 class="text-primary font-weight-bold mb-8 text-lg-center">
         Planos para você e sua família
@@ -15,7 +28,7 @@
           <p class="mb-8">
             Rol completo da ANS para que seu filho tenha a disposição nossa rede completa de dentistas.
           </p>
-          <v-btn min-width="210" color="secondary" class="rounded-lg ml-auto ml-md-0 mr-auto" size="large">
+          <v-btn min-width="210" color="secondary" class="rounded-lg ml-auto ml-md-0 mr-auto" size="large" @click="handlePurshaseButton(product)">
             CONTRATE AGORA
           </v-btn>
         </v-col>
@@ -28,7 +41,7 @@
 </template>
 
 <style lang="scss" scoped>
-#odp-home-section-4 {
+#plano-destaque {
     position: relative;
     min-height: 500px;
 
@@ -55,5 +68,11 @@
         }
       }
     }
+    @media (min-width: 1264px) {
+    &::before {
+      padding-left: 200px;
+    }
+  }
+
 }
 </style>

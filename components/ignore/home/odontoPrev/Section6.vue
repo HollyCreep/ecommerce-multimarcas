@@ -20,7 +20,7 @@ const items = [
 </script>
 
 <template>
-  <section id="odp-home-section-6" class="container">
+  <section id="importancia-plano" class="container">
     <h2 class="text-primary font-weight-bold text-center mb-6">
       A importância de um plano dental
     </h2>
@@ -32,7 +32,7 @@ const items = [
 
     <ul class="container">
       <li v-for="({ text, icon }, index) in items" :key="index" class="text-main" :class="`content${index + 1}`">
-        <EnchantedText tag="h5">
+        <EnchantedText tag="h4">
           {{ text }}
         </EnchantedText>
         <Icon width="48" color="primary" secondary-color="primary-lighten-1" :name="icon" />
@@ -43,7 +43,7 @@ const items = [
 </template>
 
 <style lang="scss" scoped>
-#odp-home-section-6 {
+#importancia-plano {
 
   .container {
     display: grid;

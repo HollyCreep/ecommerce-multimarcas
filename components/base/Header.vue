@@ -5,10 +5,20 @@ const menuItems: Link[] = [
   {
     text: 'Porque comprar?',
     href: '',
+    to: {
+      path: '/',
+      hash: '#quem-somos',
+    },
+    exact: true,
   },
   {
     text: 'Conheça dos planos',
     href: '',
+    to: {
+      path: '/',
+      hash: '#plano-destaque',
+    },
+    exact: true,
   },
   {
     text: 'Dúvidas',

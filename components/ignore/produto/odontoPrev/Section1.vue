@@ -20,7 +20,7 @@ const items = [
 </script>
 
 <template>
-  <Hero id="odp-home-section-1" v-slot="{ item }: { item: typeof items[0] }" :items="items">
+  <Hero id="inicio" v-slot="{ item }: { item: typeof items[0] }" :items="items">
     <div style="max-width: 40%" class="text-white d-flex flex-column">
       <Icon :name="product.logo" color="white" secondary-color="primary-lighten-1" class="text-h1 mx-auto" />
       <h1 class="mb-4 font-weight-bold text-primary-lighten-1 text-uppercase">

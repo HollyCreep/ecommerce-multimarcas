@@ -1,5 +1,5 @@
 <template>
-  <section id="odp-home-section-3" class="container-fluid md-inset bg-primary-darken-2 py-16">
+  <section id="rede-credenciada" class="container-fluid md-inset bg-primary-darken-2 py-16">
     <div class="text-center text-md-left mx-lg-auto mr-md-auto">
       <h2 class="text-primary-lighten-1 mb-6">
         A maior rede de atendimento do Brasil
@@ -34,13 +34,14 @@
 </template>
 
 <style lang="scss" scoped>
-#odp-home-section-3 {
+#rede-credenciada {
   position: relative;
 
   @media screen and (min-width: 600px) {
   > div {
       width: 100%;
       max-width: 50%;
+      margin-left: 132px;
     }
 
     &::after {
@@ -55,6 +56,5 @@
       background-position: right top;
     }
   }
-
 }
 </style>

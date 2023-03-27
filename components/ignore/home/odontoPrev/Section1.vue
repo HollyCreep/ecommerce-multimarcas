@@ -9,14 +9,17 @@ const items = [
     },
     action: {
       text: 'CONTRATE AGORA',
-      href: '',
+      to: {
+        path: '/',
+        hash: '#plano-destaque',
+      },
     },
   },
 ]
 </script>
 
 <template>
-  <Hero id="odp-home-section-1" v-slot="{ item }: { item: typeof items[0] }" :items="items">
+  <Hero id="inicio" v-slot="{ item }: { item: typeof items[0] }" :items="items">
     <div style="max-width: 450px" class="text-white">
       <h1 class="mb-4 font-weight-bold">
         {{ item.content.title }}
@@ -27,7 +30,7 @@ const items = [
       <p class="mb-8">
         {{ item.content.caption }}
       </p>
-      <v-btn color="secondary" :href="item.action.href" size="x-large" class="rounded-lg">
+      <v-btn color="secondary" size="x-large" class="rounded-lg" :to="item.action.to">
         {{ item.action.text }}
       </v-btn>
     </div>

@@ -3,7 +3,7 @@ const { fetchProducts } = useProductsApi()
 </script>
 
 <template>
-  <section id="odp-home-section-5" class="pb-16 ">
+  <section id="planos" class="pb-16 ">
     <div id="plans" class="px-0 container">
       <h2 class="text-primary text-center font-weight-bold mb-16">
         Os melhores planos para você
@@ -23,7 +23,7 @@ const { fetchProducts } = useProductsApi()
 </template>
 
 <style lang="scss" scoped>
-  #odp-home-section-5 {
+  #planos {
     :deep(.v-slide-group__container) {
       padding-top: 1rem;
 
