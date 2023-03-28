@@ -1,3 +1,5 @@
+export type Sistema = 'EcommercePFOdonto'
+
 export enum PaymentTypes {
   'BOLETO' = 'Boleto',
   'CARTAO_CREDITO' = 'CreditCard',
@@ -5,7 +7,8 @@ export enum PaymentTypes {
 export interface IPaymentMethod {
   id: string
   name: PaymentTypes
-  installments?: number
+  system: Sistema
+  installments?: number[]
 }
 
 export interface State {
@@ -14,7 +17,7 @@ export interface State {
 
 export type CreditCardBrands =
   | 'visa'
-  | 'mastercard'
+  | 'master'
   | 'amex'
   | 'elo'
 
@@ -26,22 +29,7 @@ export interface ICreditCard {
 }
 
 export interface IFormCreditCard extends ICreditCard {
-  parcelas: number
-}
-
-export interface ITokenizarCartaoDTO extends ICreditCard {
-  AccessToken: string
-}
-
-type Sistema = 'EcommercePFOdonto'
-
-export interface ICobrarCartaoDTO {
-  nome: string
-  paymentToken: string
-  prestacoes: number
-  proposta: string
-  sistema: Sistema
-  valor: number
+  installments: number
 }
 
 export type DynamicPaymentComponent = Partial<Record<PaymentTypes, any>>

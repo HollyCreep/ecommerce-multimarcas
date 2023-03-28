@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { fetchProducts } = useProductsApi()
+const { pending, data, error } = await fetchProducts()
 </script>
 
 <template>
@@ -8,7 +9,7 @@ const { fetchProducts } = useProductsApi()
       <h2 class="text-primary text-center font-weight-bold mb-16">
         Os melhores planos para você
       </h2>
-      <RequestLoader v-slot="{ data }" :request="fetchProducts" :retry="3">
+      <RequestLoader v-bind="{ pending, error }">
         <v-slide-group center-active>
           <v-slide-group-item v-for="(product, i) in data" :key="i">
             <PlanCard

@@ -2,31 +2,57 @@
 import FormBoleto from './FormBoleto.vue'
 import FormCreditCard from './FormCreditCard.vue'
 import FormDebit from './FormDebit.vue'
+import type { IPaymentMethod } from '~~/types/payment'
+
+const { getCompanyAvaiblePaymentMethods } = useCartPaymentApi()
+
 const components = {
-  FormBoleto,
-  FormCreditCard,
-  FormDebit,
+  1: FormCreditCard,
+  2: FormDebit,
+  3: FormBoleto,
 }
 
-const activeComponent = ref<keyof typeof components>('FormCreditCard')
+const state = ref({
+  items: [] as IPaymentMethod[],
+})
+
+const activeIndex = ref<keyof typeof components>(null)
+const activeComponent = computed(() => components[activeIndex.value])
+const currentPaymentMethod = computed(() => state.value.items.find(i => +i.id === activeIndex.value))
+
+const { data, pending } = await getCompanyAvaiblePaymentMethods({ lazy: true })
+if (data.value) {
+  state.value.items = data.value
+  activeIndex.value = +state.value.items[0].id as keyof typeof components
+}
 </script>
 
 <template>
+  <h2 class="text-primary font-weight-bold mb-8">
+    <Icon name="user" color="primary" secondary-color="primary-lighten-1" class="mr-2" />
+    Detalhes e pagamento
+  </h2>
   <v-card class="px-6 py-8 mb-8" rounded="lg">
     <h4 class="text-primary font-weight-bold">
       Escolha a forma de pagamento
     </h4>
     <v-divider class="my-4" />
-    <v-radio-group v-model="activeComponent" inline mandatory color="primary" hide-details>
-      <v-radio label="Cartão de crédito" value="FormCreditCard" />
-      <v-radio label="Débito em conta" value="FormBoleto" />
-      <v-radio label="Boleto" value="FormDebit" />
-    </v-radio-group>
+    <v-scroll-x-transition mode="out-in">
+      <FunctionalsLinearLoaderPlaceholder v-if="pending">
+        Buscando formas de pagamento...
+      </FunctionalsLinearLoaderPlaceholder>
+      <v-radio-group v-else-if="state.items.length" v-model="activeIndex" inline mandatory color="primary" hide-details>
+        <v-radio v-for="item in data" :key="item.id" :label="item.name" :value="+item.id" :model-value="item.id" />
+      </v-radio-group>
+      <h5 v-else>
+        Falha ao carregar métodos de paganto, tente novamente em breve.
+      </h5>
+    </v-scroll-x-transition>
   </v-card>
 
   <div class="px-6">
     <v-scroll-x-transition mode="out-in">
-      <component :is="components[activeComponent]" />
+      <component :is="activeComponent" v-bind="currentPaymentMethod" />
     </v-scroll-x-transition>
   </div>
 </template>

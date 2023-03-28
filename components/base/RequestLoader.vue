@@ -1,35 +1,40 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  request: (params?: any) => Promise<any>
-  params?: any
-  retry?: number
-}>(), {
-  params: {},
-})
-
-const { data, pending, error, refresh } = await props.request(props.params)
-
-let attempts = 0
-if (!!error && props.retry && attempts < props.retry) {
-  attempts++
-  refresh()
+interface Props {
+  pending?: boolean
+  error?: any
 }
+defineProps<Props>()
 </script>
 
 <template>
-  <div>
-    <h1 v-if="pending">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        size="3rem"
-      />
-    </h1>
+  <v-fade-transition mode="out-in">
+    <v-row
+      v-if="pending"
+      class="fill-height"
+      align-content="center"
+      justify="center"
+    >
+      <v-col
+        class="text-subtitle-1 text-center"
+        cols="12"
+      >
+        Carregando...
+      </v-col>
+      <v-col cols="6">
+        <v-progress-linear
+          rounded
+          indeterminate
+          color="primary"
+          size="3rem"
+          class="mx-auto d-block"
+        />
+      </v-col>
+    </v-row>
     <h1 v-else-if="error" class="text-error">
       Ops! Algo inesperado aconteceu ! {{ error }}
     </h1>
     <template v-else>
-      <slot :data="data" />
+      <slot />
     </template>
-  </div>
+  </v-fade-transition>
 </template>

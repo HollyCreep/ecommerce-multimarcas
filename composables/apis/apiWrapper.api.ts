@@ -1,8 +1,9 @@
 import type { NitroFetchRequest } from 'nitropack'
 import type { KeyOfRes } from 'nuxt/dist/app/composables/asyncData'
+import { storeToRefs } from 'pinia'
 import type { UseFetchOptions } from '#app'
 
-type RequestOptions<T> = UseFetchOptions<
+export type RequestOptions<T> = UseFetchOptions<
 T extends void ? unknown : T,
 (res: T extends void ? unknown : T) => T extends void ? unknown : T,
 KeyOfRes<
@@ -12,37 +13,37 @@ KeyOfRes<
 | undefined
 
 export const useApi = () => {
-  async function get<T>(request: NitroFetchRequest, opts?: RequestOptions<T>) {
+  function get<T>(request: NitroFetchRequest, options?: RequestOptions<T>) {
     const config = useRuntimeConfig()
-    const { getToken } = useAuthStore()
-    const token = await getToken()
+    const store = useAuthStore()
+    const { token } = storeToRefs(store)
+    const shouldRetry = ref(true)
 
     return useFetch<T>(request, {
       baseURL: config.public.baseUrl,
-      ...opts,
-      onRequest({ request, options }) {
+      server: false,
+      watch: [token],
+      parseResponse: res => JSON.parse(res),
+      ...options,
+      onRequest({ options }) {
         const headers = options?.headers ? new Headers(options.headers) : new Headers()
-
-        if (!headers.has('Authorization') && !!token)
-          headers.set('Authorization', `Bearer ${token}`)
+        if (!headers.has('Authorization') && !!token.value)
+          headers.set('Authorization', `Bearer ${token.value}`)
 
         options.headers = headers
       },
-      onRequestError({ request, options, error }) {
-        console.error(error)
-      },
-      onResponse({ request, response, options }) {
-        return response._data
-      },
-      onResponseError({ request, response, options }) {
-        console.error('[fetch response error]', request, response.status, response.body)
+      onResponseError({ response, error }) {
+        if (response.status === 401 && !!shouldRetry.value) {
+          shouldRetry.value = false
+          store.refreshToken()
+        }
       },
     })
   }
 
-  function post<T>(request: NitroFetchRequest, opts?: RequestOptions<T>) {
-    return get(request, {
-      ...opts,
+  function post<T>(request: NitroFetchRequest, options?: RequestOptions<T>) {
+    return get<T>(request, {
+      ...options,
       method: 'POST',
     })
   }

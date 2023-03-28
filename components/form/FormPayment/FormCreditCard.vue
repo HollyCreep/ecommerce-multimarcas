@@ -3,69 +3,79 @@ import { bool, object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import TextInput from '../inputs/TextInput.vue'
 import SelectInput from '../inputs/SelectInput.vue'
-import type { CreditCardBrands, IFormCreditCard } from '~~/types/payment'
+import type { CreditCardBrands, IFormCreditCard, Sistema } from '~~/types/payment'
 
+const props = defineProps<{ system: Sistema; installments?: number[] }>()
 const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submit', value: IFormCreditCard): void }>()
+
+const store = useCartStore()
+const loading = ref(false)
+const activeBrand = ref<CreditCardBrands>(null)
+const flipCreditCard = ref(false)
+
+const creditCardMask = { mask: '#### #### #### ####' }
+const expirationMask = { mask: ['##/##', '##/####'] }
+const CVVMask = { mask: '###' }
+const cardBrandLogos: Record<CreditCardBrands, string> = {
+  master: 'creditCardBrands/mastercard',
+  visa: 'creditCardBrands/visa',
+  amex: 'creditCardBrands/amex',
+  elo: 'creditCardBrands/elo',
+}
+
 const { handleSubmit, meta, values } = useForm<IFormCreditCard>({
   validationSchema: object({
     RawNumber: string().cardNumber().required(),
     Expiration: string().cardExpiry().required(),
     SecurityCode: string().cardCVV().required(),
     HolderName: string().required(),
-    installments: string().required(), // 1 | 3 | 6 | 12
+    installments: string().required(),
     terms: bool().required().equals([true]),
   }),
 })
 
+const parcelas = computed(() => {
+  if (!props.installments.length)
+    return [{ value: 1, title: `${1}x - ${store.total} ` }]
+
+  return props.installments.reduce((acc, qtdParcelas) => {
+    const valorParcela = (store.total / qtdParcelas).toFixed(2)
+    acc.push({ value: qtdParcelas, title: `${qtdParcelas}x - ${valorParcela} ` })
+    return acc
+  }, [])
+})
+
+const onSubmit = handleSubmit(async (creditCard, { resetForm }) => {
+  const paymentApi = useCartPaymentApi()
+  loading.value = true
+  const { data: token } = await paymentApi.generatePaymentToken(store.state.numberProposal)
+  const { data: paymentToken } = await paymentApi.tokenizarCartao({ ...creditCard, AccessToken: token.value.accessToken })
+  const { data, error } = await paymentApi.cobrarCartao({
+    flag: activeBrand.value,
+    cpf: store.state.titular.customer.cpf,
+    name: store.state.titular.customer.name,
+    paymentToken: paymentToken.value.PaymentToken,
+    installments: creditCard.installments,
+    proposal: store.state.numberProposal,
+    system: props.system,
+    price: cartUtils.convertNumberToAPIFormat(store.total),
+  })
+
+  if (data.value && !error)
+    resetForm()
+
+  loading.value = false
+})
+
+function flipCard() {
+  flipCreditCard.value = !flipCreditCard.value
+}
+function handleBrandChange(newBrand: CreditCardBrands) {
+  activeBrand.value = newBrand
+}
 watchEffect(async () => {
   emit('valid', meta.value.valid)
 })
-
-const fakeLoading = ref(false)
-
-const onSubmit = handleSubmit((creditCard, { resetForm }) => {
-  emit('submit', creditCard)
-  fakeLoading.value = true
-  setTimeout(() => {
-    fakeLoading.value = false
-    resetForm()
-  }, 1000)
-})
-
-const activeBrand = ref('')
-
-const cardBrandToClass: Record<CreditCardBrands, string> = {
-  mastercard: 'creditCardBrands/mastercard',
-  visa: 'creditCardBrands/visa',
-  amex: 'creditCardBrands/amex',
-  elo: 'creditCardBrands/elo',
-}
-
-const creditCardMask = { mask: '#### #### #### ####' }
-const expirationMask = { mask: ['##/##', '##/####'] }
-const CVVMask = { mask: '###' }
-
-const parcelas = ref([
-  { value: 1, title: `${1}x - ${100} ( sem juros ) ` },
-  { value: 2, title: `${2}x - ${100} ( sem juros )` },
-  { value: 3, title: `${3}x - ${100} ( sem juros )` },
-  { value: 4, title: `${4}x - ${100} ` },
-  { value: 5, title: `${5}x - ${100} ` },
-  { value: 6, title: `${6}x - ${100} ` },
-  { value: 7, title: `${7}x - ${100} ` },
-  { value: 8, title: `${8}x - ${100} ` },
-  { value: 9, title: `${9}x - ${100} ` },
-  { value: 11, title: `${11}x - ${100} ` },
-  { value: 12, title: `${12} - ${100} ` },
-])
-
-const flipCreditCard = ref(false)
-const flipCard = () => {
-  flipCreditCard.value = !flipCreditCard.value
-}
-
-const { getCompanyAvaiblePaymentMethods } = useCartPaymentApi()
-const res = await getCompanyAvaiblePaymentMethods()
 </script>
 
 <template>
@@ -82,7 +92,7 @@ const res = await getCompanyAvaiblePaymentMethods()
         mandatory
       >
         <v-item
-          v-for="(logo, brand) in cardBrandToClass"
+          v-for="(logo, brand) in cardBrandLogos"
           v-slot="{ selectedClass }"
           :key="brand"
           :value="brand"
@@ -138,7 +148,7 @@ const res = await getCompanyAvaiblePaymentMethods()
       :card-owner="values.HolderName"
       :card-cvv="values.SecurityCode"
       :card-expiration="values.Expiration"
-      @brand="activeBrand = $event"
+      @brand="handleBrandChange"
     />
 
     <SelectInput name="installments" :items="parcelas" variant="underlined" label="Parcelas*" />
@@ -149,7 +159,7 @@ const res = await getCompanyAvaiblePaymentMethods()
       </EnchantedText>
     </InputsCheckboxInput>
 
-    <v-btn color="secondary" size="large" type="submit" variant="flat" class="mt-4" rounded="lg" :loading="fakeLoading">
+    <v-btn color="secondary" size="large" type="submit" variant="flat" class="mt-4" rounded="lg" :loading="loading">
       Finalizar compra
     </v-btn>
   </v-form>

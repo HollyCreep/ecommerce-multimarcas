@@ -24,7 +24,7 @@ const { resumo } = storeToRefs(store)
         </p>
         <div class="d-flex justify-space-between text-main">
           <p class="font-weight-bold text-subtitle-1 font-noto-sans">
-            {{ resumo.titular.plan.nomeFantasia }}
+            {{ resumo.titular.customer.name }}
           </p>
           <div class="d-flex align-center">
             <p class=" text-subtitle-1 font-noto-sans mr-2">
@@ -83,8 +83,12 @@ const { resumo } = storeToRefs(store)
       </template>
     </v-slide-x-transition>
 
-    <v-btn color="secondary" variant="text" prepend-icon="mdi-plus" class="font-weight-bold text-subtitle-1 font-noto-sans px-0" density="comfortable" :to="CART_ROUTES.dependente">
-      Adicionar dependente
+    <v-btn
+      v-if="!store.isTitularMenorDeIdade || (store.isTitularMenorDeIdade && !store.state.responsavel)"
+      color="secondary" variant="text" prepend-icon="mdi-plus" class="font-weight-bold text-subtitle-1 font-noto-sans px-0" density="comfortable"
+      :to="store.isTitularMenorDeIdade ? CART_ROUTES.responsavel : CART_ROUTES.dependente"
+    >
+      Adicionar {{ store.isTitularMenorDeIdade ? 'responsável' : 'dependente' }}
     </v-btn>
 
     <v-divider class="my-2" />

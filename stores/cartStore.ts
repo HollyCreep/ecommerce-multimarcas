@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia'
 import type { IProduct } from '~~/types/product'
-import type { IDependente, ITitular } from '~~/types/customer'
+import type { IDependente, IResponsavel, ITitular } from '~~/types/customer'
 import type { CartDependente, CartSteps, CartStore, CartTitular, ICartSummary, IComputedCartItem } from '~/types/cart'
-
 import type { Period } from '~~/types'
 
 const defaultValues: CartStore = {
   selectedPeriodType: 'MENSAL',
+  contactId: null,
+  clientOrderId: null,
+  numberProposal: null,
   paymentMethod: null,
   titular: {},
   dependentes: [],
+  responsavel: null,
   steps: [
     { text: 'Cadastrar titular', step: 'titular', valid: false, required: true },
     { text: 'Detalhes Pagamento', step: 'checkout' },
@@ -48,6 +51,14 @@ export const useCartStore = defineStore('cart', () => {
   const deletePlanoTitular = () => {
     state.value.titular.product = undefined
   }
+  const isTitularMenorDeIdade = computed((): boolean => {
+    try {
+      return cartUtils.isMenorDeIdade(state.value.titular.customer.birthdate)
+    }
+    catch (error) {
+      return false
+    }
+  })
 
   /* DEPENDENTE _______________________________________________________________ */
   const addDependente = (payload: CartDependente) => {
@@ -76,6 +87,17 @@ export const useCartStore = defineStore('cart', () => {
   }
   const removerDependente = (index: number) => {
     state.value.dependentes.splice(index, 1)
+  }
+
+  /* RESPONSÁVEL _______________________________________________________________ */
+  const addResponsavel = (payload: IResponsavel) => {
+    state.value.responsavel = payload
+  }
+  const updateResponsavel = (payload: Partial<IResponsavel>): void | Error => {
+    state.value.responsavel = { ...state.value.responsavel, ...payload }
+  }
+  const removerResponsavel = () => {
+    state.value.responsavel = null
   }
 
   /* -------------------------------------------------------------------------- */
@@ -149,8 +171,12 @@ export const useCartStore = defineStore('cart', () => {
     const valorTotal = total.value
     const period = state.value.selectedPeriodType
 
-    return { titular, dependentes, qtdDependentes, totalVidas, valorTotal, period }
+    return { titular: titular as IComputedCartItem<ITitular>, dependentes: dependentes as IComputedCartItem<IDependente>[], qtdDependentes, totalVidas, valorTotal, period }
   })
+
+  const reset = () => {
+    Object.assign(state.value, defaultValues)
+  }
 
   return {
     state,
@@ -161,12 +187,17 @@ export const useCartStore = defineStore('cart', () => {
     addTitular,
     deleteTitular,
     deletePlanoTitular,
+    isTitularMenorDeIdade,
 
     addDependente,
     getDependente,
     updateDependente,
     updateDadosDependente,
     removerDependente,
+
+    addResponsavel,
+    updateResponsavel,
+    removerResponsavel,
 
     changePeriod,
 
@@ -177,6 +208,8 @@ export const useCartStore = defineStore('cart', () => {
     count,
     items,
     resumo,
+
+    reset,
   }
 })
 
