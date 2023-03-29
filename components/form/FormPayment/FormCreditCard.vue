@@ -6,15 +6,16 @@ import SelectInput from '../inputs/SelectInput.vue'
 import type { CreditCardBrands, IFormCreditCard, Sistema } from '~~/types/payment'
 
 const props = defineProps<{ system: Sistema; installments?: number[] }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submit', value: IFormCreditCard): void }>()
+const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submited'): void }>()
 
-const store = useCartStore()
-const loading = ref(false)
+const cartStore = useCartStore()
+const appStore = useAppStore()
+const error = ref(null)
 const activeBrand = ref<CreditCardBrands>(null)
 const flipCreditCard = ref(false)
 
 const creditCardMask = { mask: '#### #### #### ####' }
-const expirationMask = { mask: ['##/##', '##/####'] }
+const expirationMask = { mask: '##/####' }
 const CVVMask = { mask: '###' }
 const cardBrandLogos: Record<CreditCardBrands, string> = {
   master: 'creditCardBrands/mastercard',
@@ -36,10 +37,10 @@ const { handleSubmit, meta, values } = useForm<IFormCreditCard>({
 
 const parcelas = computed(() => {
   if (!props.installments.length)
-    return [{ value: 1, title: `${1}x - ${store.total} ` }]
+    return [{ value: 1, title: `${1}x - ${cartStore.total} ` }]
 
   return props.installments.reduce((acc, qtdParcelas) => {
-    const valorParcela = (store.total / qtdParcelas).toFixed(2)
+    const valorParcela = (cartStore.total / qtdParcelas).toFixed(2)
     acc.push({ value: qtdParcelas, title: `${qtdParcelas}x - ${valorParcela} ` })
     return acc
   }, [])
@@ -47,24 +48,45 @@ const parcelas = computed(() => {
 
 const onSubmit = handleSubmit(async (creditCard, { resetForm }) => {
   const paymentApi = useCartPaymentApi()
-  loading.value = true
-  const { data: token } = await paymentApi.generatePaymentToken(store.state.numberProposal)
-  const { data: paymentToken } = await paymentApi.tokenizarCartao({ ...creditCard, AccessToken: token.value.accessToken })
-  const { data, error } = await paymentApi.cobrarCartao({
-    flag: activeBrand.value,
-    cpf: store.state.titular.customer.cpf,
-    name: store.state.titular.customer.name,
-    paymentToken: paymentToken.value.PaymentToken,
-    installments: creditCard.installments,
-    proposal: store.state.numberProposal,
-    system: props.system,
-    price: cartUtils.convertNumberToAPIFormat(store.total),
-  })
+  appStore.startBuffering(4, 'Processando pagamento')
+  error.value = null
 
-  if (data.value && !error)
-    resetForm()
+  try {
+    const { data: token } = await paymentApi.generatePaymentToken(cartStore.state.numberProposal)
+    appStore.updateBuffer()
 
-  loading.value = false
+    const { data: paymentToken } = await paymentApi.tokenizarCartao({ ...creditCard, AccessToken: token.value.accessToken })
+    appStore.updateBuffer()
+
+    await paymentApi.saveCreditCardTokenLog({ order: cartStore.state.clientOrderId, PaymentToken: paymentToken.value.PaymentToken })
+    appStore.updateBuffer()
+
+    const { data: result } = await paymentApi.cobrarCartao({
+      flag: activeBrand.value,
+      cpf: cartStore.state.titular.customer.cpf,
+      name: cartStore.state.titular.customer.name,
+      paymentToken: paymentToken.value.PaymentToken,
+      installments: creditCard.installments,
+      proposal: cartStore.state.numberProposal,
+      system: props.system,
+      price: cartUtils.convertNumberToAPIFormat(cartStore.total),
+    })
+    appStore.updateBuffer()
+
+    if (result.value.sucesso === 1) {
+      emit('submited')
+      appStore.updateBuffer({ status: 'success', message: 'Pagamento realizado com sucesso!' })
+      resetForm()
+    }
+    else {
+      error.value = result.value.mensagem
+      appStore.updateBuffer({ status: 'error', message: result.value.mensagem })
+    }
+  }
+  catch (e) {
+    error.value = 'Tentar novamente ou pagar com outro método.'
+    appStore.updateBuffer({ status: 'error', message: 'Falha ao processar pagamento.' })
+  }
 })
 
 function flipCard() {
@@ -125,7 +147,7 @@ watchEffect(async () => {
             name="Expiration"
             variant="underlined"
             label="Validade*"
-            placeholder="MM/AA"
+            placeholder="MM/AAAA"
           />
         </v-col>
         <v-col cols="12" md="6">
@@ -153,13 +175,30 @@ watchEffect(async () => {
 
     <SelectInput name="installments" :items="parcelas" variant="underlined" label="Parcelas*" />
 
-    <InputsCheckboxInput color="primary" name="terms">
+    <InputsCheckboxInput color="primary" name="terms" density="compact">
       <EnchantedText :link="{ text: 'termos de contrato', href: 'https://odontoprev.com.br/termos-de-uso' }">
         Eu aceito os termos de contrato
       </EnchantedText>
     </InputsCheckboxInput>
 
-    <v-btn color="secondary" size="large" type="submit" variant="flat" class="mt-4" rounded="lg" :loading="loading">
+    <v-slide-x-transition>
+      <v-alert
+        v-if="error"
+        prominent
+        type="error"
+        variant="text"
+        closable
+        class="px-0"
+      >
+        <h6 class="text-main">
+          Ops! Aconteceu um problema seu pagamento.
+        </h6>
+        <h6 class="text-main font-weight-bold">
+          {{ error }}
+        </h6>
+      </v-alert>
+    </v-slide-x-transition>
+    <v-btn color="secondary" size="large" type="submit" variant="flat" class="mt-4" rounded="lg" :loading="appStore.loading">
       Finalizar compra
     </v-btn>
   </v-form>

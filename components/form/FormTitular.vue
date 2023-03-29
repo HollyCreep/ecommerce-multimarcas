@@ -15,10 +15,17 @@ interface ITitularForm extends ITitular {
 const props = defineProps<{ customer?: ITitular }>()
 const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'update:customer', value: ITitular): void; (e: 'submit'): void }>()
 
-const { handleSubmit, meta, values, errors, setValues, validate } = useForm<ITitularForm>({
+const cpfMask = { mask: '###.###.###-##' }
+const dataMask = { mask: ['##/##/##', '##/##/####'] }
+const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
+const loading = ref(false)
+const error = ref(null)
+const mounted = ref(false)
+
+const { handleSubmit, resetForm, meta, values, errors, setValues, validate } = useForm<ITitularForm>({
   validationSchema: object({
     name: string().required('O campo nome é obrigatório'),
-    birthdate: string().required('O campo data de nascimento é obrigatório'),
+    birthdate: string().required('O campo data de nascimento é obrigatório').min(8),
     cpf: string().cpf().required(),
     rg: string().required(),
     documentIssue: string().required('O campo exp é obrigatório'),
@@ -38,28 +45,41 @@ const { handleSubmit, meta, values, errors, setValues, validate } = useForm<ITit
   }),
 })
 
-watchEffect(async () => {
-  emit('valid', meta.value.valid)
+onMounted(async () => {
+  if (props.customer) {
+    setValues({ ...props.customer, repeatEmail: props.customer.email, complement: '' })
+    await validate()
+  }
+  mounted.value = true
 })
 
-onMounted(() => {
-  if (props.customer) {
-    setValues({ ...props.customer, repeatEmail: props.customer.email })
-    validate()
-  }
-})
+watchEffect(() => emit('valid', meta.value.valid))
+
+watch(() => values.email, (newEmail, oldEmail) => {
+  if (!!newEmail && newEmail !== oldEmail && !Object.prototype.hasOwnProperty.call(errors.value, 'email'))
+    handleSaveAbandonedCart()
+}, { immediate: false })
+
+watch(() => values.phone, (newPhone, oldPhone) => {
+  if (!!newPhone && newPhone !== oldPhone && !Object.prototype.hasOwnProperty.call(errors.value, 'phone'))
+    handleSaveAbandonedCart()
+}, { immediate: false })
 
 const store = useCartStore()
 const { saveAbandonedCart, saveClient } = useCartClientApi()
+
 async function handleSaveAbandonedCart() {
   if (
-    !!values.email
+    !!mounted.value
+    && !loading.value
+    && !!values.email
     && !!values.phone
     && !Object.prototype.hasOwnProperty.call(errors, 'email')
     && !Object.prototype.hasOwnProperty.call(errors, 'phone')
   ) {
     const plan = store.state.titular.product.planos.find(p => p.tipoNegociacao === store.state.selectedPeriodType)
-    const { data, pending } = await saveAbandonedCart({
+    loading.value = true
+    const { data } = await saveAbandonedCart({
       email: values.email,
       phone: values.phone,
       planCode: plan.codigoPlano,
@@ -67,32 +87,28 @@ async function handleSaveAbandonedCart() {
       quantity: 1,
       contactId: store.state.contactId,
     })
+    loading.value = false
     if (data.value) {
       store.state.contactId = data.value.contactId
       store.state.clientOrderId = data.value.clientOrderId
       store.state.numberProposal = data.value.numberProposal
+      return true
     }
+    return false
   }
 }
 
-watch(() => values.email, (newEmail, oldEmail) => {
-  if (!!newEmail && newEmail !== oldEmail && !Object.prototype.hasOwnProperty.call(errors.value, 'email'))
-    handleSaveAbandonedCart()
-})
-watch(() => values.phone, (newPhone, oldPhone) => {
-  if (!!newPhone && newPhone !== oldPhone && !Object.prototype.hasOwnProperty.call(errors.value, 'phone'))
-    handleSaveAbandonedCart()
-})
-
-const loading = ref(false)
 const onSubmit = handleSubmit(async (FormCustomer) => {
   const store = useCartStore()
   const { state } = storeToRefs(store)
 
   const customer = omit(FormCustomer, ['repeatEmail'])
   const { clientOrderId, dependentes, responsavel } = state.value
-  // if (!customer || !clientOrderId)
-  //   return
+  if (!clientOrderId) {
+    const res = await handleSaveAbandonedCart()
+    if (!res)
+      return
+  }
 
   const payload: ISaveClientDTO = {
     ...customer,
@@ -101,14 +117,18 @@ const onSubmit = handleSubmit(async (FormCustomer) => {
     responsavel,
   }
 
-  const { pending } = await saveClient(payload)
-  loading.value = pending.value
+  loading.value = true
+  const { error: responseError } = await saveClient(payload)
+  loading.value = false
+
+  if (responseError.value)
+    return error.value = responseError.value
+
+  error.value = null
   emit('update:customer', customer)
   emit('submit')
+  resetForm()
 })
-const cpfMask = { mask: '###.###.###-##' }
-const dataMask = { mask: ['##/##/##', '##/##/####'] }
-const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
 </script>
 
 <template>
@@ -138,7 +158,6 @@ const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
         <v-col>
           <TextInput
             v-maska:[phoneMask]
-            masked
             name="phone"
             variant="underlined"
             label="Telefone ou celular"
@@ -163,7 +182,6 @@ const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
         <v-col cols="12" md="6">
           <TextInput
             v-maska:[dataMask]
-            masked
             name="birthdate"
             variant="underlined"
             label="Data de Nascimento"
@@ -204,7 +222,7 @@ const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
       </v-row>
     </div>
 
-    <div class="mb-4">
+    <div>
       <h4 class="font-weight-bold text-primary">
         Endereço
       </h4>
@@ -264,7 +282,13 @@ const phoneMask = { mask: ['(##) ####-####', '(##) #####-####'] }
       </v-row>
     </div>
 
-    <v-btn :color="meta.valid ? 'secondary' : 'error'" size="large" type="submit" variant="flat">
+    <v-fade-transition>
+      <p v-if="error" class="text-error">
+        Ops! Ocorreu uma falha ao salvar os dados, favor revisar os campos e tentar novamente!
+      </p>
+    </v-fade-transition>
+
+    <v-btn :color="meta.valid ? 'secondary' : 'error'" size="large" type="submit" variant="flat" :loading="loading" class="mt-4">
       {{ customer ? 'Continuar' : 'Cadastrar' }}
     </v-btn>
   </v-form>

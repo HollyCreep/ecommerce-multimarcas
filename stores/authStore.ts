@@ -34,7 +34,6 @@ export const useAuthStore = defineStore('auth', () => {
     catch (error) {
       cookies.remove('bearer')
     }
-    return token
   }
 
   return { token, refreshToken }

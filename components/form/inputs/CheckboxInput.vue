@@ -29,3 +29,10 @@ const { errors, value } = useField(nameRef, undefined, {
     </template>
   </v-checkbox>
 </template>
+
+<style lang="scss" scoped>
+  :deep(.v-selection-control__wrapper) {
+    width: 24px;
+    padding-right: 8px;
+  }
+</style>

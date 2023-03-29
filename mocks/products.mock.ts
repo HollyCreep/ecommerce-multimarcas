@@ -145,7 +145,7 @@ export default [
   rest.get('*/products', (_, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.delay(500),
+      ctx.delay(1000),
 
       ctx.json(PRODUTOS),
     )

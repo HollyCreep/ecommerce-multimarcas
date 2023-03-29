@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IFieldSetCard } from '../FieldSetCard.vue'
 import type { IProduct } from '~~/types/product'
+import { CART_ROUTES } from '~~/types/cart'
 
 const props = defineProps<{ produto: IProduct; cobertura: IFieldSetCard; naoCobertura: IFieldSetCard; active?: boolean }>()
 
@@ -8,6 +9,12 @@ const { getColor } = useThemeController()
 const color = getColor('primary')
 
 const precoTitular = props.produto.planos.find(p => p.tipoNegociacao === 'MENSAL')?.valorTitular
+
+const store = useCartStore()
+const handlePurshaseButton = () => {
+  store.addPlanoTitular(props.produto)
+  navigateTo(CART_ROUTES.carrinho)
+}
 </script>
 
 <template>
@@ -42,7 +49,7 @@ const precoTitular = props.produto.planos.find(p => p.tipoNegociacao === 'MENSAL
           </PriceTag>
         </div>
 
-        <v-btn color="secondary" variant="flat" size="large" class="ml-auto mt-8 d-block ">
+        <v-btn color="secondary" variant="flat" size="large" class="ml-auto mt-8 d-block " @click="handlePurshaseButton">
           CONTRATE AGORA
         </v-btn>
       </div>

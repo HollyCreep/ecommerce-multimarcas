@@ -189,27 +189,9 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
 
     <v-scroll-x-transition>
       <div v-if="state.loading" class="container">
-        <v-row
-          class="fill-height"
-          align-content="center"
-          justify="center"
-        >
-          <v-col
-            class="text-subtitle-1 text-center"
-            cols="12"
-          >
-            Buscando planos...
-          </v-col>
-          <v-col cols="6">
-            <v-progress-linear
-              rounded
-              indeterminate
-              color="primary"
-              size="3rem"
-              class="mx-auto d-block"
-            />
-          </v-col>
-        </v-row>
+        <FunctionalsLinearLoader>
+          Buscando planos
+        </FunctionalsLinearLoader>
       </div>
     </v-scroll-x-transition>
 

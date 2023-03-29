@@ -174,7 +174,7 @@ export const useCartStore = defineStore('cart', () => {
     return { titular: titular as IComputedCartItem<ITitular>, dependentes: dependentes as IComputedCartItem<IDependente>[], qtdDependentes, totalVidas, valorTotal, period }
   })
 
-  const reset = () => {
+  const $reset = () => {
     Object.assign(state.value, defaultValues)
   }
 
@@ -209,7 +209,7 @@ export const useCartStore = defineStore('cart', () => {
     items,
     resumo,
 
-    reset,
+    $reset,
   }
 })
 
