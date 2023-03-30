@@ -27,15 +27,15 @@ const fontSize = computed(() => fonts[props.size])
 <template>
   <div class="price-tag d-flex flex-column" :class="[size, !!$attrs.dark ? 'text-white' : textColor]">
     <slot name="tooltip">
-      <div v-if="tooltip" class="tooltip font-soletos" v-text="tooltip" />
+      <div v-if="tooltip" class="tooltip font-blinkers" v-text="tooltip" />
     </slot>
     <div class="d-flex font-weight-bold">
-      <div class="sign font-soleto">
+      <div class="sign font-blinker">
         R$
       </div>
-      <div class="integer font-soleto mr-1" v-text="integer || 0" />
+      <div class="integer font-blinker mr-1" v-text="integer || 0" />
       <div class="d-flex flex-column justify-center align-baseline">
-        <span class="fraction font-soleto mb-1">,{{ fraction || '00' }}</span>
+        <span class="fraction font-blinker mb-1">,{{ fraction || '00' }}</span>
 
         <span class="period font-noto-sans">
           Mensal

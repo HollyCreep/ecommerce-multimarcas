@@ -37,6 +37,10 @@ export default defineNuxtConfig({
         wght: [400, 600, 700],
         ital: [],
       },
+      'Blinker': {
+        wght: [300, 400, 700],
+        ital: [],
+      },
     },
   },
 

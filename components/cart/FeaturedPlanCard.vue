@@ -17,7 +17,7 @@ const carencia = computed(() => props.plan.especialidades.reduce((acc, val) => {
     <div class="title d-flex align-center " :class="{ 'text-primary': !dark }">
       <Icon :key="+dark" :name="plan.logo" :color="dark ? 'white' : 'primary'" secondary-color="primary-lighten-1" class="text-h2 mr-3" />
       <div>
-        <p class="text-subtitle-1 font-soleto">
+        <p class="text-subtitle-1 font-blinker">
           Plano
         </p>
         <h4 class="font-weight-bold">

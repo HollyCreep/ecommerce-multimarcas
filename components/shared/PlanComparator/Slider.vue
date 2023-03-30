@@ -72,7 +72,7 @@ watchEffect(() => {
             :secondary-color="produto.faxaEtaria ? 'white' : 'primary-lighten-1'"
             class="text-h2"
           />
-          <EnchantedText class="font-weight-bold font-soleto text-subtitle-1" :class="produto.faxaEtaria ? 'text-primary' : 'text-primary-lighten-1'">
+          <EnchantedText class="font-weight-bold font-blinker text-subtitle-1" :class="produto.faxaEtaria ? 'text-primary' : 'text-primary-lighten-1'">
             {{ produto.nome }}
           </EnchantedText>
           <p v-if="produto.faxaEtaria" class="text-white">

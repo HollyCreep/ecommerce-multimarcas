@@ -147,12 +147,12 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
 
     <v-radio-group v-model="state.radioInput" name="product" color="primary" @update:model-value="handleProductTypeChange">
       <v-radio
-        class="text-main font-weight-bold font-soleto"
+        class="text-main font-weight-bold font-blinker"
         label="É o mesmo plano do titular"
         :value="1"
       />
       <v-radio
-        class="text-main font-weight-bold font-soleto"
+        class="text-main font-weight-bold font-blinker"
         label="É outro plano"
         :disabled="state.loading || !state.products.length"
         :value="2"

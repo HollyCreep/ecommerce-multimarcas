@@ -26,13 +26,13 @@ const { errors, value } = useField(nameRef, undefined, {
       <p>{{ label || name }}</p>
     </template>
     <v-radio
-      class="text-main font-weight-bold font-soleto"
+      class="text-main font-weight-bold font-blinker"
       label="Masculino"
       :name="name"
       value="MASCULINO"
     />
     <v-radio
-      class="text-main font-weight-bold font-soleto"
+      class="text-main font-weight-bold font-blinker"
       label="Feminino"
       :name="name"
       value="FEMININO"
