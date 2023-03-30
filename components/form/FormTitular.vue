@@ -13,7 +13,7 @@ interface ITitularForm extends ITitular {
 }
 
 const props = defineProps<{ customer?: ITitular }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'update:customer', value: ITitular): void; (e: 'submit'): void }>()
+const emit = defineEmits<{ (e: 'update:customer', value: ITitular): void; (e: 'submit'): void }>()
 
 const cpfMask = { mask: '###.###.###-##' }
 const dataMask = { mask: ['##/##/##', '##/##/####'] }
@@ -22,7 +22,7 @@ const loading = ref(false)
 const error = ref(null)
 const mounted = ref(false)
 
-const { handleSubmit, resetForm, meta, values, errors, setValues, validate } = useForm<ITitularForm>({
+const { handleSubmit, resetForm, meta, values, errors, setValues, setFieldValue, validate } = useForm<ITitularForm>({
   validationSchema: object({
     name: string().required('O campo nome é obrigatório'),
     birthdate: string().required('O campo data de nascimento é obrigatório').min(8),
@@ -46,14 +46,13 @@ const { handleSubmit, resetForm, meta, values, errors, setValues, validate } = u
 })
 
 onMounted(async () => {
+  setFieldValue('complement', '')
   if (props.customer) {
-    setValues({ ...props.customer, repeatEmail: props.customer.email, complement: '' })
+    setValues({ ...props.customer, repeatEmail: props.customer.email })
     await validate()
   }
   mounted.value = true
 })
-
-watchEffect(() => emit('valid', meta.value.valid))
 
 watch(() => values.email, (newEmail, oldEmail) => {
   if (!!newEmail && newEmail !== oldEmail && !Object.prototype.hasOwnProperty.call(errors.value, 'email'))

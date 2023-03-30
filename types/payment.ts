@@ -1,12 +1,15 @@
 export type Sistema = 'EcommercePFOdonto'
 
 export enum PaymentTypes {
-  'BOLETO' = 'Boleto',
-  'CARTAO_CREDITO' = 'CreditCard',
+  'Cartao de Credito' = 1,
+  'Debito em conta',
+  'Boleto',
 }
+
+export type PaymentName = keyof typeof PaymentTypes
 export interface IPaymentMethod {
-  id: string
-  name: PaymentTypes
+  id: PaymentTypes
+  name: PaymentName
   system: Sistema
   installments?: number[]
 }
@@ -15,11 +18,7 @@ export interface State {
   companyPaymentMethods: IPaymentMethod[]
 }
 
-export type CreditCardBrands =
-  | 'visa'
-  | 'master'
-  | 'amex'
-  | 'elo'
+export type CreditCardBrands = 'visa' | 'master' | 'amex' | 'elo'
 
 export interface ICreditCard {
   RawNumber: string

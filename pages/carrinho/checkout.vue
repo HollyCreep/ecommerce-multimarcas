@@ -10,6 +10,7 @@ definePageMeta({
   },
   middleware(to, from) {
     const store = useCartStore()
+
     if (!store.state.titular.customer || !store.state.titular.product)
       return CART_ROUTES.carrinho
 
@@ -25,7 +26,7 @@ definePageMeta({
 <template>
   <v-row>
     <v-col cols="12" md="7">
-      <FormPayment />
+      <NuxtPage />
     </v-col>
     <v-col cols="12" md="4" offset-md="1" order="first" order-md="last">
       <CartSteps class="mb-8" />

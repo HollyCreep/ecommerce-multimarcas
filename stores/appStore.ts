@@ -34,22 +34,25 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const stopBuffering = () => {
-    setTimeout(() => {
+    return new Promise(resolve => setTimeout(() => {
       loading.value = false
       buffer.value = default_buffer
-    }, 2500)
+      resolve(true)
+    }, 2500))
   }
-  const updateBuffer = (bufferStep?: Partial<IBufferStep>) => {
+
+  const updateBuffer = async (bufferStep?: Partial<IBufferStep>) => {
     if (!buffer.value.status)
       return
-    else if (!!bufferStep && bufferStep?.status !== 'pending')
-      stopBuffering()
 
     const step = bufferStep?.step || buffer.value.currentStep + 1
 
     buffer.value.currentStep = step > buffer.value.totalSteps ? buffer.value.totalSteps : step
     buffer.value.message = bufferStep?.message || buffer.value.message
     buffer.value.status = (bufferStep?.status || 'pending')
+
+    if (!!bufferStep && bufferStep?.status !== 'pending')
+      await stopBuffering()
   }
 
   watch(() => loading.value, (newValue) => {

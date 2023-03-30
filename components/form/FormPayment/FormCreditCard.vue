@@ -4,9 +4,10 @@ import { useForm } from 'vee-validate'
 import TextInput from '../inputs/TextInput.vue'
 import SelectInput from '../inputs/SelectInput.vue'
 import type { CreditCardBrands, IFormCreditCard, Sistema } from '~~/types/payment'
+import { CART_ROUTES } from '~~/types/cart'
 
 const props = defineProps<{ system: Sistema; installments?: number[] }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submited'): void }>()
+const emit = defineEmits<{ (e: 'submited'): void }>()
 
 const cartStore = useCartStore()
 const appStore = useAppStore()
@@ -53,13 +54,13 @@ const onSubmit = handleSubmit(async (creditCard, { resetForm }) => {
 
   try {
     const { data: token } = await paymentApi.generatePaymentToken(cartStore.state.numberProposal)
-    appStore.updateBuffer()
+    await appStore.updateBuffer()
 
     const { data: paymentToken } = await paymentApi.tokenizarCartao({ ...creditCard, AccessToken: token.value.accessToken })
-    appStore.updateBuffer()
+    await appStore.updateBuffer()
 
     await paymentApi.saveCreditCardTokenLog({ order: cartStore.state.clientOrderId, PaymentToken: paymentToken.value.PaymentToken })
-    appStore.updateBuffer()
+    await appStore.updateBuffer()
 
     const { data: result } = await paymentApi.cobrarCartao({
       flag: activeBrand.value,
@@ -71,21 +72,22 @@ const onSubmit = handleSubmit(async (creditCard, { resetForm }) => {
       system: props.system,
       price: cartUtils.convertNumberToAPIFormat(cartStore.total),
     })
-    appStore.updateBuffer()
+    await appStore.updateBuffer()
 
     if (result.value.sucesso === 1) {
       emit('submited')
-      appStore.updateBuffer({ status: 'success', message: 'Pagamento realizado com sucesso!' })
+      await appStore.updateBuffer({ status: 'success', message: 'Pagamento realizado com sucesso!' })
+      await navigateTo(CART_ROUTES.cartao)
       resetForm()
     }
     else {
       error.value = result.value.mensagem
-      appStore.updateBuffer({ status: 'error', message: result.value.mensagem })
+      await appStore.updateBuffer({ status: 'error', message: result.value.mensagem })
     }
   }
   catch (e) {
     error.value = 'Tentar novamente ou pagar com outro método.'
-    appStore.updateBuffer({ status: 'error', message: 'Falha ao processar pagamento.' })
+    await appStore.updateBuffer({ status: 'error', message: 'Falha ao processar pagamento.' })
   }
 })
 
@@ -95,9 +97,6 @@ function flipCard() {
 function handleBrandChange(newBrand: CreditCardBrands) {
   activeBrand.value = newBrand
 }
-watchEffect(async () => {
-  emit('valid', meta.value.valid)
-})
 </script>
 
 <template>

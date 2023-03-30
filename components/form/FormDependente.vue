@@ -8,7 +8,7 @@ import type { CartDependente } from '~~/types/cart'
 import type { IDependente } from '~~/types/customer'
 
 const props = defineProps<{ dependente?: CartDependente }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submit', value: CartDependente): void }>()
+const emit = defineEmits<{ (e: 'submit', value: CartDependente): void }>()
 const { getFeaturedProducts } = useProductStore()
 const store = useCartStore()
 
@@ -38,10 +38,6 @@ const { handleSubmit, meta, setValues, validate } = useForm<IDependente>({
     exp: string().required(),
     gender: string().required('O campo gênero é obrigatório').oneOf(['MASCULINO', 'FEMININO']),
   }),
-})
-
-watchEffect(async () => {
-  emit('valid', meta.value.valid)
 })
 
 watchEffect(async () => {

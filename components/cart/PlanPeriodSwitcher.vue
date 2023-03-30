@@ -11,6 +11,7 @@ const primaryColor = getColor('primary')
     selected-class="elevation-4"
     density="comfortable"
     mandatory
+    v-bind="$attrs"
   >
     <v-btn value="MENSAL" width="115">
       Mensal

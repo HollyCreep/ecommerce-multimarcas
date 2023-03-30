@@ -9,11 +9,8 @@ const { state } = storeToRefs(store)
 
 const [titular] = store.items
 
-const handleFormValidationChange = (value: boolean) => {
-  store.updateStepValidation({ value, step: 'titular' })
-}
-
 const handleFormSubmit = () => {
+  store.updateStepValidation({ value: true, step: 'titular' })
   const rota = store.isTitularMenorDeIdade ? CART_ROUTES.responsavel : CART_ROUTES.checkout
   navigateTo(rota)
 }
@@ -51,7 +48,7 @@ definePageMeta({
     </v-col>
     <v-col cols="12" md="7">
       <v-card class="px-6 py-8">
-        <FormTitular v-model:customer="state.titular.customer" @valid="handleFormValidationChange" @submit="handleFormSubmit" />
+        <FormTitular v-model:customer="state.titular.customer" @submit="handleFormSubmit" />
       </v-card>
     </v-col>
   </v-row>

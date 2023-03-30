@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { CART_ROUTES } from '~~/types/cart'
 
 const store = useCartStore()
-const { resumo } = storeToRefs(store)
+const { resumo, allStepsValid } = storeToRefs(store)
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { resumo } = storeToRefs(store)
       <Icon name="cart-fill" color="primary" secondary-color="primary-lighten-1" />
       Resumo do pedido
     </h2>
-    <CartPlanPeriodSwitcher class="mb-8" />
+    <CartPlanPeriodSwitcher class="mb-8" :disabled="allStepsValid" />
     <v-slide-x-transition
       class="resumo-plans-list mb-4"
       tag="ul"
@@ -36,10 +36,10 @@ const { resumo } = storeToRefs(store)
               </template>
 
               <v-list density="compact">
-                <v-list-item :to="CART_ROUTES.titular">
+                <v-list-item :to="CART_ROUTES.titular" :disabled="allStepsValid">
                   <v-list-item-title><v-icon size="small" class="mr-2" icon="mdi-pencil" color="amber" /> Editar</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="resumo.titular.delete">
+                <v-list-item :disabled="allStepsValid" @click="resumo.titular.delete">
                   <v-list-item-title><v-icon size="small" color="error" class="mr-2" icon="mdi-delete" />Excluir</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -87,6 +87,7 @@ const { resumo } = storeToRefs(store)
       v-if="!store.isTitularMenorDeIdade || (store.isTitularMenorDeIdade && !store.state.responsavel)"
       color="secondary" variant="text" prepend-icon="mdi-plus" class="font-weight-bold text-subtitle-1 font-noto-sans px-0" density="comfortable"
       :to="store.isTitularMenorDeIdade ? CART_ROUTES.responsavel : CART_ROUTES.dependente"
+      :disabled="allStepsValid"
     >
       Adicionar {{ store.isTitularMenorDeIdade ? 'responsável' : 'dependente' }}
     </v-btn>

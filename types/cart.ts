@@ -1,6 +1,6 @@
 import type { IPlan, IProduct } from './product'
 import type { ICustomer, IDependente, IResponsavel, ITitular } from './customer'
-import type { PaymentTypes } from './payment'
+import type { IPaymentMethod } from './payment'
 import type { Period } from '.'
 
 export const CART_ROUTES = {
@@ -9,6 +9,9 @@ export const CART_ROUTES = {
   dependente: '/carrinho/dependente',
   responsavel: '/carrinho/responsavel',
   checkout: '/carrinho/checkout',
+  cartao: '/carrinho/checkout/cartao',
+  boleto: '/carrinho/checkout/boleto',
+  debito: '/carrinho/checkout/debito',
 } as const
 
 export type CartSteps = keyof typeof CART_ROUTES
@@ -54,7 +57,7 @@ export interface CartDependente {
 
 export interface CartStore {
   selectedPeriodType: Period
-  paymentMethod: PaymentTypes
+  paymentMethod: IPaymentMethod
   titular: CartTitular
   responsavel: IResponsavel
   dependentes: CartDependente[]
