@@ -12,67 +12,45 @@ const handlePurshaseButton = (product: IProduct) => {
 </script>
 
 <template>
-  <section id="plano-destaque" class="container-fluid md-inset-right bg-background pb-10 d-flex justify-end align-center">
-    <div class="text-center text-md-left mx-lg-auto ml-md-auto">
-      <h2 class="text-primary font-weight-bold mb-8 text-lg-center">
-        Planos para você e sua família
-      </h2>
-      <v-row class="justify-lg-center">
-        <v-col cols="12" md="5" class="d-flex flex-column">
-          <div class="d-flex text-primary mb-4 justify-center justify-md-start">
-            <Icon name="controle" color="primary" secondary-color="primary-lighten-1" class="text-h3 mr-4" />
-            <EnchantedText tag="h5" bold="Dental Júnior">
-              {{ 'Dental Júnior\n de 8 a 16 anos' }}
-            </EnchantedText>
-          </div>
-          <p class="mb-8">
-            Rol completo da ANS para que seu filho tenha a disposição nossa rede completa de dentistas.
-          </p>
-          <v-btn min-width="210" color="secondary" class="rounded-lg ml-auto ml-md-0 mr-auto" size="large" @click="handlePurshaseButton(product)">
-            CONTRATE AGORA
-          </v-btn>
-        </v-col>
-        <v-col cols="12" md="auto">
-          <PriceTag :value="27.99" tooltip="por apenas" class="ml-auto ml-md-0 mr-auto" />
-        </v-col>
-      </v-row>
-    </div>
+  <section id="odp-home-section-4" class="container-fluid bg-background pt-16 pt-sm-0 pb-16">
+    <v-row no-gutters justify="center">
+      <v-col class="d-flex" cols="12" sm="4" lg="3">
+        <v-img src="/images/odontoPrev/home/img-1.png" />
+      </v-col>
+      <v-col cols="12" sm="8" md="6" class="py-16">
+        <h2 class="text-primary font-weight-bold mb-8 text-center">
+          Planos para você e sua família
+        </h2>
+        <v-row class="justify-sm-center">
+          <v-col cols="12" sm="5" lg="4" class="d-flex flex-column justify-md-space-evenly">
+            <div class="d-flex text-primary mb-4 justify-center justify-sm-start">
+              <Icon name="controle" color="primary" secondary-color="primary-lighten-1" class="text-h3 mr-4" />
+              <EnchantedText tag="h5" bold="Dental Júnior">
+                {{ 'Dental Júnior\n de 8 a 16 anos' }}
+              </EnchantedText>
+            </div>
+            <p class="text-center text-sm-start">
+              Rol completo da ANS para que seu filho tenha a disposição nossa rede completa de dentistas.
+            </p>
+          </v-col>
+          <v-col cols="12" sm="auto">
+            <PriceTag :value="27.99" tooltip="por apenas" class="ml-auto ml-md-0 mr-auto" />
+          </v-col>
+          <v-col cols="12" sm="8" lg="6" class="d-flex justify-center justify-sm-start">
+            <v-btn min-width="210" color="secondary" class="rounded-lg" size="large">
+              CONTRATE AGORA
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#plano-destaque {
-    position: relative;
-    min-height: 500px;
-
-    @media screen and (min-width: 600px) {
-      > div {
-        width: 100%;
-        max-width: 50%;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        width: 40%;
-        max-width: 600px;
-        height: calc(100% + 35px);
-        bottom: 0;
-        left: 0;
-        background-size: auto 100%;
-        background-image: url(/images/odontoPrev/home/img-1.png);
-        background-position: right top;
-
-        @media screen and (min-width: 1264px) {
-          width: 25%;
-        }
-      }
-    }
-    @media (min-width: 1264px) {
-    &::before {
-      padding-left: 200px;
-    }
+#odp-home-section-4 {
+  :deep(.price-tag .integer) {
+    line-height: .8;
   }
-
 }
 </style>

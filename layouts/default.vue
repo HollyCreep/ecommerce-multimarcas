@@ -7,5 +7,6 @@
       </v-main>
     </v-container>
     <Footer />
+    <LoadingOverlay />
   </v-app>
 </template>

@@ -8,7 +8,7 @@ import type { IResponsavel, Sexo } from '~~/types/customer'
 interface FormResponsavel extends Omit<IResponsavel, 'sexo'> {}
 
 const props = defineProps<{ responsavel?: IResponsavel }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'update:responsavel', value: IResponsavel): void; (e: 'submit'): void }>()
+const emit = defineEmits<{ (e: 'update:responsavel', value: IResponsavel): void; (e: 'submit'): void }>()
 
 const { handleSubmit, meta, setValues, validate } = useForm<FormResponsavel>({
   validationSchema: object({
@@ -19,10 +19,6 @@ const { handleSubmit, meta, setValues, validate } = useForm<FormResponsavel>({
     email: string().required().email(),
     gender: string().required('O campo gênero é obrigatório').oneOf(['MASCULINO', 'FEMININO']),
   }),
-})
-
-watchEffect(async () => {
-  emit('valid', meta.value.valid)
 })
 
 const onSubmit = handleSubmit((FormResponsavel) => {

@@ -44,7 +44,7 @@ const plan = props.product.planos.find(p => p.tipoNegociacao === 'MENSAL') as IP
             height="40"
           />
           <div>
-            <EnchantedText class="font-weight-bold font-soleto text-subtitle-1">
+            <EnchantedText class="font-weight-bold font-blinker text-subtitle-1">
               {{ plan?.nomeFantasia }}
             </EnchantedText>
             <p>{{ product.faxaEtaria }}</p>

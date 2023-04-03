@@ -1,5 +1,6 @@
 import type { CartRoute } from '~~/types/cart'
 import { CART_ROUTES } from '~~/types/cart'
+import type { IPaymentMethod, PaymentTypes } from '~~/types/payment'
 
 function getRouteStep(cartRoute: CartRoute) {
   try {
@@ -7,6 +8,20 @@ function getRouteStep(cartRoute: CartRoute) {
   }
   catch (error) {
     return -1
+  }
+}
+
+function getActivePaymentTypeRoute(paymentMethod: IPaymentMethod) {
+  try {
+    const routes: Record<PaymentTypes, CartRoute> = {
+      1: CART_ROUTES.cartao,
+      2: CART_ROUTES.debito,
+      3: CART_ROUTES.boleto,
+    }
+    return routes[paymentMethod.id]
+  }
+  catch (error) {
+    return null
   }
 }
 
@@ -50,6 +65,7 @@ function isMenorDeIdade(data: string) {
 
 export default {
   getRouteStep,
+  getActivePaymentTypeRoute,
   formatNumber,
   convertNumberToAPIFormat,
   calcIdade,

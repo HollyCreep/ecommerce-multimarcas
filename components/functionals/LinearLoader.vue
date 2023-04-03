@@ -8,7 +8,9 @@
       class="text-subtitle-1 text-center"
       cols="12"
     >
-      <slot>Buscando...</slot>
+      <span class="d-inline">
+        <slot>Buscando</slot>
+      </span>
     </v-col>
     <v-col cols="6">
       <v-progress-linear

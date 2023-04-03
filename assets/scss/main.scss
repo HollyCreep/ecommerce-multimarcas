@@ -25,12 +25,6 @@
 
     @media screen and (min-width: 960px) {
       &-fluid {
-        &.md-left {
-          padding-left: 0;
-        }
-        &.md-right {
-          padding-right: 0;
-        }
         &.md-inset {
           padding-left: calc(#{$container-padding} * 2);
           padding-right: calc(#{$container-padding} * 2);

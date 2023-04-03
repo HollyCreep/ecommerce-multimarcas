@@ -16,14 +16,14 @@ const mutedColor = getColor(rawColors.muted)
 const validColor = getColor(rawColors.valid)
 
 const store = useCartStore()
-const { state } = storeToRefs(store)
+const { state, allStepsValid } = storeToRefs(store)
 </script>
 
 <template>
   <div class="steps">
     <ul class="invisible-overflow">
       <template v-for="(item, index) in state.steps" :key="index">
-        <nuxt-link :to="CART_ROUTES[item.step]" class="step-item" exact-active-class="step-item-active" :class="{ 'step-item-valid': !!item.valid }">
+        <nuxt-link :to="allStepsValid ? '' : CART_ROUTES[item.step]" class="step-item" :class="{ 'step-item-valid': !!item.valid }">
           <v-avatar
             size="48"
             class="no-text-pointer"

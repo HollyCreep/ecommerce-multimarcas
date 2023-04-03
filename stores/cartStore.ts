@@ -15,7 +15,7 @@ const defaultValues: CartStore = {
   responsavel: null,
   steps: [
     { text: 'Cadastrar titular', step: 'titular', valid: false, required: true },
-    { text: 'Detalhes Pagamento', step: 'checkout' },
+    { text: 'Detalhes Pagamento', step: 'checkout', valid: false, required: true },
   ],
 }
 
@@ -115,7 +115,7 @@ export const useCartStore = defineStore('cart', () => {
     if (index >= 0)
       state.value.steps[index].valid = payload.value
   }
-  const isValid = computed((): boolean => {
+  const allStepsValid = computed((): boolean => {
     return Object.values(state.value.steps).every(step => !!step.valid)
   })
 
@@ -174,7 +174,7 @@ export const useCartStore = defineStore('cart', () => {
     return { titular: titular as IComputedCartItem<ITitular>, dependentes: dependentes as IComputedCartItem<IDependente>[], qtdDependentes, totalVidas, valorTotal, period }
   })
 
-  const reset = () => {
+  const $reset = () => {
     Object.assign(state.value, defaultValues)
   }
 
@@ -202,14 +202,14 @@ export const useCartStore = defineStore('cart', () => {
     changePeriod,
 
     updateStepValidation,
-    isValid,
+    allStepsValid,
 
     total,
     count,
     items,
     resumo,
 
-    reset,
+    $reset,
   }
 })
 

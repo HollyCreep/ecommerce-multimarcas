@@ -33,10 +33,6 @@ const route = useRoute()
 const [_ignore, index] = route.params.dependente
 const dependente = store.getDependente(+index)
 
-const handleFormValidationChange = (value: boolean) => {
-  store.updateStepValidation({ value, step: 'dependente' })
-}
-
 const handleFormSubmit = (val: CartDependente) => {
   dependente ? store.updateDependente(val, +index) : store.addDependente(val)
   navigateTo(CART_ROUTES.checkout)
@@ -66,7 +62,7 @@ definePageMeta({
     </v-col>
     <v-col cols="12" md="7">
       <v-card class="px-6 py-8">
-        <FormDependente :dependente="dependente" @submit="handleFormSubmit" @valid="handleFormValidationChange" />
+        <FormDependente :dependente="dependente" @submit="handleFormSubmit" />
       </v-card>
     </v-col>
   </v-row>

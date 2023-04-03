@@ -1,59 +1,73 @@
 <template>
-  <section id="rede-credenciada" class="container-fluid md-inset bg-primary-darken-2 py-16">
-    <div class="text-center text-md-left mx-lg-auto mr-md-auto">
-      <h2 class="text-primary-lighten-1 mb-6">
-        A maior rede de atendimento do Brasil
-      </h2>
-      <EnchantedText bold="27 mil dentistas" class="mb-6">
-        São mais de 27 mil dentistas de diversas especialidades para você escolher, de onde estiver. Nossa rede
-        credenciada possui profissionais capacitados e experts em odontologia para proporcionar atendimento de
-        qualidade.
-      </EnchantedText>
-      <v-row>
-        <v-col cols="12" md="6" class="d-flex align-center">
-          <Icon
-            name="click" color="white" secondary-color="primary-lighten-1" width="64" height="64"
-            class="mr-4 flex-shrink-0"
-          />
-          <EnchantedText tag="h3" bold="+ 2.600" class="text-primary-lighten-1">
-            + 2.600 de municípios atendidos
+  <section id="odp-home-section-3" class="container-fluid">
+    <v-row no-gutters justify="center">
+      <v-col class="py-16 py-md-0 px-8 px-md-0 d-flex align-center" cols="12" lg="5" sm="7">
+        <div class="text-center text-md-left">
+          <h2 class="text-primary-lighten-1 mb-6">
+            A maior rede de atendimento do Brasil
+          </h2>
+          <EnchantedText bold="27 mil dentistas" class="mb-6 text-white">
+            São mais de 27 mil dentistas de diversas especialidades para você escolher, de onde estiver. Nossa rede
+            credenciada possui profissionais capacitados e experts em odontologia para proporcionar atendimento de
+            qualidade.
           </EnchantedText>
-        </v-col>
-        <v-col cols="12" md="6" class="d-flex align-center">
-          <Icon
-            name="user-group" color="white" secondary-color="primary-lighten-1" width="94"
-            class="mr-4 flex-shrink-0"
-          />
-          <EnchantedText tag="h3" bold="+ 27.000" class="text-primary-lighten-1">
-            + 27.000 de dentistas credenciados
-          </EnchantedText>
-        </v-col>
-      </v-row>
-    </div>
+          <v-row>
+            <v-col cols="12" md="6" class="d-flex align-center">
+              <Icon
+                name="click" color="white" secondary-color="primary-lighten-1" width="64" height="64"
+                class="mr-4 flex-shrink-0"
+              />
+              <EnchantedText tag="h3" bold="+ 2.600" class="text-primary-lighten-1">
+                + 2.600 de municípios atendidos
+              </EnchantedText>
+            </v-col>
+            <v-col cols="12" md="6" class="d-flex align-center">
+              <Icon
+                name="user-group" color="white" secondary-color="primary-lighten-1" width="94"
+                class="mr-4 flex-shrink-0"
+              />
+              <EnchantedText tag="h3" bold="+ 27.000" class="text-primary-lighten-1">
+                + 27.000 de dentistas credenciados
+              </EnchantedText>
+            </v-col>
+          </v-row>
+        </div>
+      </v-col>
+      <v-col cols="12" sm="5" lg="4">
+        <v-img src="/images/odontoPrev/home/bg-1.png" class="fill-height" />
+      </v-col>
+    </v-row>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #rede-credenciada {
   position: relative;
+  transform-style: preserve-3d;
 
-  @media screen and (min-width: 600px) {
-  > div {
-      width: 100%;
-      max-width: 50%;
-      margin-left: 132px;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 2vw);
+    background-color: #003EA6;
+    bottom: 0;
+    left: 0;
+    transform: translateZ(-1px);
+  }
 
-    &::after {
-      content: '';
-      position: absolute;
-      width: 50%;
-      height: calc(100% + 50px);
-      bottom: 0;
-      right: 0;
-      background-size: contain;
-      background-image: url(/images/odontoPrev/home/bg-1.png);
-      background-position: right top;
+  // MD only
+  @media screen and (min-width: 960px) and (max-width: 1264px) {
+    padding-right: 0;
+
+  }
+
+  // SM and down
+  @media screen and (max-width: 960px) {
+    padding: 0;
+
+    :deep(.v-img .v-img__img) {
+      object-fit: fill !important;
     }
   }
 }

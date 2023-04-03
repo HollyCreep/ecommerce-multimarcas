@@ -8,7 +8,7 @@ import type { CartDependente } from '~~/types/cart'
 import type { IDependente } from '~~/types/customer'
 
 const props = defineProps<{ dependente?: CartDependente }>()
-const emit = defineEmits<{ (e: 'valid', value: boolean): void; (e: 'submit', value: CartDependente): void }>()
+const emit = defineEmits<{ (e: 'submit', value: CartDependente): void }>()
 const { getFeaturedProducts } = useProductStore()
 const store = useCartStore()
 
@@ -38,10 +38,6 @@ const { handleSubmit, meta, setValues, validate } = useForm<IDependente>({
     exp: string().required(),
     gender: string().required('O campo gênero é obrigatório').oneOf(['MASCULINO', 'FEMININO']),
   }),
-})
-
-watchEffect(async () => {
-  emit('valid', meta.value.valid)
 })
 
 watchEffect(async () => {
@@ -151,12 +147,12 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
 
     <v-radio-group v-model="state.radioInput" name="product" color="primary" @update:model-value="handleProductTypeChange">
       <v-radio
-        class="text-main font-weight-bold font-soleto"
+        class="text-main font-weight-bold font-blinker"
         label="É o mesmo plano do titular"
         :value="1"
       />
       <v-radio
-        class="text-main font-weight-bold font-soleto"
+        class="text-main font-weight-bold font-blinker"
         label="É outro plano"
         :disabled="state.loading || !state.products.length"
         :value="2"
@@ -189,27 +185,9 @@ const dataMask = { mask: ['##/##/##', '##/##/####'] }
 
     <v-scroll-x-transition>
       <div v-if="state.loading" class="container">
-        <v-row
-          class="fill-height"
-          align-content="center"
-          justify="center"
-        >
-          <v-col
-            class="text-subtitle-1 text-center"
-            cols="12"
-          >
-            Buscando planos...
-          </v-col>
-          <v-col cols="6">
-            <v-progress-linear
-              rounded
-              indeterminate
-              color="primary"
-              size="3rem"
-              class="mx-auto d-block"
-            />
-          </v-col>
-        </v-row>
+        <FunctionalsLinearLoader>
+          Buscando planos
+        </FunctionalsLinearLoader>
       </div>
     </v-scroll-x-transition>
 

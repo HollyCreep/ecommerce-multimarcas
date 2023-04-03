@@ -27,19 +27,19 @@ const cards = [
           <h4 class="font-weight-bold text-main mb-1">
             {{ title }}
           </h4>
-          <p class="text-primary text-caption font-weight-bold font-soleto mb-2">
+          <p class="text-primary text-caption font-weight-bold font-blinker mb-2">
             14/04/2022
           </p>
           <v-card-subtitle class="px-0 mb-2" style="font-size: 16px">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, a!
           </v-card-subtitle>
           <div class="d-flex justify-space-between align-center">
-            <p class="font-soleto text-caption text-uppercase text-primary font-weight-bold">
+            <p class="font-blinker text-caption text-uppercase text-primary font-weight-bold">
               <v-icon icon="mdi-clock-outline" color="main" size="14" />
               14 min
             </p>
 
-            <v-btn class="font-soleto font-weight-bold text-caption" variant="text" color="primary" append-icon="mdi-chevron-right">
+            <v-btn class="font-blinker font-weight-bold text-caption" variant="text" color="primary" append-icon="mdi-chevron-right">
               Leia mais
             </v-btn>
           </div>
@@ -53,7 +53,7 @@ const cards = [
           Tem muito mais no nosso Blog! :)
         </h2>
         <v-btn color="white" variant="text" class="px-0" density="compact">
-          <EnchantedText tag="h4" class="font-soleto font-weight-bold">
+          <EnchantedText tag="h4" class="font-blinker font-weight-bold">
             {{ `ver mais\n noticias` }}
           </EnchantedText>
           <template #append>

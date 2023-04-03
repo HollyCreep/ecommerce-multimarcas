@@ -27,7 +27,7 @@ export const useCartClientApi = () => {
     body: params,
   })
 
-  const saveClient = (params: ISaveClientDTO, options?: RequestOptions<ISaveClientResponse>) => api.post<ISaveClientResponse>('/cart/abandoned', {
+  const saveClient = (params: ISaveClientDTO, options?: RequestOptions<ISaveClientResponse>) => api.post<ISaveClientResponse>('/cart/client', {
     ...options,
     body: params,
   })
