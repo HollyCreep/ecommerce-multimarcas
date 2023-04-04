@@ -3,12 +3,20 @@ import type { Link } from '~~/types'
 
 const menuItems: Link[] = [
   {
-    text: 'Porque comprar?',
+    text: 'Por que comprar?',
     href: '',
+    to: {
+      path: '/',
+      hash: '#quem-somos',
+    },
   },
   {
-    text: 'Conheça dos planos',
+    text: 'Conheça os planos',
     href: '',
+    to: {
+      path: '/',
+      hash: '#plano-destaque',
+    },
   },
   {
     text: 'Dúvidas',
@@ -23,7 +31,7 @@ const menuItems: Link[] = [
       <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
     </NuxtLink>
     <v-spacer />
-    <GroupLinks :items="menuItems" button-class="text-white" />
+    <GroupLinks :items="menuItems" :active="false" button-class="text-white" />
   </v-toolbar>
 </template>
 

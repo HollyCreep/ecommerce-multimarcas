@@ -22,7 +22,7 @@ const items = [
 </script>
 
 <template>
-  <section id="odp-home-section-2" class="container-fluid bg-background py-16 text-center">
+  <section id="quem-somos" class="container-fluid bg-background py-16 text-center">
     <EnchantedText tag="h2" bold="Odontoprev" class="mb-8 mx-auto text-primary" :class="{ 'w-50': mdAndUp }">
       {{ `Odontoprev, a mais completa\n solução odontológica.` }}
     </EnchantedText>

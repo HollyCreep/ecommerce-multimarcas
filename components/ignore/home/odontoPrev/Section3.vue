@@ -70,6 +70,5 @@
       object-fit: fill !important;
     }
   }
-
 }
 </style>

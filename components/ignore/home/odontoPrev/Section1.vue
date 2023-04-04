@@ -9,7 +9,10 @@ const items = [
     },
     action: {
       text: 'CONTRATE AGORA',
-      href: '',
+      to: {
+        path: '/',
+        hash: '#plano-destaque',
+      },
     },
   },
 ]
@@ -27,7 +30,7 @@ const items = [
       <p class="mb-8">
         {{ item.content.caption }}
       </p>
-      <v-btn color="secondary" :href="item.action.href" size="x-large" class="rounded-lg">
+      <v-btn color="secondary" size="x-large" class="rounded-lg" :to="item.action.to">
         {{ item.action.text }}
       </v-btn>
     </div>

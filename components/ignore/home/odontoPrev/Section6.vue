@@ -32,7 +32,7 @@ const items = [
 
     <ul class="container">
       <li v-for="({ text, icon }, index) in items" :key="index" class="text-main" :class="`content${index + 1}`">
-        <EnchantedText tag="h5">
+        <EnchantedText tag="h4">
           {{ text }}
         </EnchantedText>
         <Icon width="48" color="primary" secondary-color="primary-lighten-1" :name="icon" />

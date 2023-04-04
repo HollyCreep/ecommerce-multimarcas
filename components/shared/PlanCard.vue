@@ -58,18 +58,23 @@ const handlePurshaseButton = (product: IProduct) => {
           </EnchantedText>
         </v-list-item>
       </v-list>
-      <a class="text-primary" href="https://www.google.com.br">Veja cobertura completa</a>
-      <a class="text-primary" href="https://www.google.com.br">Condições gerais do plano</a>
-      <v-btn color="primary" variant="outlined" rounded="lg" class="mt-4" :to="`/produtos/${product.sku}`">
-        Saiba mais
+      <a class="text-primary" href="https://www.google.com.br" style="font-size: 12px">Veja cobertura completa</a>
+      <a class="text-primary" href="https://www.google.com.br" style="font-size: 12px">Condições gerais do plano</a>
+      <v-btn color="primary" variant="outlined" rounded="lg" class="mt-4" :to="`/produtos/${product.sku}`" size="small">
+        <p>Saiba mais</p>
       </v-btn>
       <v-divider class="my-4" />
       <PriceTag v-if="plan" :value="plan.valorTitular" class="mx-auto" />
-      <v-btn color="secondary" variant="flat" rounded="lg" class="my-4" @click="handlePurshaseButton(product)">
-        Comprar
-      </v-btn>
+      <v-hover
+        v-slot="{ isHovering, props }"
+      >
+        <v-btn v-bind="props" color="secondary" :style="isHovering ? 'font-size: 20px' : ''" class="my-5" variant="flat" rounded="lg" :elevation="isHovering ? 24 : 0 " :size=" isHovering ? 'x-large' : 'large' " @click="handlePurshaseButton(product)">
+          COMPRAR
+        </v-btn>
+      </v-hover>
+
       <p>
-        Carência: 90 dias para tratamento e 180 dias para prótese.
+        Use em 90 dias para Clínico Geral e 180 dias para prótese.
       </p>
     </v-card-text>
 
@@ -91,7 +96,7 @@ const handlePurshaseButton = (product: IProduct) => {
   overflow: visible;
 
   &.most-valuable {
-    border-width: 2px;
+    border-width: 3px;
     position: relative;
 
     .badge {
@@ -102,7 +107,7 @@ const handlePurshaseButton = (product: IProduct) => {
       position: absolute;
       background-color: v-bind(borderColor);
       border-radius: 5px;
-      font-size: 11px;
+      font-size: 18px;
       color: white;
       display: flex;
       align-items: center;

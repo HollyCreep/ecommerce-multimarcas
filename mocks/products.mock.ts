@@ -62,7 +62,7 @@ const generateProducts = (): IProduct[] => [
     vantagens: '',
     coberturas: [
       {
-        cobertura: 'Cobertura Rol ANS',
+        cobertura: 'Cobertura completa Rol ANS',
         link: {
           text: 'Rol ANS',
           href: 'https://www.odontoprevonline.com.br/sites/default/files/Plano-Dente-de-Leite.pdf',
@@ -80,7 +80,7 @@ const generateProducts = (): IProduct[] => [
     mais_vendido: false,
     vantagens: '',
     coberturas: [{
-      cobertura: 'Cobertura Rol ANS',
+      cobertura: 'Cobertura completa Rol ANS',
       link: {
         text: 'Rol ANS',
         href: 'https://www.odontoprevonline.com.br/sites/default/files/Plano%20Dental%20Junior.pdf',
@@ -96,12 +96,12 @@ const generateProducts = (): IProduct[] => [
     mais_vendido: true,
     vantagens: '',
     coberturas: [{
-      cobertura: 'Cobertura Rol ANS',
+      cobertura: 'Cobertura completa Rol ANS',
       link: {
         text: 'Rol ANS',
         href: 'https://www.odontoprevonline.com.br/sites/default/files/bem-estar.pdf',
       },
-    }, { cobertura: 'Documentação Ortodôntica' }, { cobertura: 'Concorra a R$ 10.000 mensalmente' }],
+    }, { cobertura: 'Documentação Ortodôntica' }],
     logo: 'coracao',
     planos: generatePlans('Dental \nbem-estar\n mais'),
   },
@@ -112,12 +112,12 @@ const generateProducts = (): IProduct[] => [
     mais_vendido: false,
     vantagens: '',
     coberturas: [{
-      cobertura: 'Cobertura Rol ANS',
+      cobertura: 'Cobertura completa Rol ANS',
       link: {
         text: 'Rol ANS',
         href: 'https://www.odontoprevonline.com.br/sites/default/files/Plano-Dental-Estetica_0.pdf',
       },
-    }, { cobertura: 'Placa de clareamento + Gel' }, { cobertura: 'Documentação Ortodôntica' }, { cobertura: 'Concorra a R$ 10.000 mensalmente' }],
+    }, { cobertura: 'Placa de clareamento + Gel' }, { cobertura: 'Consulta em especialista Odonto Estética' }],
     logo: 'sorriso',
     planos: generatePlans('Dental \nEstética\n mais'),
   },
@@ -133,7 +133,7 @@ const generateProducts = (): IProduct[] => [
         text: 'Rol ANS',
         href: 'https://www.odontoprevonline.com.br/sites/default/files/Plano-Dental-Orto.pdf',
       },
-    }, { cobertura: 'Colocação + Manutenção de Aparelho' }, { cobertura: 'Placa de clareamento + Gel' }, { cobertura: 'Documentação Ortodôntica' }, { cobertura: 'Concorra a R$ 10.000 mensalmente' }],
+    }, { cobertura: 'Colocação + Manutenção de Aparelho' }, { cobertura: 'Documentação Ortodôntica' }],
     logo: 'dente-aparelho',
     planos: generatePlans('Dental\n Orto\n Total'),
   },
