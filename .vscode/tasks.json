@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "dev",
+			"problemMatcher": [],
+			"label": "Server Build",
+			"detail": "nuxt dev --dotenv .env.development",
+			
+		},
+		{
+			"type": "npm",
+			"script": "back",
+			"problemMatcher": [],
+			"label": "Back Build",
+			"detail": "docker compose -f ../e-commerce-multimarcas-back/docker-compose.yml up"
+		},
+		{
+			"type": "npm",
+			"script": "proxy",
+			"problemMatcher": [],
+			"label": "Proxy Build",
+			"detail": "lcp --proxyUrl http://localhost:8000"
+		},
+		{
+			"label": "Build",
+			"dependsOn": ["Server Build", "Back Build", "Proxy Build"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
