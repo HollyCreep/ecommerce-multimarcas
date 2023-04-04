@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
   const basic = getActiveBrandBasicToken()
 
   const generateTokenRequest = () => {
-    const { data } = useLazyFetch<{ token: string; expiration: number }>(() => `${baseUrl}/api/authenticate/token`, {
+    const { data } = useLazyFetch<{ token: string; expiration: number }>(() => `${baseUrl}/authenticate/token`, {
       headers: {
         Authorization: `Basic ${basic}`,
       },
