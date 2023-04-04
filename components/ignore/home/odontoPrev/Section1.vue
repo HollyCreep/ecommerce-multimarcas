@@ -19,7 +19,7 @@ const items = [
 </script>
 
 <template>
-  <Hero id="inicio" v-slot="{ item }: { item: typeof items[0] }" :items="items">
+  <Hero id="odp-home-section-1" v-slot="{ item }: { item: typeof items[0] }" :items="items">
     <div style="max-width: 450px" class="text-white">
       <h1 class="mb-4 font-weight-bold">
         {{ item.content.title }}

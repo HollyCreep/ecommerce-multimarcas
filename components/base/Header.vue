@@ -9,7 +9,6 @@ const menuItems: Link[] = [
       path: '/',
       hash: '#quem-somos',
     },
-    exact: true,
   },
   {
     text: 'Conheça dos planos',
@@ -18,7 +17,6 @@ const menuItems: Link[] = [
       path: '/',
       hash: '#plano-destaque',
     },
-    exact: true,
   },
   {
     text: 'Dúvidas',
@@ -33,7 +31,7 @@ const menuItems: Link[] = [
       <Icon name="logo-odontoPrev" color="white" secondary-color="white" width="200px" class="flex-shrink-0" />
     </NuxtLink>
     <v-spacer />
-    <GroupLinks :items="menuItems" button-class="text-white" />
+    <GroupLinks :items="menuItems" :active="false" button-class="text-white" />
   </v-toolbar>
 </template>
 

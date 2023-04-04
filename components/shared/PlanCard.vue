@@ -58,8 +58,8 @@ const handlePurshaseButton = (product: IProduct) => {
           </EnchantedText>
         </v-list-item>
       </v-list>
-      <p><a class="text-primary" href="https://www.google.com.br">Veja cobertura completa</a></p>
-      <p><a class="text-primary" href="https://www.google.com.br">Condições gerais do plano</a></p>
+      <a class="text-primary" href="https://www.google.com.br" style="font-size: 12px">Veja cobertura completa</a>
+      <a class="text-primary" href="https://www.google.com.br" style="font-size: 12px">Condições gerais do plano</a>
       <v-btn color="primary" variant="outlined" rounded="lg" class="mt-4" :to="`/produtos/${product.sku}`" size="small">
         <p>Saiba mais</p>
       </v-btn>

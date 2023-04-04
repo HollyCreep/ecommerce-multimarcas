@@ -12,7 +12,7 @@ const handlePurshaseButton = (product: IProduct) => {
 </script>
 
 <template>
-  <section id="odp-home-section-4" class="container-fluid bg-background pt-16 pt-sm-0 pb-16">
+  <section id="plano-destaque" class="container-fluid bg-background pt-16 pt-sm-0 pb-16">
     <v-row no-gutters justify="center">
       <v-col class="d-flex" cols="12" sm="4" lg="3">
         <v-img src="/images/odontoPrev/home/img-1.png" />
@@ -37,7 +37,7 @@ const handlePurshaseButton = (product: IProduct) => {
             <PriceTag :value="27.99" tooltip="por apenas" class="ml-auto ml-md-0 mr-auto" />
           </v-col>
           <v-col cols="12" sm="8" lg="6" class="d-flex justify-center justify-sm-start">
-            <v-btn min-width="210" color="secondary" class="rounded-lg" size="large">
+            <v-btn min-width="210" color="secondary" class="rounded-lg" size="large" @click="handlePurshaseButton(product)">
               CONTRATE AGORA
             </v-btn>
           </v-col>
@@ -48,7 +48,7 @@ const handlePurshaseButton = (product: IProduct) => {
 </template>
 
 <style lang="scss" scoped>
-#odp-home-section-4 {
+#plano-destque {
   :deep(.price-tag .integer) {
     line-height: .8;
   }
