@@ -20,7 +20,7 @@ const items = [
 </script>
 
 <template>
-  <section id="importancia-plano" class="container">
+  <section id="odp-home-section-6" class="container">
     <h2 class="text-primary font-weight-bold text-center mb-6">
       A importância de um plano dental
     </h2>
@@ -43,7 +43,7 @@ const items = [
 </template>
 
 <style lang="scss" scoped>
-#importancia-plano {
+#odp-home-section-6 {
 
   .container {
     display: grid;

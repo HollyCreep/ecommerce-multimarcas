@@ -4,7 +4,7 @@ const { pending, data, error } = await fetchProducts({ lazy: true })
 </script>
 
 <template>
-  <section id="planos" class="pb-16 ">
+  <section id="odp-home-section-5" class="pb-16 ">
     <div id="plans" class="px-0 container">
       <h2 class="text-primary text-center font-weight-bold mb-16">
         Os melhores planos para você
@@ -27,7 +27,7 @@ const { pending, data, error } = await fetchProducts({ lazy: true })
 </template>
 
 <style lang="scss" scoped>
-  #planos {
+  #odp-home-section-5 {
     :deep(.v-slide-group__container) {
       padding-top: 1rem;
 

@@ -14,7 +14,7 @@ const items = [
 </script>
 
 <template>
-  <section id="testemunhos" class="container-fluid pt-16">
+  <section id="odp-home-section-8" class="container-fluid pt-16">
     <h2 class="font-weight-bold text-primary text-center mb-10">
       Veja o que nossos clientes dizem sobre a Odontoprev
     </h2>
@@ -48,7 +48,7 @@ const items = [
 </template>
 
 <style lang="scss" scoped>
-#testemunhos {
+#odp-home-section-8 {
   background-color: #F4F4F6;
 }
 </style>

@@ -3,7 +3,7 @@ import type { Link } from '~~/types'
 
 const menuItems: Link[] = [
   {
-    text: 'Porque comprar?',
+    text: 'Por que comprar?',
     href: '',
     to: {
       path: '/',
@@ -11,7 +11,7 @@ const menuItems: Link[] = [
     },
   },
   {
-    text: 'Conheça dos planos',
+    text: 'Conheça os planos',
     href: '',
     to: {
       path: '/',

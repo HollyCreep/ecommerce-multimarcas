@@ -48,7 +48,7 @@ const handlePurshaseButton = (product: IProduct) => {
 </template>
 
 <style lang="scss" scoped>
-#plano-destque {
+#plano-destaque {
   :deep(.price-tag .integer) {
     line-height: .8;
   }

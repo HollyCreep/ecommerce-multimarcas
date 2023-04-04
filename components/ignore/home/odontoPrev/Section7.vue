@@ -10,7 +10,7 @@ const logos = [
 </script>
 
 <template>
-  <section id="clube-beneficios" class="container-fluid pb-16 bg-primary-darken-2 text-white">
+  <section id="odp-home-section-7" class="container-fluid pb-16 bg-primary-darken-2 text-white">
     <div class="text-center text-md-left pt-8">
       <h2 class="font-weight-bold mb-6">
         Clube de benefícios Odontoprev
@@ -39,7 +39,7 @@ const logos = [
 <style lang="scss">
   $padding: 200px;
 
-#clube-beneficios {
+#odp-home-section-7 {
   overflow: hidden;
   padding-top: $padding;
   position: relative;
