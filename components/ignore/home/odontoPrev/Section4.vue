@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import { CART_ROUTES } from '~~/types/cart'
-import type { IProduct } from '~~/types/product'
-
-const store = useCartStore()
-const product = await useProductStore().getProduct('2')
-
-const handlePurshaseButton = (product: IProduct) => {
-  store.addPlanoTitular(product)
-  navigateTo(CART_ROUTES.carrinho)
-}
+const { buyProduct } = await useProductStore()
 </script>
 
 <template>
@@ -37,7 +28,7 @@ const handlePurshaseButton = (product: IProduct) => {
             <PriceTag :value="27.99" tooltip="por apenas" class="ml-auto ml-md-0 mr-auto" />
           </v-col>
           <v-col cols="12" sm="8" lg="6" class="d-flex justify-center justify-sm-start">
-            <v-btn min-width="210" color="secondary" class="rounded-lg" size="large" @click="handlePurshaseButton(product)">
+            <v-btn min-width="210" color="secondary" class="rounded-lg" size="large" @click="buyProduct('2')">
               CONTRATE AGORA
             </v-btn>
           </v-col>

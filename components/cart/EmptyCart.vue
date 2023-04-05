@@ -13,7 +13,7 @@
       <v-btn
         color="primary" variant="flat" size="small" :to="{
           path: '/',
-          hash: '#plans',
+          hash: '#planos',
         }"
       >
         Retornar a loja

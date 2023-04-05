@@ -8,7 +8,7 @@
     background-color: white;
     border-radius: 50%;
     border: 1px solid #707070;
-    width: 1rem;
-    height: 1rem;
+    width: 14px;
+    height: 14px;
 }
 </style>

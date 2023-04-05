@@ -1,4 +1,5 @@
 import { StorageSerializers } from '@vueuse/core'
+import { CART_ROUTES } from '~~/types/cart'
 import type { IProduct } from '~~/types/product'
 
 export const useProductStore = defineStore('product', () => {
@@ -30,7 +31,17 @@ export const useProductStore = defineStore('product', () => {
     return featuredProducts.value
   }
 
-  return { product, featuredProducts, getProduct, getFeaturedProducts }
+  const buyProduct = async (id: string) => {
+    const produto = await getProduct(id)
+    if (!produto)
+      return new Error('Não foi possível localizar o produto. Tente novamente mais tarde!')
+
+    const store = useCartStore()
+    store.addPlanoTitular(produto)
+    navigateTo(CART_ROUTES.carrinho)
+  }
+
+  return { product, featuredProducts, getProduct, getFeaturedProducts, buyProduct }
 })
 
 if (import.meta.hot)

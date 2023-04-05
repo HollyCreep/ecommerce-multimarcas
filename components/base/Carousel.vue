@@ -79,16 +79,15 @@ function changeSlide(index: number) {
 .odp-hero-carousel {
   position: relative;
 
-  ::deep(.v-carousel__controls .v-btn) {
+  ::v-deep(.v-carousel__controls .v-btn) {
       &.v-btn--active i .delimiter::after {
         content: '';
         position: absolute;
         background-color: v-bind(color);
         left: 2px;
         top: 2px;
-        height: calc(100% - 4px);
-        width: calc(100% - 4px);
-        font-size: 12px;
+        height: 8px;
+        width: 8px;
         border-radius: 50%;
       }
   }
