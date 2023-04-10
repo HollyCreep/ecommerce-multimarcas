@@ -142,7 +142,7 @@ const generateProducts = (): IProduct[] => [
 const PRODUTOS = generateProducts()
 
 export default [
-  rest.get('*/products', (_, res, ctx) => {
+  rest.get('*/planos', (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.delay(1000),
@@ -150,7 +150,7 @@ export default [
       ctx.json(PRODUTOS),
     )
   }),
-  rest.get('*/products/:id', (req, res, ctx) => {
+  rest.get('*/planos/:id', (req, res, ctx) => {
     const { id } = req.params
     const produto = PRODUTOS.find(product => product.sku === id || getProductFriendlyName(product.nome) === id)
     return res(

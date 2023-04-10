@@ -5,9 +5,7 @@ import type { CartRoute } from '~~/types/cart'
 import { CART_ROUTES } from '~~/types/cart'
 
 const store = useCartStore()
-const { state } = storeToRefs(store)
-
-const [titular] = store.items
+const { state, items } = storeToRefs(store)
 
 const handleFormSubmit = () => {
   store.updateStepValidation({ value: true, step: 'titular' })
@@ -39,7 +37,7 @@ definePageMeta({
     <v-col cols="12" md="4" offset-md="1" order-md="last">
       <CartSteps class="mb-8" />
       <CartPlanPeriodSwitcher class="mb-8" />
-      <CartFeaturedPlanCard :plan="titular.plan" class="mb-6" dark />
+      <CartFeaturedPlanCard :key="state.selectedPeriodType" :plan="store.items[0].plan" class="mb-6" dark />
     </v-col>
     <v-col cols="12">
       <h2 class="text-primary font-weight-bold mb-2">
