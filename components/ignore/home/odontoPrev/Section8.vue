@@ -14,7 +14,7 @@ const items = [
 </script>
 
 <template>
-  <section id="odp-home-section-8" class="container-fluid pt-16">
+  <section id="odp-home-section-8" class="container-fluid pt-16 pb-8">
     <h2 class="font-weight-bold text-primary text-center mb-10">
       Veja o que nossos clientes dizem sobre a Odontoprev
     </h2>
