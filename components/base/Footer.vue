@@ -14,19 +14,17 @@ const waveColor = getColor('primary')
 const backgroundColor = getColor(props.color)
 
 const leftItems = [
-  { text: 'Política de privacidade', href: '' },
-  { text: 'Termos e condições', href: '' },
-  { text: 'ANS', href: '' },
-  { text: 'Seja nosso corretor', href: '' },
+  { text: 'Política de privacidade', href: 'https://www.odontoprev.com.br/portal-de-privacidade' },
+  { text: 'Termos e condições', href: 'https://www.odontoprev.com.br/termos-de-uso' },
+  { text: 'Seja nosso corretor', href: 'https://www.parceirosodontoprev.com.br/login' },
 ]
 
 const rightItems = [
-  { text: 'Porque comprar?', href: '' },
-  { text: 'Encontre seu dentista', href: '' },
-  { text: 'Conheça os planos', href: '' },
-  { text: 'Dúvidas', href: '' },
+  { text: 'Por que comprar?', href: '' },
+  { text: 'Encontre seu dentista', href: 'https://beneficiario.odontoprev.com.br/rede-credenciada' },
+  { text: 'Conheça nossos planos', to: { path: '/', hash: '#plano-destaque' } },
+  { text: 'Dúvidas', href: 'https://www.odontoprevonline.com.br/tire-suas-duvidas' },
   { text: 'Login', href: '' },
-
 ]
 
 const socialMedia: ISocialMedia[] = [
@@ -46,9 +44,9 @@ const socialMedia: ISocialMedia[] = [
         </NuxtLink>
 
         <div class="d-flex mt-8">
-          <GroupLinks :items="leftItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="border-e-md border-opacity-100 border-primary-darken-2 pr-4" />
+          <GroupLinks :items="leftItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="border-e-md border-opacity-100 border-primary-darken-2 pr-4" :active="false" />
 
-          <GroupLinks :items="rightItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="pl-4" />
+          <GroupLinks :items="rightItems" vertical variant="text" size="x-small" button-class="text-caption font-noto-sans" class="pl-4" :active="false" />
         </div>
       </v-col>
     </v-row>
