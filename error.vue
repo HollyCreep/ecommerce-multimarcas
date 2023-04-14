@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 defineProps<{ error: Object }>()
 const store = useThemeStore()
 const { activeBrand } = storeToRefs(store)
-const items = [{ src: `/images/${activeBrand.value.name}/home/hero.png`, alt: '' }]
+const items = [{ src: `/images/${activeBrand.value.name}/home/hero-1.png`, alt: '' }]
 
 const handleError = () => clearError({ redirect: '/' })
 </script>

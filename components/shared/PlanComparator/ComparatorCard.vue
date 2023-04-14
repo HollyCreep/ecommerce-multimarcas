@@ -18,8 +18,8 @@ const handlePurshaseButton = () => {
 </script>
 
 <template>
-  <div class="pa-8 fill-height" :class="{ active: !!active }">
-    <v-scale-transition mode="out-in" origin="bottom center">
+  <div class="pa-4 pa-md-8 fill-height" :class="{ active: !!active }">
+    <v-scroll-x-transition mode="out-in" origin="bottom center">
       <div :key="produto.sku" class="d-flex flex-column fill-height">
         <div class="d-flex align-center mb-8">
           <Icon :name="produto.logo" color="white" secondary-color="primary-lighten-1" class="text-h3 mr-3" />
@@ -53,7 +53,7 @@ const handlePurshaseButton = () => {
           CONTRATE AGORA
         </v-btn>
       </div>
-    </v-scale-transition>
+    </v-scroll-x-transition>
   </div>
 </template>
 

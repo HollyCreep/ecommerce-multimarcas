@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   },
 
   ignore: [
-    'components/ignore',
+    // 'components/ignore',
   ],
 
   runtimeConfig: {

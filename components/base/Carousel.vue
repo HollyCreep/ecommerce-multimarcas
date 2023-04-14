@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 import delimiter from '~~/components/functionals/Delimiter.vue'
+
 const props = withDefaults(defineProps<{
   items: any[]
   color?: string
@@ -16,6 +18,7 @@ const size = computed(() => props.items.length)
 function changeSlide(index: number) {
   activeSlide.value = index
 }
+const { mdAndUp } = useDisplay()
 </script>
 
 <template>
@@ -33,7 +36,7 @@ function changeSlide(index: number) {
     :show-arrows="
       Object.prototype.hasOwnProperty.call($attrs, 'show-arrows')
         ? !!$attrs['show-arrows']
-        : !!items.length && items.length > 1
+        : mdAndUp && !!items.length && items.length > 1
     "
     v-bind="$attrs"
   >

@@ -52,7 +52,7 @@ const cards = [
         <h2 class="text-primary-lighten-1 font-weight-bold">
           Tem muito mais no nosso Blog! :)
         </h2>
-        <v-btn color="white" variant="text" class="px-0" density="compact">
+        <v-btn color="white" variant="text" class="px-0" height="60">
           <EnchantedText tag="h4" class="font-blinker font-weight-bold">
             {{ `ver mais\n noticias` }}
           </EnchantedText>
@@ -72,9 +72,11 @@ const cards = [
   gap: 1rem;
   overflow: hidden;
 
-  > div {
-    // flex: 1 0;
+  @media screen and (max-width: 600px) {
+    flex-wrap: wrap;
+  }
 
+  > div {
     &:last-child {
       background-color: #003EA6;
       background-image: url(/images/odontoPrev/bg-coracao.png);

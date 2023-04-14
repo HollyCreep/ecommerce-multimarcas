@@ -10,7 +10,7 @@ definePageMeta({
     const productStore = useProductStore()
     const product = await productStore.getProduct(id)
 
-    return /^\d+$/.test(id) && !!product
+    return !!product
   },
 })
 

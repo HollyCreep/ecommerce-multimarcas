@@ -18,11 +18,13 @@ const props = withDefaults(defineProps<{
   gap?: string | number
   size?: string | number
   buttonClass?: string
+  label?: string
 }>(), {
   color: 'primary',
   secondaryColor: 'secondary',
   gap: 12,
   size: 24,
+  label: 'Encontre-nos\n nas Redes sociais:',
 })
 
 const { getValue } = useUtils()
@@ -32,19 +34,21 @@ const computedSize = getValue(props.size)
 
 <template>
   <div class="d-flex flex-column flex-md-row align-center">
-    <EnchantedText class="mr-4">
-      {{ `Encontre-nos\n nas Redes sociais:` }}
-    </EnchantedText>
+    <slot name="label">
+      <EnchantedText class="mr-4">
+        {{ label }}
+      </EnchantedText>
+    </slot>
     <ul class="odp-social-media">
       <li v-for="(item, index) in items" :key="index">
         <v-btn
-          v-bind="$attrs"
           :class="buttonClass"
           :href="item.href"
           :color="color"
           target="_blank"
           variant="flat"
           icon
+          v-bind="$attrs"
         >
           <v-icon v-if="Object.prototype.hasOwnProperty.call(item, 'icon')" :size="computedSize" :color="secondaryColor">
             {{ (item as ISocialMediaIcon).icon }}
@@ -53,6 +57,8 @@ const computedSize = getValue(props.size)
             v-else-if="Object.prototype.hasOwnProperty.call(item, 'svg')"
             :name="(item as ISocialMediaSVG).svg"
             :color="secondaryColor"
+            :width="computedSize"
+            :height="computedSize"
             class="text-h3"
           />
         </v-btn>

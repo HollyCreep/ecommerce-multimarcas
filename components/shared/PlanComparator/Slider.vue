@@ -70,7 +70,7 @@ watchEffect(() => {
             :name="produto.logo"
             :color="produto.faxaEtaria ? 'primary' : 'white'"
             :secondary-color="produto.faxaEtaria ? 'white' : 'primary-lighten-1'"
-            class="text-h2"
+            class="text-h2 mb-2"
           />
           <EnchantedText class="font-weight-bold font-blinker text-subtitle-1" :class="produto.faxaEtaria ? 'text-primary' : 'text-primary-lighten-1'">
             {{ produto.nome }}
@@ -109,6 +109,11 @@ watchEffect(() => {
 
     &.vertical {
       width: min-content;
+
+      h3 {
+        max-width: 200px;
+        margin: 0 auto;
+      }
 
       :deep(.v-slide-group__content) {
         gap: 1rem;

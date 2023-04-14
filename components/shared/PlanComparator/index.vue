@@ -70,8 +70,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="12" md="3" order-md="last">
+  <v-row no-gutters>
+    <v-col cols="12" md="3" order-md="last" class="pl-lg-4">
       <Slider :produtos="state.products" @update:selected-product="$event => compareProduct = $event" />
     </v-col>
     <v-col cols="12" md="5" order-md="2">

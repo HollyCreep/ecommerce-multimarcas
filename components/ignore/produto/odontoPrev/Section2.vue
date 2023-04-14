@@ -34,7 +34,7 @@ const cards: IFieldSetCard[] = [
 <template>
   <section id="odp-produtos-section-2" class="container-fluid py-8">
     <v-row>
-      <v-col class="d-flex flex-column">
+      <v-col cols="12" md="4" class="d-flex flex-column">
         <v-avatar size="70" color="primary-darken-2" class="mx-auto mb-6" />
         <h5 class="text-primary font-noto-sans font-weight-bold">
           Sobre o {{ product.nome }}
@@ -46,7 +46,7 @@ const cards: IFieldSetCard[] = [
           dicta.
         </p>
       </v-col>
-      <v-col class="d-flex flex-column">
+      <v-col cols="12" md="4" class="d-flex flex-column">
         <v-avatar size="70" color="primary-darken-2" class="mx-auto mb-6" />
         <h5 class="text-primary font-noto-sans font-weight-bold">
           Para quem é indicado ?
@@ -58,7 +58,7 @@ const cards: IFieldSetCard[] = [
           dicta.
         </p>
       </v-col>
-      <v-col class="d-flex flex-column">
+      <v-col cols="12" md="4" class="d-flex flex-column">
         <v-avatar size="70" color="primary-darken-2" class="mx-auto mb-6" />
         <h5 class="text-primary font-noto-sans font-weight-bold">
           Vantagens

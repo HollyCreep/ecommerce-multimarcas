@@ -9,7 +9,7 @@ defineProps<{ items: any[] }>()
       v-bind="{ ...{ height: 'auto' }, ...$attrs }"
       :items="items"
     >
-      <div class="container h-100 py-6 d-flex flex-column" style="gap: 2rem">
+      <div class="container h-100 pt-6 pb-16 pb-md-6 d-flex flex-column" style="gap: 2rem">
         <Header />
         <div class="hero-content">
           <slot v-bind="props" />
@@ -30,9 +30,6 @@ defineProps<{ items: any[] }>()
 
     @media screen and (max-width: 1264px) {
       width: calc(100% - 10vw);
-    }
-    @media screen and (max-width: 600px) {
-      margin-bottom: 8vw;
     }
   }
 }
