@@ -13,15 +13,6 @@ const color = getColor(props.color)
 
 const size = computed(() => props.items.length)
 
-function next() {
-  activeSlide.value++
-}
-
-function previous() {
-  const value = activeSlide.value - 1
-  activeSlide.value = value < 0 ? size.value - 1 : value
-}
-
 function changeSlide(index: number) {
   activeSlide.value = index
 }

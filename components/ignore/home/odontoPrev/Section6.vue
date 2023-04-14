@@ -86,6 +86,7 @@ const items = [
 
     .img {
       grid-area: img;
+      // min-width: 300px;
     }
 
     >li {

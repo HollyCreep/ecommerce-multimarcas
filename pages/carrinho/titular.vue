@@ -5,7 +5,7 @@ import type { CartRoute } from '~~/types/cart'
 import { CART_ROUTES } from '~~/types/cart'
 
 const store = useCartStore()
-const { state, items } = storeToRefs(store)
+const { state } = storeToRefs(store)
 
 const handleFormSubmit = () => {
   store.updateStepValidation({ value: true, step: 'titular' })

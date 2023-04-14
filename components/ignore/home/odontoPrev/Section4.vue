@@ -24,10 +24,10 @@ const { buyProduct } = await useProductStore()
               Rol completo da ANS para que seu filho tenha a disposição nossa rede completa de dentistas.
             </p>
           </v-col>
-          <v-col cols="12" sm="auto">
+          <v-col cols="12" sm="5" lg="4">
             <PriceTag :value="27.99" tooltip="por apenas" class="ml-auto ml-md-0 mr-auto" />
           </v-col>
-          <v-col cols="12" sm="8" lg="6" class="d-flex justify-center justify-sm-start">
+          <v-col cols="12" sm="10" lg="8" class="d-flex justify-center justify-sm-start">
             <v-btn min-width="210" color="secondary" class="rounded-lg" size="large" @click="buyProduct('2')">
               CONTRATE AGORA
             </v-btn>

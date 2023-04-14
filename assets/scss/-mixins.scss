@@ -10,6 +10,7 @@
 
 @mixin container-fluid-base-styles {
   @include container-base-styles;
+  max-width: 100%;
   width: 100% !important;
   padding: 0 $container-min-padding;
   

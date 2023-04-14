@@ -66,9 +66,9 @@ const handlePurshaseButton = (product: IProduct) => {
       <v-divider class="my-4" />
       <PriceTag v-if="plan" :value="plan.valorTitular" class="mx-auto" />
       <v-hover
-        v-slot="{ isHovering, props }"
+        v-slot="{ isHovering, props: hoverProps }"
       >
-        <v-btn v-bind="props" color="secondary" :style="isHovering ? 'font-size: 20px' : ''" class="my-5" variant="flat" rounded="lg" :elevation="isHovering ? 24 : 0 " :size=" isHovering ? 'x-large' : 'large' " @click="handlePurshaseButton(product)">
+        <v-btn v-bind="hoverProps" color="secondary" :style="isHovering ? 'font-size: 20px' : ''" class="my-5" variant="flat" rounded="lg" :elevation="isHovering ? 24 : 0 " :size=" isHovering ? 'x-large' : 'large' " @click="handlePurshaseButton(product)">
           COMPRAR
         </v-btn>
       </v-hover>

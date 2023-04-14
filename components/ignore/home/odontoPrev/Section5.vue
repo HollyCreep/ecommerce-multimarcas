@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { fetchProducts } = useProductsApi()
-const { pending, data, error } = await fetchProducts({ lazy: true })
+const { pending, data: produtos, error } = await fetchProducts({ lazy: true })
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const { pending, data, error } = await fetchProducts({ lazy: true })
           Buscando planos
         </template>
         <v-slide-group center-active>
-          <v-slide-group-item v-for="(product, i) in data" :key="i">
+          <v-slide-group-item v-for="(product, i) in produtos" :key="i">
             <PlanCard
               v-ripple :product="product" color="primary-lighten-1" :dark="!!product.faxaEtaria"
               class="mx-2"
