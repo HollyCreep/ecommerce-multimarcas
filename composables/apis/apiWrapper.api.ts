@@ -1,16 +1,21 @@
-import type { NitroFetchRequest } from 'nitropack'
-import type { KeyOfRes } from 'nuxt/dist/app/composables/asyncData'
 import { storeToRefs } from 'pinia'
-import type { UseFetchOptions } from '#app'
-
-export type RequestOptions<T> = UseFetchOptions<
-T extends void ? unknown : T,
-(res: T extends void ? unknown : T) => T extends void ? unknown : T,
-KeyOfRes<
-    (res: T extends void ? unknown : T) => T extends void ? unknown : T
->
->
-| undefined
+import type { SearchParameters } from 'ofetch'
+import type { NitroFetchRequest } from 'nitropack'
+export interface RequestOptions<T> {
+  key?: string
+  method?: string
+  query?: SearchParameters
+  params?: SearchParameters
+  body?: RequestInit['body'] | Record<string, any>
+  headers?: Record<string, string> | [key: string, value: string][] | Headers
+  baseURL?: string
+  server?: boolean
+  lazy?: boolean
+  immediate?: boolean
+  default?: () => T
+  transform?: (input: T) => T
+  pick?: string[]
+}
 
 export const useApi = () => {
   function get<T>(request: NitroFetchRequest, options?: RequestOptions<T>) {
@@ -19,7 +24,8 @@ export const useApi = () => {
     const { token } = storeToRefs(store)
     const shouldRetry = ref(true)
 
-    return useFetch<T>(request, {
+    // @ts-expect-error impossivel tipar essas options separadamente
+    return useFetch(request, {
       baseURL: config.public.baseUrl,
       server: false,
       watch: [token],
@@ -32,7 +38,7 @@ export const useApi = () => {
 
         options.headers = headers
       },
-      onResponseError({ response, error }) {
+      onResponseError({ response }) {
         if (response.status === 401 && !!shouldRetry.value) {
           shouldRetry.value = false
           store.refreshToken()
