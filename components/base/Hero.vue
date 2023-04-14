@@ -31,6 +31,9 @@ defineProps<{ items: any[] }>()
     @media screen and (max-width: 1264px) {
       width: calc(100% - 10vw);
     }
+    @media screen and (max-width: 600px) {
+      margin-bottom: 8vw;
+    }
   }
 }
 </style>

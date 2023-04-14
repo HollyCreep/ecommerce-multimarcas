@@ -13,7 +13,7 @@ const items = [
       text: 'CONTRATE AGORA',
       to: {
         path: '/',
-        hash: '#plano-destaque',
+        hash: '#odp-home-section-5',
       },
     },
   },
@@ -28,7 +28,7 @@ const items = [
       text: 'CONTRATE AGORA',
       to: {
         path: '/',
-        hash: '#plano-destaque',
+        hash: '#odp-home-section-5',
       },
     },
   },
