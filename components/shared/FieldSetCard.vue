@@ -65,6 +65,10 @@ $gap: 4px;
       :deep(.v-list-item__prepend > .v-icon) {
         opacity: unset;
       }
+
+      @media screen and (max-width: 600px) {
+        flex-basis: calc((100% - #{$gap}) / 1);
+      }
     }
  }
 </style>

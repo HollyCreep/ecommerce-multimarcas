@@ -33,9 +33,9 @@ const computedSize = getValue(props.size)
 </script>
 
 <template>
-  <div class="d-flex flex-column flex-md-row align-center">
+  <div class="odp-social-media-container d-flex flex-column flex-md-row align-center">
     <slot name="label">
-      <EnchantedText class="mr-4">
+      <EnchantedText>
         {{ label }}
       </EnchantedText>
     </slot>
@@ -69,13 +69,16 @@ const computedSize = getValue(props.size)
 
 ,
 <style lang="scss" scoped>
-.odp-social-media {
-  display: inline-flex;
-  list-style: none;
-  gap: v-bind(computedGap);
+.odp-social-media-container {
+  gap: 1rem;
+  .odp-social-media {
+    display: inline-flex;
+    list-style: none;
+    gap: v-bind(computedGap);
 
-  :deep(.v-btn.v-btn--icon) {
-    border-radius: 25%;
+    :deep(.v-btn.v-btn--icon) {
+      border-radius: 25%;
+    }
   }
 }
 </style>

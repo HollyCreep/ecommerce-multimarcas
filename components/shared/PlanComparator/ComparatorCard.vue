@@ -49,7 +49,7 @@ const handlePurshaseButton = () => {
           </PriceTag>
         </div>
 
-        <v-btn color="secondary" variant="flat" size="large" class="ml-auto mt-8 d-block " @click="handlePurshaseButton">
+        <v-btn color="secondary" variant="flat" size="large" class="mr-auto mr-md-0 ml-auto mt-8 d-block " @click="handlePurshaseButton">
           CONTRATE AGORA
         </v-btn>
       </div>

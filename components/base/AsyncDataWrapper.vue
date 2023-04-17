@@ -12,7 +12,9 @@ defineProps<Props>()
       <slot name="placeholder" />
     </FunctionalsLinearLoader>
     <h1 v-else-if="error" class="text-error">
-      Ops! Algo inesperado aconteceu ! {{ error }}
+      <slot name="error">
+        Ops! Algo inesperado aconteceu ! {{ error }}
+      </slot>
     </h1>
     <template v-else>
       <slot />

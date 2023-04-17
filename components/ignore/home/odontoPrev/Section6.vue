@@ -30,12 +30,12 @@ const items = [
       segurança e autoestima.
     </p>
 
-    <ul class="container">
+    <ul>
       <li v-for="({ text, icon }, index) in items" :key="index" class="text-main" :class="`content${index + 1}`">
         <EnchantedText tag="h4">
           {{ text }}
         </EnchantedText>
-        <Icon width="48" color="primary" secondary-color="primary-lighten-1" :name="icon" />
+        <Icon width="48" color="primary" secondary-color="primary-lighten-1" :name="icon" class="flex-shrink-0" />
       </li>
       <v-img src="/images/odontoPrev/home/img-2.png" class="img" />
     </ul>
@@ -45,7 +45,7 @@ const items = [
 <style lang="scss" scoped>
 #odp-home-section-6 {
 
-  .container {
+  ul {
     display: grid;
     column-gap: 4rem;
     grid-template-areas:
@@ -86,26 +86,29 @@ const items = [
 
     .img {
       grid-area: img;
-      // min-width: 300px;
+      min-width: 300px;
     }
 
     >li {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       padding: 24px 8px;
-
-      &:nth-child(odd) {
-        justify-content: flex-end;
-      }
 
       &:nth-child(even) {
         span {
           order: 1
         }
 
-        h5 {
+        h4 {
           order: 2
+        }
+      }
+
+      @media screen and (min-width: 600px) {
+        &:nth-child(odd) {
+          justify-content: flex-end;
         }
       }
     }

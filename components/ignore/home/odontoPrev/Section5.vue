@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { fetchProducts } = useProductsApi()
-const { pending, data: produtos, error } = await fetchProducts({ lazy: true })
+const { pending, data: produtos, error, refresh } = await fetchProducts({ lazy: true })
 </script>
 
 <template>
@@ -9,9 +9,18 @@ const { pending, data: produtos, error } = await fetchProducts({ lazy: true })
       <h2 class="text-primary text-center font-weight-bold mb-16">
         Os melhores planos para você
       </h2>
-      <AyncDataWrapper v-bind="{ pending, error }">
+      <AsyncDataWrapper v-bind="{ pending, error }">
         <template #placeholder>
           Buscando planos
+        </template>
+        <template #error>
+          <div class="text-center">
+            <h6>Não foi possível buscar os planos.</h6>
+
+            <v-btn color="secondary" @click="refresh">
+              Tentar novamente
+            </v-btn>
+          </div>
         </template>
         <v-slide-group center-active>
           <v-slide-group-item v-for="(product, i) in produtos" :key="i">
@@ -21,7 +30,7 @@ const { pending, data: produtos, error } = await fetchProducts({ lazy: true })
             />
           </v-slide-group-item>
         </v-slide-group>
-      </AyncDataWrapper>
+      </AsyncDataWrapper>
     </div>
   </section>
 </template>

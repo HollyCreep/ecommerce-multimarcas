@@ -23,7 +23,7 @@ const items = [
         <v-card variant="outlined" rounded="lg" class="pa-8 bg-white" color="border">
           <div class="d-flex flex-column flex-md-row align-center justify-space-between">
             <v-avatar
-              class="mr-8"
+              class="mr-md-8"
               size="150"
               rounded="0"
             >

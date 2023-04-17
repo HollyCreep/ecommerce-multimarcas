@@ -70,6 +70,8 @@ const socialMedia: ISocialMedia[] = [
     position: relative;
     width: fit-content;
     padding-right: 2rem;
+    padding-top: 4px;
+    padding-bottom: 4px;
 
     &::before {
       content: '';
