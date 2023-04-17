@@ -34,7 +34,7 @@
         </div>
       </v-col>
       <v-col cols="12" sm="5" lg="4">
-        <v-img src="/images/odontoPrev/home/bg-1.png" class="fill-height" />
+        <v-img src="/images/odontoPrev/home/bg-1.png" class="fill-height" min-height="300px" cover />
       </v-col>
     </v-row>
   </section>
@@ -69,6 +69,9 @@
     :deep(.v-img .v-img__img) {
       object-fit: fill !important;
     }
+  }
+  :deep(.v-img .v-img__img) {
+    object-position: left;
   }
 }
 </style>

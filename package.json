@@ -11,8 +11,8 @@
     "back": "docker compose -f ../e-commerce-multimarcas-back/docker-compose.yml up",
     "reset": "rm -rf node_modules dist .nuxt yarn.lock .output",
     "test": "vitest",
-    "build:nomad": "docker build -t 172.18.10.44:8085/hml/e-commerce-multimarcas-front:%VERSION% .",
-    "push:nomad": "docker push 172.18.10.44:8085/hml/e-commerce-multimarcas-front:%VERSION%"
+    "nomad:build": "docker build -t 172.18.10.44:8085/hml/e-commerce-multimarcas-front:%VERSION% .",
+    "nomad:push": "docker push 172.18.10.44:8085/hml/e-commerce-multimarcas-front:%VERSION%"
   },
   "dependencies": {
     "@formvuelate/plugin-vee-validate": "^3.9.1",
